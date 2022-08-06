@@ -10,14 +10,14 @@ const useDrag = ({
 }) => {
   const dragValue = new DragValue();
   const handlers = {
-    ondragstart: (e: DragEvent) => {
+    onDragStart: (e: React.DragEvent) => {
       onDragStart && onDragStart();
       dragValue.start(e)
     },
-    ondrag: (e: DragEvent) => {
+    onDrag: (e: React.DragEvent) => {
       dragValue.update(e)
     },
-    ondragend: (e: DragEvent) => {
+    onDragEnd: (e: React.DragEvent) => {
       dragValue.update(e)
       onDragEnd && onDragEnd([dragValue.getDiffX(), dragValue.getDiffY()])
     }
@@ -37,8 +37,10 @@ export const Draggable: FC<{
     onDragEnd: props.onDragEnd
   })
 
+  
   return (
     <div
+      draggable={true}
       {...handlers}
       style={{
         position: 'absolute',

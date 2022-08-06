@@ -18,7 +18,7 @@ export default class Editor extends StateMachine<States, Actions, Topics> {
   private describeAddComponent() {
     let componentToPlace: Meta | null = null;
     let addVector: [number, number] = [0, 0];
-    this.register(States.DragStart, States.PlacingComponent, Actions.StartAddComponent, (meta) => {
+    this.register(States.Start, States.PlacingComponent, Actions.StartAddComponent, (meta) => {
       componentToPlace = meta;
     })
     this.register(States.PlacingComponent, States.PlacingComponent, Actions.EvtDrag, (vec: [number, number]) => {
@@ -38,7 +38,7 @@ export default class Editor extends StateMachine<States, Actions, Topics> {
       this.root.add(node)
       this.root.emit(Topics.NodeChildrenUpdated)
     })
-    this.register(States.AddingComponent, States.DragStart, Actions.AUTO, () => {
+    this.register(States.AddingComponent, States.Start, Actions.AUTO, () => {
       console.log('auto restart')
     })
   }

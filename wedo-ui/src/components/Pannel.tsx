@@ -1,16 +1,20 @@
 
+import React, { useContext } from 'react'
 import classes from '../class/drag-drop.module.scss'
 import Editor from '../object/Editor'
 import { Actions } from '../object/editor.types'
 import { Render } from './Render'
+import { EditorContext } from './UIEditor'
 
-export default ({ editor }: { editor: Editor }) => {
+export default () => {
+  const editor = useContext(EditorContext);
+
   return <div className={classes['panel']}
     onDragOver={e => {
       e.preventDefault()
       editor.dispatch(Actions.EvtDrag, [e.clientX, e.clientY])
     }}
-    onDragEnd={e => {
+    onDrop={e => {
       e.preventDefault()
       editor.dispatch(Actions.EvtDrop)
     }}
