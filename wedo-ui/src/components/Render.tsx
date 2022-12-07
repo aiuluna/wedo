@@ -51,7 +51,7 @@ const ItemRenderForDraggable = ({ node }: WedoComponent) => {
 const renderItem = (node: Node) => {
   switch (node.getType()) {
     case 'image':
-      return <img src={'//cdn.myweimai.com/images/48da10f83d954c2ded38f66db6e49c09_192x192.png'} />
+      return <img src={'//cdn.xxx.com/images/48da10f83d954c2ded38f66db6e49c09_192x192.png'} />
     case 'rect':
       return (
         <div
