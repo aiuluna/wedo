@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react'
-import DragValue from "../object/DragValue";
+import DragValue from "../../object/DragValue";
 
 const useDrag = ({
   onDragStart,
@@ -18,7 +18,8 @@ const useDrag = ({
       dragValue.update(e)
     },
     onDragEnd: (e: React.DragEvent) => {
-      dragValue.update(e)
+      // 当前状态的e.client的值不对，不能覆盖
+      // dragValue.update(e)
       onDragEnd && onDragEnd([dragValue.getDiffX(), dragValue.getDiffY()])
     }
   }
@@ -29,7 +30,8 @@ const useDrag = ({
 export const Draggable: FC<{
   initalPosition: [number, number],
   onDragStart?: () => void,
-  onDragEnd?: (vec: [number, number]) => void
+  onDragEnd?: (vec: [number, number]) => void,
+  children: any
 }> = (props) => {
 
   const { handlers } = useDrag({
@@ -44,6 +46,8 @@ export const Draggable: FC<{
       {...handlers}
       style={{
         position: 'absolute',
+        // left: '0px',
+        // top: '0px'
         left: (props.initalPosition?.[0] || 0) + 'px',
         top: (props.initalPosition?.[1] || 0) + 'px'
       }}>

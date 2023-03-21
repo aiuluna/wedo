@@ -1,7 +1,7 @@
 import StateMachine from "./StateMachine"
 import { Actions, Meta, States } from "./editor.types";
 import { Topics } from "./Topics";
-import { Node } from "./Node";
+import { Node } from "../meta/instance/Node";
 
 export default class Editor extends StateMachine<States, Actions, Topics> {
   private root: Node;

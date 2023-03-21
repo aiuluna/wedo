@@ -11,7 +11,7 @@ export default [
     type: "text",
     default: "请输入文本",
     w: 120,
-    h: 30,
+    h: 34,
   },
   {
     title: "矩形",

@@ -1,6 +1,6 @@
 import { List, Map as ImmutableMap} from 'immutable'
-import { Emitter } from "./Emitter";
-import { Topics } from "./Topics";
+import { Emitter } from "../../object/Emitter";
+import { Topics } from "../../object/Topics";
 
 export class Node extends Emitter<Topics> {
   private nodeData: ImmutableMap<string, any>;

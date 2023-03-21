@@ -1,13 +1,13 @@
 import React from 'react'
-import classes from '../class/drag-drop.module.scss'
+import classes from '../../class/drag-drop.module.scss'
 import Pannel from './Pannel'
 import ItemList from './ItemList'
-import Editor from '../object/Editor'
+import Editor from '../../object/Editor'
 
-import '../class/index.scss'
+import '../../class/index.scss'
 
 export const EditorContext = React.createContext<Editor>(null as any);
-export default class UIEditor extends React.Component<{ editor: Editor }> {
+export default class UIEditor extends React.Component {
   render() {
     const editor = new Editor()
     return (

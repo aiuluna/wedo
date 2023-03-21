@@ -8,14 +8,14 @@ export default class DragValue extends Emitter<Topics> {
   private diffX: number = 0;
   private diffY: number = 0;
 
-  public start(e: DragEvent) {
+  public start(e: React.DragEvent) {
     this.startX = e.clientX;
     this.startY = e.clientY;
     this.diffX = 0;
     this.diffY = 0;
   }
 
-  public update(e: DragEvent) {
+  public update(e: React.DragEvent) {
     this.diffX = e.clientX - this.startX;
     this.diffY = e.clientY - this.startY;
   }
