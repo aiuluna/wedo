@@ -1,6 +1,5 @@
-import { Emitter } from "./Emitter"
+import { Emitter } from "@wedo/utils"
 import { Topics } from './Topics'
-
 
 export default class DragValue extends Emitter<Topics> {
   private startX: number = 0;

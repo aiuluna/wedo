@@ -1,4 +1,4 @@
-import { Emitter } from "./Emitter";
+import { Emitter } from '@wedo/utils';
 
 type StateTransferFunction = (...args: any) => void
 
