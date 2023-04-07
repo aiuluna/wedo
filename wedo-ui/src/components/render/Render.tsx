@@ -1,9 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
-import classes from '../class/drag-drop.module.scss'
-import Editor from '../../object/Editor'
 import { Actions } from '../../object/editor.types'
-import { Node } from '../../meta/instance/Node'
-import { Topics } from '../../object/Topics'
+import { Node, Topic } from '@wedo/meta'
 import { Draggable } from '../draggable/Draggable'
 import { EditorContext } from './UIEditor'
 
@@ -73,7 +70,7 @@ export const Render = ({ node }: WedoComponent) => {
   const [ver, setVer] = useState<number>(0);
 
   useEffect(() => {
-    node.on([Topics.NodeChildrenUpdated, Topics.NodePositionMoved]).subscribe(() => {
+    node.on([Topic.NodeChildrenUpdated, Topic.NodePositionMoved]).subscribe(() => {
       setVer(ver => ver + 1)
     })
   }, [])

@@ -1,7 +1,7 @@
 import { Emitter } from "@wedo/utils"
-import { Topics } from './Topics'
+import { Topic } from '@wedo/meta'
 
-export default class DragValue extends Emitter<Topics> {
+export default class DragValue extends Emitter<Topic> {
   private startX: number = 0;
   private startY: number = 0;
   private diffX: number = 0;

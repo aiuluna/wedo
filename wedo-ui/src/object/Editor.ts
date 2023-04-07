@@ -1,9 +1,8 @@
 import StateMachine from "./StateMachine"
 import { Actions, Meta, States } from "./editor.types";
-import { Topics } from "./Topics";
-import { Node } from "../meta/instance/Node";
+import { Topic, Node } from "@wedo/meta";
 
-export default class Editor extends StateMachine<States, Actions, Topics> {
+export default class Editor extends StateMachine<States, Actions, Topic> {
   private root: Node;
   constructor() {
     super(States.Start)
@@ -36,7 +35,7 @@ export default class Editor extends StateMachine<States, Actions, Topics> {
         componentToPlace.h
       )
       this.root.add(node)
-      this.root.emit(Topics.NodeChildrenUpdated)
+      this.root.emit(Topic.NodeChildrenUpdated)
     })
     this.register(States.AddingComponent, States.Start, Actions.AUTO, () => {
       console.log('auto restart')
@@ -50,7 +49,7 @@ export default class Editor extends StateMachine<States, Actions, Topics> {
     })
     this.register(States.DragStart, States.Stoped, Actions.EvtDragEnd, (vec: [number, number]) => {
       curNode?.setXY(vec)
-      curNode?.emit(Topics.NodePositionMoved)
+      curNode?.emit(Topic.NodePositionMoved)
     })
     this.register(States.Stoped, States.Start, Actions.AUTO, () => {
       console.log('auto drag to start')

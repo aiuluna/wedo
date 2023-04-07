@@ -249,9 +249,9 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@jridgewell/gen-mapping@^0.3.2":
-  version "0.3.2"
-  resolved "http://npm-reg.devops.ichoice.cc/@jridgewell%2fgen-mapping/-/gen-mapping-0.3.2.tgz"
-  integrity sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==
+  version "0.3.3"
+  resolved "http://npm-reg.devops.ichoice.cc/@jridgewell%2fgen-mapping/-/gen-mapping-0.3.3.tgz"
+  integrity sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==
   dependencies:
     "@jridgewell/set-array" "^1.0.1"
     "@jridgewell/sourcemap-codec" "^1.4.10"
@@ -318,6 +318,12 @@
     "@babel/plugin-transform-react-jsx-source" "^7.18.6"
     magic-string "^0.26.2"
     react-refresh "^0.14.0"
+
+"@wedo/meta@file:../wedo-meta":
+  version "1.0.0"
+  resolved "file:../wedo-meta"
+  dependencies:
+    immutable "^4.3.0"
 
 "@wedo/utils@file:../wedo-utils":
   version "1.0.0"

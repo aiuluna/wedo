@@ -1,6 +1,6 @@
 import { Validator } from 'jsonschema'
-import { Topic } from '../../meta/Topic';
-import { Emitter } from '../../object/Emitter';
+import { Topic } from '@wedo/meta';
+import { Emitter } from '@wedo/utils';
 
 const metas = {}
 
