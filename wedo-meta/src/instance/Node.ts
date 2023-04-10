@@ -1,15 +1,11 @@
 import { List, Map as ImmutableMap } from 'immutable'
-import { Emitter } from "@wedo/utils";
+import { Emitter, Rect } from "@wedo/utils";
 import { Topic } from "../Topic";
 import { NodeData } from '../standard.types'
 
 export class Node extends Emitter<Topic> {
 
-  constructor(private data: NodeData) {
-    super()
-    this.data = data;
-  }
-
+  private mountPoint?: Node | null;
   // constructor(type: string, x: number, y: number, w: number, h: number) {
   //   super()
   //   this.data = ImmutableMap({
@@ -21,6 +17,34 @@ export class Node extends Emitter<Topic> {
   //     children: List<Node>()
   //   })
   // }
+
+  constructor(private data: NodeData) {
+    super()
+    this.data = data;
+  }
+
+  public setInstanceData(key: string, value: any): void {
+    this.data = this.data.set(key, value)
+  }
+
+  public updateInstanceData(key: string, updator: (value: any) => any) {
+    this.data = this.data.update(key, updator) 
+  }
+
+  public getData(): NodeData {
+    return this.data
+  }
+
+  public getParent(): Node {
+    return this.data.get("parent")
+  }
+
+  public getRect(): Rect {
+    if(!this.mountPoint) return Rect.ZERO;
+    return this.mountPoint.getRect()
+  }
+
+
 
   public add(child: Node) {
     this.data = this.data.update('children', children => children.push(child))
