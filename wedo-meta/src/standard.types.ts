@@ -30,4 +30,19 @@ export type BoxDescriptorInput = {
   marginBottom?: number | string | SizeUnitInput
 }
 
-export type NodeData = ImmutableMap<string, any>
+export type NodeData = ImmutableMap<string, any>;
+
+export type BasicJsonNode = {
+	type? : string,
+	group : string,
+	style? : any,
+	name : string,
+	children? : Array<JsonNode>,
+	id? : number,
+	passProps? : any
+}
+
+export type JsonNode = BasicJsonNode & { 
+	box : BoxDescriptorInput,
+	linkedId? : number
+}

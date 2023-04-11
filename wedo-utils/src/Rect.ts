@@ -16,4 +16,22 @@ export class Rect {
   }
 
   static ZERO = new Rect(0, 0, 0, 0)
+
+
+  public getWidth() {
+    return this.width
+  }
+
+  public getHeight() {
+    return this.height
+  }
+
+  public getTop() {
+    return this.top
+  }
+
+  public getLeft() {
+    return this.left
+  }
+
 }
