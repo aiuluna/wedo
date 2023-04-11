@@ -2,10 +2,12 @@ import { List, Map as ImmutableMap } from 'immutable'
 import { Emitter, Rect } from "@wedo/utils";
 import { Topic } from "../Topic";
 import { NodeData } from '../standard.types'
+import { ComponentMeta } from '../meta/ComponentMeta';
 
 export class Node extends Emitter<Topic> {
 
   private mountPoint?: Node | null;
+  private meta: ComponentMeta; 
   // constructor(type: string, x: number, y: number, w: number, h: number) {
   //   super()
   //   this.data = ImmutableMap({
@@ -18,9 +20,10 @@ export class Node extends Emitter<Topic> {
   //   })
   // }
 
-  constructor(private data: NodeData) {
+  constructor(private data: NodeData, meta: ComponentMeta) {
     super()
     this.data = data;
+    this.meta = meta;
   }
 
   public setInstanceData(key: string, value: any): void {
