@@ -1,4 +1,4 @@
-export { Emitter } from './Emitter'
-export { PubSub } from './PubSub'
-export { Rect } from './Rect'
+export * from './Emitter'
+export * from './PubSub'
+export * from './Rect'
 

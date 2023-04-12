@@ -1,8 +1,19 @@
-import { Emitter } from "@wedo/utils";
+import { Emitter, Rect } from "@wedo/utils";
 import { Topic } from "../Topic";
+import { NodeData } from '../standard.types';
+import { ComponentMeta } from '../meta/ComponentMeta';
+import { BoxDescriptor } from '../BoxDescriptor';
 export declare class Node extends Emitter<Topic> {
-    private nodeData;
-    constructor(type: string, x: number, y: number, w: number, h: number);
+    private data;
+    private mountPoint?;
+    meta: ComponentMeta;
+    constructor(data: NodeData, meta: ComponentMeta);
+    setInstanceData(key: string, value: any): void;
+    updateInstanceData(key: string, updator: (value: any) => any): void;
+    getData(): NodeData;
+    getParent(): Node;
+    getRect(): Rect;
+    getBox(): BoxDescriptor;
     add(child: Node): void;
     getType(): any;
     getX(): any;

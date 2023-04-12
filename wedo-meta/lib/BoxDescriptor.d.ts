@@ -1,7 +1,6 @@
-import { Rect } from "./instance/Rect";
 import { Node } from "./instance/Node";
-import { ComponentMeta } from "./meta/ComponentMeta";
 import { BoxDescriptorInput, SizeUnitInput, SizeMode, CSSPosition, CSSDisplay, FlexDirection } from "./standard.types";
+import { ComponentMeta } from "./meta/ComponentMeta";
 type Unit = 'px' | '%';
 export declare class SizeUnit {
     private value;
@@ -13,21 +12,18 @@ export declare class SizeUnit {
     setMode(mode: SizeMode): void;
     getMode(): SizeMode;
     getValue(): number;
+    /**
+     * @param val
+     * @returns
+     */
+    setValue(val: number): void;
+    static parse(ipt: string | number | SizeUnitInput | undefined, key: string): SizeUnit;
     getUnit(): Unit;
     setUnit(unit: Unit): void;
+    setParent(parent: BoxDescriptor): void;
     toString(unit?: string): string;
     toJSON(): SizeUnitInput;
-    setParent(parent: BoxDescriptor): void;
-    set(val: number): void;
-    private getMax;
-    toPxNumberWithRect(rect: Rect): number;
     private getPrect;
-    toPxNumber(node: Node): number;
-    toNumber(): number;
-    getKey(): string;
-    static parse(ipt: string | number | SizeUnitInput | undefined, key: string): SizeUnit;
-    clone(): SizeUnit;
-    setValue(val: number): void;
 }
 export declare class BoxDescriptor {
     movable: boolean;
@@ -42,16 +38,12 @@ export declare class BoxDescriptor {
     top: SizeUnit;
     width: SizeUnit;
     height: SizeUnit;
-    marginLeft: SizeUnit;
     marginTop: SizeUnit;
-    marginBottom: SizeUnit;
     marginRight: SizeUnit;
+    marginBottom: SizeUnit;
+    marginLeft: SizeUnit;
     constructor(box?: BoxDescriptorInput, meta?: ComponentMeta);
-    parseSizeUnit(ipt: string | number | SizeUnitInput | undefined, key: string): SizeUnit;
-    toJson(): BoxDescriptorInput;
+    private parseSizeUnit;
     setNode(node: Node): void;
-    toRect(): Rect;
-    clone(): BoxDescriptor;
-    toString(): string;
 }
 export {};

@@ -1,12 +1,21 @@
+import { NodeData } from "@wedo/meta/lib/standard.types";
 import StateMachine from "./StateMachine"
 import { Actions, Meta, States } from "./editor.types";
-import { Topic, Node } from "@wedo/meta";
+import { Topic, Node, ComponentMeta } from "@wedo/meta";
+import { Map as ImmutableMap } from "immutable";
 
 export default class Editor extends StateMachine<States, Actions, Topic> {
   private root: Node;
   constructor() {
     super(States.Start)
-    this.root = new Node('root', 0, 0, 800, 800)
+    // this.root = new Node('root', 0, 0, 800, 800)
+    // this.root = new Node(ImmutableMap({
+    //       type: 'root',
+    //       x: 0,
+    //       y: 0,
+    //       w: 800,
+    //       h: 800,
+    //     }) as NodeData, )
 
     // 注册添加组件事件
     this.describeAddComponent()

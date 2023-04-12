@@ -3,11 +3,12 @@ import { Emitter, Rect } from "@wedo/utils";
 import { Topic } from "../Topic";
 import { NodeData } from '../standard.types'
 import { ComponentMeta } from '../meta/ComponentMeta';
+import { BoxDescriptor } from '../BoxDescriptor';
 
 export class Node extends Emitter<Topic> {
 
   private mountPoint?: Node | null;
-  private meta: ComponentMeta; 
+  meta: ComponentMeta; 
   // constructor(type: string, x: number, y: number, w: number, h: number) {
   //   super()
   //   this.data = ImmutableMap({
@@ -24,6 +25,7 @@ export class Node extends Emitter<Topic> {
     super()
     this.data = data;
     this.meta = meta;
+    this.getBox().setNode(this)
   }
 
   public setInstanceData(key: string, value: any): void {
@@ -45,6 +47,10 @@ export class Node extends Emitter<Topic> {
   public getRect(): Rect {
     if(!this.mountPoint) return Rect.ZERO;
     return this.mountPoint.getRect()
+  }
+
+  public getBox(): BoxDescriptor {
+    return this.data.get('box')
   }
 
 

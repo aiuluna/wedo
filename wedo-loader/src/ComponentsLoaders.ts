@@ -1,31 +1,67 @@
 import { Validator } from 'jsonschema'
-import { Topic } from '@wedo/meta';
+import { Topic, ComponentMetaConfig } from '@wedo/meta';
 import { Emitter } from '@wedo/utils';
+// import { Emitter } from './Emiter';
 
 const metas = {}
+const ymls: { [key: string]: any } = {}
+
 
 // @ts-ignore
-// const ymls = require.context('../yml', true, /\.yml$/);
-const ymlModules = import.meta.glob('../yml/*.yml');
-// window.ymlModules = ymlModules;
+// require.context('../yml', true, /\.yml$/)
+//   .keys()
+//   .forEach((key: string) => {
+//     key = key.replace('./', '')
+//     const [a,] = key.split('.')
+//     const n = a.split('/').pop()
+//     if (n && n !== 'default') {
+//       const config: ComponentMetaConfig = require(`../yml/${key}`)
+//       ymls[config.group + '.' + config.name] = config
+//     }
+//   })
 
-for (let key in ymlModules) {
-  // const yml = require(key);
-  
-  // console.log(yml);
+const modules = await import.meta.glob('../yml/*.*');
+
+for (const path in modules) {
+  console.log('path', path)
+  const [a,] = path.split('.')
+  const n = a.split('/').pop()
+  if (n && n !== 'default') {
+    const config = modules[path];
+    ymls[config.group + '.' + config.name] = config;
+  }
 }
-
-// console.log('ymls', ymls);
+console.log('ymls', ymls);
 export class ComponentsLoader extends Emitter<Topic>{
-  private static instance: ComponentsLoader = new ComponentsLoader();
+  private static instance: ComponentsLoader;
+
+  constructor() {
+    super()
+  }
 
   /**
    * getInstance
    */
   static getInstance() {
-    // console.log(ymls)
+    if (!ComponentsLoader.instance) {
+      ComponentsLoader.instance = new ComponentsLoader();
+    }
     // @ts-ignore
-    window.componentsLoader = ComponentsLoader.instance;
+    window.componentsLoader = ComponentsLoader.instance
+    console.log('ComponentsLoader.instance')
     return ComponentsLoader.instance;
+    // @ts-ignore
+    // window.componentsLoader = ComponentsLoader.instance;
+    // return ComponentsLoader.instance;
+  }
+
+  async load() {
+    // @ts-ignore
+
+
+    for (let key in ymls) {
+      const [group, name] = key.split('.')
+      console.log('group=' + group + ', name=' + name)
+    }
   }
 }

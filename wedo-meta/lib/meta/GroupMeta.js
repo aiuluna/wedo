@@ -1,23 +1,24 @@
 export class GroupMeta {
-    propKeys;
-    title;
-    style;
-    disabled;
     name;
+    title;
+    disable;
+    style;
+    // todo ???为什么只要key
+    propKeys;
     constructor() {
-        this.propKeys = new Set();
         this.name = '';
         this.title = '';
-        this.style = {};
+        this.style = '';
+        this.propKeys = new Set();
     }
     static of(config) {
         const group = new GroupMeta();
         group.name = config.name;
         group.title = config.title;
-        group.disabled = config.disabled;
+        group.disable = config.disable || false;
         group.style = config.style;
         if (config.props) {
-            config.props.forEach((prop) => {
+            config.props.forEach(prop => {
                 if (prop.name) {
                     group.propKeys.add(prop.name);
                 }
@@ -30,16 +31,10 @@ export class GroupMeta {
         g.name = this.name;
         g.title = this.title;
         g.style = this.style;
-        g.disabled = this.disabled;
+        g.disable = this.disable;
         g.propKeys = new Set([...this.propKeys]);
         return g;
     }
     mergeGroup(group) {
-        const g = new GroupMeta();
-        g.propKeys = new Set([...this.propKeys]);
-        group.propKeys.forEach(key => {
-            g.propKeys.add(key);
-        });
-        return g;
     }
 }

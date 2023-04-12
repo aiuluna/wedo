@@ -319,6 +319,25 @@
     magic-string "^0.26.2"
     react-refresh "^0.14.0"
 
+"@wedo/loader@file:../wedo-loader":
+  version "1.0.0"
+  resolved "file:../wedo-loader"
+  dependencies:
+    "@babel/core" "^7.21.3"
+    "@babel/plugin-transform-runtime" "^7.21.0"
+    "@babel/preset-env" "^7.20.2"
+    "@babel/preset-typescript" "^7.21.0"
+    "@babel/runtime-corejs3" "^7.21.0"
+    "@rollup/plugin-babel" "^6.0.3"
+    "@rollup/plugin-node-resolve" "^15.0.1"
+    "@rollup/plugin-typescript" "^11.0.0"
+    expect.js "^0.3.1"
+    jsonschema "^1.4.1"
+    mocha "^10.2.0"
+    rollup "^3.20.0"
+    tslib "^2.5.0"
+    typescript "^5.0.2"
+
 "@wedo/meta@file:../wedo-meta":
   version "1.0.0"
   resolved "file:../wedo-meta"

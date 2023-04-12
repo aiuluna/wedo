@@ -1,12 +1,19 @@
-import { GroupConfig } from "./ComponentMeta";
-export declare class GroupMeta {
-    propKeys: Set<string>;
-    title: string;
-    style: any;
-    disabled?: boolean;
+import { PropConfig } from "./PropMeta";
+export interface GroupConfig {
     name: string;
-    constructor();
+    title: string;
+    disable?: boolean;
+    style: any;
+    props?: Array<PropConfig>;
+}
+export declare class GroupMeta {
+    name: string;
+    title: string;
+    disable?: boolean;
+    style: any;
+    propKeys: Set<string>;
+    private constructor();
     static of(config: GroupConfig): GroupMeta;
     clone(): GroupMeta;
-    mergeGroup(group: GroupMeta): GroupMeta;
+    mergeGroup(group: GroupMeta): void;
 }

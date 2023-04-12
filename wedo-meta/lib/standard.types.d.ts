@@ -1,3 +1,4 @@
+import { Map as ImmutableMap } from 'immutable';
 export type SizeMode = "fill" | "value" | "fixed" | 'auto';
 export type SizeUnitInput = {
     value: number;
@@ -23,4 +24,18 @@ export type BoxDescriptorInput = {
     marginTop?: number | string | SizeUnitInput;
     marginRight?: number | string | SizeUnitInput;
     marginBottom?: number | string | SizeUnitInput;
+};
+export type NodeData = ImmutableMap<string, any>;
+export type BasicJsonNode = {
+    type?: string;
+    group: string;
+    style?: any;
+    name: string;
+    children?: Array<JsonNode>;
+    id?: number;
+    passProps?: any;
+};
+export type JsonNode = BasicJsonNode & {
+    box: BoxDescriptorInput;
+    linkedId?: number;
 };

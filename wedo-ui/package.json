@@ -29,7 +29,8 @@
 	"hydra": {
 		"devLinks": [
 			"@wedo/utils",
-			"@wedo/meta"
+			"@wedo/meta",
+      "@wedo/loader"
 		],
 		"type": "app"
 	}

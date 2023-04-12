@@ -184,6 +184,10 @@ export class BoxDescriptor {
     unit.setParent(this)
     return unit;
   }
+
+  public setNode(node: Node): void {
+    this.node = node;
+  }
 }
 
 function defineOr(val: any, defaultValue: any) {
