@@ -1,3 +1,4 @@
+import { NodeData } from "../standard.types";
 export interface PropConfig {
     name: string;
     label?: string;
@@ -16,4 +17,5 @@ export declare class PropMeta {
     path: Array<string>;
     config: PropConfig;
     constructor(config: PropConfig);
+    static setPropValue(path: Array<string>, data: NodeData, value: any): NodeData;
 }

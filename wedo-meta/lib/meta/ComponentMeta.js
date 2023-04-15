@@ -2,7 +2,7 @@ import { BoxDescriptor } from "../BoxDescriptor";
 import { GroupMeta } from "./GroupMeta";
 import { KeyValueCache } from "./KeyValueCache";
 import { PropMeta } from "./PropMeta";
-import { fromJS } from 'immutable';
+import { Map as ImmutableMap, fromJS } from 'immutable';
 export class ComponentMeta {
     name;
     group;
@@ -55,6 +55,38 @@ export class ComponentMeta {
             box
         });
     }
-    createData() {
+    /**
+     * 创建实例数据
+     * @param id
+     * @param box
+     */
+    createData(id, box) {
+        let data = ImmutableMap({
+            id,
+            parent: null,
+            name: this.name,
+            group: this.group,
+            style: ImmutableMap(),
+            children: [],
+            allowDrag: true,
+            isMoving: false,
+            editMode: false,
+            passProps: fromJS(this.defaultProps || {}),
+            box
+        });
+        // 处理props
+        for (let key in this.props) {
+            const prop = this.props[key];
+            // 如果有默认值，就根据path设置属性值
+            if (prop.config.default !== undefined) {
+                data = PropMeta.setPropValue(prop.path, data, prop.config.default);
+            }
+            // 将yml最外层定义的style也整合进data['style']
+            data = data.update("style", (style) => {
+                const metaStyle = fromJS(this.style);
+                return style.merge(metaStyle);
+            });
+        }
+        return data;
     }
 }

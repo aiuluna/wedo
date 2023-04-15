@@ -1,5 +1,6 @@
 export declare enum Topic {
-    DragDataUpdated = 0,
-    NodeChildrenUpdated = 1,
-    NodePositionMoved = 2
+    RemoteComponentsLoaded = 0,
+    DragDataUpdated = 1,
+    NodeChildrenUpdated = 2,
+    NodePositionMoved = 3
 }

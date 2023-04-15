@@ -14,7 +14,7 @@ export class Node extends Emitter {
     //     children: List<Node>()
     //   })
     // }
-    constructor(data, meta) {
+    constructor(meta, data) {
         super();
         this.data = data;
         this.data = data;

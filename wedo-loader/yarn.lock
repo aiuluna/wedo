@@ -1065,10 +1065,22 @@
   resolved "http://npm-reg.devops.ichoice.cc/@types%2festree/-/estree-1.0.0.tgz"
   integrity sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==
 
+"@types/js-yaml@^4.0.5":
+  version "4.0.5"
+  resolved "http://npm-reg.devops.ichoice.cc/@types%2fjs-yaml/-/js-yaml-4.0.5.tgz"
+  integrity sha1-c43TkKbsxUQvNefwP6FDE1P34Tg=
+
 "@types/node@^18.15.11":
   version "18.15.11"
   resolved "http://npm-reg.devops.ichoice.cc/@types%2fnode/-/node-18.15.11.tgz"
   integrity sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==
+
+"@types/ramda@^0.28.24":
+  version "0.28.24"
+  resolved "http://npm-reg.devops.ichoice.cc/@types%2framda/-/ramda-0.28.24.tgz"
+  integrity sha512-VxCMFlrqYFzsarNI0b9RZS2fistW3/CGwslZ9pCrx0xCNC4utASpYPEDMg3wgzeb04mNlxb4BYAiqqSOdqjdIQ==
+  dependencies:
+    types-ramda "^0.29.1"
 
 "@types/resolve@1.20.2":
   version "1.20.2"
@@ -1582,7 +1594,7 @@ js-tokens@^4.0.0:
   resolved "http://npm-reg.devops.ichoice.cc/js-tokens/-/js-tokens-4.0.0.tgz"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
-js-yaml@4.1.0:
+js-yaml@^4.1.0, js-yaml@4.1.0:
   version "4.1.0"
   resolved "http://npm-reg.devops.ichoice.cc/js-yaml/-/js-yaml-4.1.0.tgz"
   integrity sha1-wftl+PUBeQHN0slRhkuhhFihBgI=
@@ -1765,6 +1777,11 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "http://npm-reg.devops.ichoice.cc/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha1-SSkii7xyTfrEPg77BYyve2z7YkM=
+
+ramda@^0.29.0:
+  version "0.29.0"
+  resolved "http://npm-reg.devops.ichoice.cc/ramda/-/ramda-0.29.0.tgz"
+  integrity sha512-BBea6L67bYLtdbOqfp8f58fPMqEwx0doL+pAi8TZyp2YWz8R9G8z9x75CZI8W+ftqhFHCpEX2cRnUUXK130iKA==
 
 randombytes@^2.1.0:
   version "2.1.0"
@@ -1971,10 +1988,22 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
+ts-toolbelt@^9.6.0:
+  version "9.6.0"
+  resolved "http://npm-reg.devops.ichoice.cc/ts-toolbelt/-/ts-toolbelt-9.6.0.tgz"
+  integrity sha1-UKJUJs/tUA1KCb0bOvtvKIee39U=
+
 tslib@*, tslib@^2.1.0, tslib@^2.5.0:
   version "2.5.0"
   resolved "http://npm-reg.devops.ichoice.cc/tslib/-/tslib-2.5.0.tgz"
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==
+
+types-ramda@^0.29.1:
+  version "0.29.1"
+  resolved "http://npm-reg.devops.ichoice.cc/types-ramda/-/types-ramda-0.29.1.tgz"
+  integrity sha512-pdEF8VXcBTSu3fPupZahieG6Lh8eBWPtcaH/OB5QPCoN2hz4vBbspoMLB3X9kwzXRD3lwD4/j0hwj3Z/PAzzcA==
+  dependencies:
+    ts-toolbelt "^9.6.0"
 
 typescript@^5.0.2, typescript@>=3.7.0:
   version "5.0.4"

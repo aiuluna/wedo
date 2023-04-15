@@ -47,5 +47,10 @@ export declare class ComponentMeta {
     cache: KeyValueCache<any>;
     constructor(config: ComponentMetaConfig);
     createDataFromJson(json: JsonNode): ImmutableMap<string, any>;
-    createData(): void;
+    /**
+     * 创建实例数据
+     * @param id
+     * @param box
+     */
+    createData(id: number, box: BoxDescriptor | null): ImmutableMap<string, any>;
 }

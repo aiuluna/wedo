@@ -280,6 +280,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@types/node@^18.15.11":
+  version "18.15.11"
+  resolved "http://npm-reg.devops.ichoice.cc/@types%2fnode/-/node-18.15.11.tgz"
+  integrity sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==
+
 "@types/prop-types@*":
   version "15.7.5"
   resolved "http://npm-reg.devops.ichoice.cc/@types%2fprop-types/-/prop-types-15.7.5.tgz"
@@ -332,6 +337,7 @@
     "@rollup/plugin-node-resolve" "^15.0.1"
     "@rollup/plugin-typescript" "^11.0.0"
     expect.js "^0.3.1"
+    js-yaml "^4.1.0"
     jsonschema "^1.4.1"
     mocha "^10.2.0"
     rollup "^3.20.0"
@@ -788,6 +794,11 @@ update-browserslist-db@^1.0.5:
   dependencies:
     escalade "^3.1.1"
     picocolors "^1.0.0"
+
+vite-plugin-yaml2@^1.1.5:
+  version "1.1.5"
+  resolved "http://npm-reg.devops.ichoice.cc/vite-plugin-yaml2/-/vite-plugin-yaml2-1.1.5.tgz"
+  integrity sha512-98PPEBWmyS+t2KcvGXfvnX83+QRGedpyPkDwluUAzCyCquwJzYsUNqfNzJHDk2/52d8uoCmJTZJpnQMls7LNtw==
 
 vite@^3.0.0, vite@^3.0.3:
   version "3.0.4"

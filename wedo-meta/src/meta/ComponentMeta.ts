@@ -104,7 +104,46 @@ export class ComponentMeta {
     })
   }
 
-  createData() {
+  /**
+   * 创建实例数据
+   * @param id 
+   * @param box 
+   */
+  createData(id: number, box: BoxDescriptor | null) {
+    let data = ImmutableMap({
+      id,
+      parent: null,
+      name: this.name,
+      group: this.group,
+      style: ImmutableMap<string, any>(),
+      children: [],
+      allowDrag: true,
+      isMoving: false,
+      editMode: false,
+      passProps: fromJS(this.defaultProps || {}),
+      box
+    })
+
+    // 处理props
+    for (let key in this.props) {
+      const prop: PropMeta = this.props[key];
+      // 如果有默认值，就根据path设置属性值
+      if (prop.config.default !== undefined) {
+        data = PropMeta.setPropValue(
+          prop.path,
+          data,
+          prop.config.default
+        )
+      }
+
+      // 将yml最外层定义的style也整合进data['style']
+      data = data.update("style", (style: any) => {
+        const metaStyle = fromJS(this.style) as ImmutableMap<string, any>;
+        return style.merge(metaStyle)
+      })
+    }
+
+    return data
 
   }
 }

@@ -1,4 +1,5 @@
 import { Map as ImmutableMap } from 'immutable'
+import { Node } from './instance/Node'
 
 export type SizeMode = "fill" | "value" | "fixed" | 'auto'
 
@@ -46,3 +47,5 @@ export type JsonNode = BasicJsonNode & {
 	box : BoxDescriptorInput,
 	linkedId? : number
 }
+
+export type NodeType = Node 

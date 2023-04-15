@@ -12,6 +12,7 @@
 	"author": "huzhang",
 	"license": "ISC",
 	"devDependencies": {
+		"@types/node": "^18.15.11",
 		"@types/react": "^18.0.15",
 		"@types/react-dom": "^18.0.6",
 		"@vitejs/plugin-react": "^2.0.0",
@@ -24,13 +25,14 @@
 		"immutable": "^4.1.0",
 		"js-yaml": "^4.1.0",
 		"jsonschema": "^1.4.1",
-		"rxjs": "^7.5.6"
+		"rxjs": "^7.5.6",
+		"vite-plugin-yaml2": "^1.1.5"
 	},
 	"hydra": {
 		"devLinks": [
 			"@wedo/utils",
 			"@wedo/meta",
-      "@wedo/loader"
+			"@wedo/loader"
 		],
 		"type": "app"
 	}

@@ -7,7 +7,7 @@ export declare class Node extends Emitter<Topic> {
     private data;
     private mountPoint?;
     meta: ComponentMeta;
-    constructor(data: NodeData, meta: ComponentMeta);
+    constructor(meta: ComponentMeta, data: NodeData);
     setInstanceData(key: string, value: any): void;
     updateInstanceData(key: string, updator: (value: any) => any): void;
     getData(): NodeData;

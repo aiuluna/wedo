@@ -21,7 +21,7 @@ export class Node extends Emitter<Topic> {
   //   })
   // }
 
-  constructor(private data: NodeData, meta: ComponentMeta) {
+  constructor(meta: ComponentMeta, private data: NodeData, ) {
     super()
     this.data = data;
     this.meta = meta;
@@ -92,4 +92,8 @@ export class Node extends Emitter<Topic> {
   public printData() {
     console.log(this.data.toJS())
   }
+
+
+
+  
 }
