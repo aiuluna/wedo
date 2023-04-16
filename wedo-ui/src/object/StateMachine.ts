@@ -2,6 +2,8 @@ import { Emitter } from '@wedo/utils';
 
 type StateTransferFunction = (...args: any) => void
 
+type RegFuncType<S, A> = (form: S | S[], to: S, action: A, fn: StateTransferFunction) => void;
+
 class StateMachine<S extends string | number, A extends string | number, Topic extends string | number | symbol> extends Emitter<Topic> {
   private state: S;
   private transferTable: Map<S, Map<A, [StateTransferFunction, S]>>;
@@ -12,7 +14,7 @@ class StateMachine<S extends string | number, A extends string | number, Topic e
     this.transferTable = new Map();
   }
 
-  addTransferTable(from: S, to: S, action: A, fn: StateTransferFunction) {
+  private addTransferTable(from: S, to: S, action: A, fn: StateTransferFunction) {
     if (!this.transferTable.has(from)) {
       this.transferTable.set(from, new Map())
     }
@@ -29,6 +31,10 @@ class StateMachine<S extends string | number, A extends string | number, Topic e
     this.addTransferTable(from, to, action, fn)
   }
 
+  describe(desc: string, callback: (fn: RegFuncType<S, A>) => void) {
+    callback(this.register)
+  }
+
   dispatch(action: A, ...data: any) {
     const actionMap = this.transferTable.get(this.state);
     const transfer = actionMap?.get(action);
@@ -37,8 +43,13 @@ class StateMachine<S extends string | number, A extends string | number, Topic e
     fn(...data)
     this.state = nextS;
 
+    // 每个阶段如果注册有要自动处理的事件，则执行
     while (this.dispatch('<auto>' as A, ...data));
     return true
+  }
+
+  underState(s: S) {
+    return this.state === s
   }
 }
 

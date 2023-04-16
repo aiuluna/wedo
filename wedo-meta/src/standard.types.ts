@@ -48,4 +48,9 @@ export type JsonNode = BasicJsonNode & {
 	linkedId? : number
 }
 
+export type JsonPage = {
+	links : Record<number, JsonNode>,
+	page : JsonNode
+}
+
 export type NodeType = Node 

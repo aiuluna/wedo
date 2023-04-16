@@ -39,4 +39,14 @@ export class PropMeta {
     return data.setIn(path, value)
   }
 
+  static getPropValue(path: Array<string>, data: NodeData) {
+    if (path[0] === 'rect') {
+      return data.get('rect')[path[1]]
+    } 
+    if (path[0] === 'box') {
+      return data.get('rect')[path[1]]
+    }
+    return data.getIn(path)
+  }
+
 }

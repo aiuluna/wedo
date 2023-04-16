@@ -6,3 +6,4 @@ export * from './meta/KeyValueCache';
 export * from './meta/PropMeta';
 export * from './standard.types';
 export * from './metaSchema';
+export * from './instance/Page';

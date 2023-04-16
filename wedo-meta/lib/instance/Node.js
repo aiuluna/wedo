@@ -1,4 +1,6 @@
 import { Emitter, Rect } from "@wedo/utils";
+import { Topic } from "../Topic";
+import { PropMeta } from '../meta/PropMeta';
 export class Node extends Emitter {
     data;
     mountPoint;
@@ -26,6 +28,10 @@ export class Node extends Emitter {
     }
     updateInstanceData(key, updator) {
         this.data = this.data.update(key, updator);
+    }
+    updateInstanceByPath(path, value) {
+        this.data = PropMeta.setPropValue(path, this.data, value);
+        this.emit(Topic.NodePropUpdated);
     }
     getData() {
         return this.data;

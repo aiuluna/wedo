@@ -96,6 +96,18 @@ export class SizeUnit {
     return this.unit
   }
 
+  public getMax(rect: Rect) {
+    if (["marginTop",
+      "marginBottom",
+      "top",
+      "height"].includes(this.key)) {
+      return rect.getHeight()
+    }
+    else {
+      return rect.getWidth()
+    }
+  }
+
   public setUnit(unit: Unit) {
     this.unit = unit
   }
@@ -115,6 +127,31 @@ export class SizeUnit {
       return this.value + unit
     }
     return this.value + this.unit
+  }
+
+  public toPxNumberWithRect(rect: Rect) {
+    const realtiveMax = this.getMax(rect);
+    if (this.mode === 'fill') {
+      return realtiveMax
+    } 
+    if (this.unit === 'px') {
+      return this.value
+    } else if (this.unit === '%') {
+      return this.value / 100 * realtiveMax
+    }
+
+    throw new Error("invalid sizeunit.")	
+
+  }
+
+  public toPxNumber(node: Node) {
+    const prect = this.getPrect(node);
+    return this.toPxNumberWithRect(prect)
+
+  }
+
+  public toNumber(): number {
+    return this.toPxNumber(this.parent?.node)
   }
 
   public toJSON(): SizeUnitInput {
@@ -173,10 +210,10 @@ export class BoxDescriptor {
     this.top = this.parseSizeUnit(box.top, 'top');
     this.width = this.parseSizeUnit(box.width, 'width');
     this.height = this.parseSizeUnit(box.height, 'height');
-    this.marginTop = this.parseSizeUnit(box.marginTop,'marginTop');
-    this.marginRight = this.parseSizeUnit(box.marginRight,'marginRight');
-    this.marginBottom = this.parseSizeUnit(box.marginBottom,'marginBottom');
-    this.marginLeft = this.parseSizeUnit(box.marginLeft,'marginLeft');
+    this.marginTop = this.parseSizeUnit(box.marginTop, 'marginTop');
+    this.marginRight = this.parseSizeUnit(box.marginRight, 'marginRight');
+    this.marginBottom = this.parseSizeUnit(box.marginBottom, 'marginBottom');
+    this.marginLeft = this.parseSizeUnit(box.marginLeft, 'marginLeft');
   }
 
   private parseSizeUnit(ipt: string | number | SizeUnitInput | undefined, key: string): SizeUnit {

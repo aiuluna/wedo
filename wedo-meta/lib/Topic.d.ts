@@ -1,6 +1,10 @@
 export declare enum Topic {
     RemoteComponentsLoaded = 0,
-    DragDataUpdated = 1,
-    NodeChildrenUpdated = 2,
-    NodePositionMoved = 3
+    PropertyChanged = 1,
+    NodePropUpdated = 2,
+    Resized = 3,
+    NodeMoved = 4,
+    DragDataUpdated = 5,
+    NodeChildrenUpdated = 6,
+    NodePositionMoved = 7
 }

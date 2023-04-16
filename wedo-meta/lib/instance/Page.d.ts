@@ -5,8 +5,11 @@ type ComponentsLoader = {
     loadByName: (group: string, name: string) => ComponentMeta;
 };
 export declare class Page extends Emitter<Topic> {
+    private root;
+    private name;
     private loader;
-    constructor(loader: ComponentsLoader);
-    initLoader(): Promise<void>;
+    private id_base;
+    constructor(name: string, loader: ComponentsLoader);
+    createId(): number;
 }
 export {};

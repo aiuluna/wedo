@@ -3,12 +3,12 @@
 
 
 "@wedo/utils@file:../wedo-utils":
-  version "1.0.0"
-  resolved "file:../wedo-utils"
+  "resolved" "file:../wedo-utils"
+  "version" "1.0.0"
   dependencies:
-    rxjs "^7.8.0"
+    "rxjs" "^7.8.0"
 
-immutable@^4.3.0:
-  version "4.3.0"
-  resolved "http://npm-reg.devops.ichoice.cc/immutable/-/immutable-4.3.0.tgz"
-  integrity sha512-0AOCmOip+xgJwEVTQj1EfiDDOkPmuyllDuTuEX+DDXUgapLAsBIfkg3sxCYyCEA8mQqZrrxPUGjcOQ2JS3WLkg==
+"immutable@^4.3.0":
+  "integrity" "sha512-0AOCmOip+xgJwEVTQj1EfiDDOkPmuyllDuTuEX+DDXUgapLAsBIfkg3sxCYyCEA8mQqZrrxPUGjcOQ2JS3WLkg=="
+  "resolved" "http://npm-reg.devops.ichoice.cc/immutable/-/immutable-4.3.0.tgz"
+  "version" "4.3.0"

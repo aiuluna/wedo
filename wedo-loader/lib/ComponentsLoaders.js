@@ -46,9 +46,6 @@ export class ComponentsLoader extends Emitter {
         // @ts-ignore
         window.componentsLoader = ComponentsLoader.instance;
         return ComponentsLoader.instance;
-        // @ts-ignore
-        // window.componentsLoader = ComponentsLoader.instance;
-        // return ComponentsLoader.instance;
     }
     async loadByName(group, name) {
         const key = group + '.' + name;

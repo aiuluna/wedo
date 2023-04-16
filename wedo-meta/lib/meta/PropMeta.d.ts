@@ -18,4 +18,5 @@ export declare class PropMeta {
     config: PropConfig;
     constructor(config: PropConfig);
     static setPropValue(path: Array<string>, data: NodeData, value: any): NodeData;
+    static getPropValue(path: Array<string>, data: NodeData): any;
 }

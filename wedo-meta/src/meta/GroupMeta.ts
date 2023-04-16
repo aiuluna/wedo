@@ -50,6 +50,14 @@ export class GroupMeta {
   }
 
   mergeGroup(group: GroupMeta) {
-    
+    // const g = new GroupMeta()
+    // g.propKeys = new Set([...this.propKeys])
+    // for (let prop of group.propKeys) {
+    //   g.propKeys.add(prop)
+    // }
+    // return g
+    for (let prop of group.propKeys) {
+      this.propKeys.add(prop)
+    }
   }
 }

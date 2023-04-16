@@ -5,15 +5,16 @@ import ItemList from './ItemList'
 import Editor from '../../object/Editor'
 import { ComponentsLoader } from '@wedo/loader/lib'
 
-import '../../class/index.scss'
 import { ComponentMeta, Node } from '@wedo/meta'
 import { BoxDescriptor } from '@wedo/meta/lib/BoxDescriptor'
+
+import '../../class/index.scss'
 
 export const EditorContext = React.createContext<Editor>(null as any);
 
 export default class UIEditor extends React.Component {
   componentDidMount(): void {
-  
+    
   }
 
 

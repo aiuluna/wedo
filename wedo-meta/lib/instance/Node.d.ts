@@ -10,6 +10,7 @@ export declare class Node extends Emitter<Topic> {
     constructor(meta: ComponentMeta, data: NodeData);
     setInstanceData(key: string, value: any): void;
     updateInstanceData(key: string, updator: (value: any) => any): void;
+    updateInstanceByPath(path: Array<string>, value: any): void;
     getData(): NodeData;
     getParent(): Node;
     getRect(): Rect;
