@@ -23,6 +23,6 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
 
   constructor(json : JsonPage, pageName : string) {
     super(UIStates.Start)
-
+    
   }
 }
