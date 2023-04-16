@@ -67,6 +67,9 @@ export class Page extends Emitter<Topic>{
       const instanceData = meta.createData(id, box)
       node = new Node(meta, instanceData)
     }
+    this.linkPage(node);
+
+    return node;
 
 
 
