@@ -6,6 +6,8 @@ export enum Topic {
 
   Resized,
   NodeMoved,
+
+  ShadowReceiverChanged,
   
   DragDataUpdated,
   NodeChildrenUpdated,

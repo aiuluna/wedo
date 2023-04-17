@@ -13,6 +13,21 @@ class Rect {
         return new Rect(left, top, width, height);
     }
     static ZERO = new Rect(0, 0, 0, 0);
+    right() {
+        return this.left + this.width;
+    }
+    bottom() {
+        return this.top + this.height;
+    }
+    boundX(x) {
+        return this.left <= x && this.right() >= x;
+    }
+    boundY(y) {
+        return this.top <= y && this.bottom() >= y;
+    }
+    bound(x, y) {
+        return this.boundX(x) && this.boundY(y);
+    }
     getWidth() {
         return this.width;
     }

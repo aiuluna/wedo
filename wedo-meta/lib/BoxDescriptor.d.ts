@@ -1,3 +1,4 @@
+import { Rect } from "@wedo/utils";
 import { Node } from "./instance/Node";
 import { BoxDescriptorInput, SizeUnitInput, SizeMode, CSSPosition, CSSDisplay, FlexDirection } from "./standard.types";
 import { ComponentMeta } from "./meta/ComponentMeta";
@@ -19,11 +20,16 @@ export declare class SizeUnit {
     setValue(val: number): void;
     static parse(ipt: string | number | SizeUnitInput | undefined, key: string): SizeUnit;
     getUnit(): Unit;
+    getMax(rect: Rect): number;
     setUnit(unit: Unit): void;
     setParent(parent: BoxDescriptor): void;
     toString(unit?: string): string;
+    toPxNumberWithRect(rect: Rect): number;
+    toPxNumber(node: Node): number;
+    toNumber(): number;
     toJSON(): SizeUnitInput;
     private getPrect;
+    clone(): SizeUnit;
 }
 export declare class BoxDescriptor {
     movable: boolean;
@@ -45,5 +51,6 @@ export declare class BoxDescriptor {
     constructor(box?: BoxDescriptorInput, meta?: ComponentMeta);
     private parseSizeUnit;
     setNode(node: Node): void;
+    clone(): BoxDescriptor;
 }
 export {};

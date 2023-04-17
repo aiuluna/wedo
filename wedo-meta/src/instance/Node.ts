@@ -74,12 +74,43 @@ export class Node extends Emitter<Topic> {
     if (!position) {
       position = [node.getBox().left.toNumber(), node.getBox().top.toNumber()]
     }
-    this.add(node)
-
-
+    this.add(node);
+    node.setXY(position);
+    this.sortChildren(node);    
   }
 
+  public addToAbsolute(node: Node, position?: [number, number]) {
+    if(!position) {
+      position = [node.getBox().left.toNumber(), node.getBox().top.toNumber()]
+    }
+    this.add(node);   
+    // 子节点位置 
+    const [x, y] = position;
+    // 当前节点位置
+    const [sx, sy] = this.absPosition();
+    // 计算子节点相对于当前节点的位置
+    node.setXY([x - sx, y - sy])
+    this.sortChildren(node);
+  }
 
+  public setAllowDrag(allowDrag: boolean) {
+    this.setInstanceData('allowDrag', allowDrag)
+  }
+
+  private sortChildren(node: Node) {
+    this.updateInstanceData('children', (_children) => {
+      let children = _children as Array<Node>;
+      children.concat(node)
+      if (this.isFlex()) {
+        children = children.sort((a, b) => a.getRect().left - b.getRect().left)
+      }
+      return children
+    })
+  }
+
+  public isFlex() {
+    return this.getBox().display === 'flex'
+  }
 
 
   public add(child: Node) {
@@ -115,6 +146,10 @@ export class Node extends Emitter<Topic> {
     })
   }
 
+  public setChildren(children: Array<Node>) {
+    this.setInstanceData('children', children)
+  }
+
   public setParent(node: Node | null) {
     this.logger.debug(
       "set-parent",
@@ -124,6 +159,27 @@ export class Node extends Emitter<Topic> {
 
     if (node !== null) this.level = node.level + 1;
     this.setInstanceData('parent', node)
+  }
+
+  public absPosition():Array<number> {
+    if (this.mountPoint) {
+      return this.mountPoint.absPosition()
+    }
+    const parent = this.getParent()
+    const rect = this.getRect()
+    if (!parent) return [rect.left, rect.top];
+    const [x, y] = parent.absPosition();
+    return [x + rect.left, y + rect.top]
+  }
+
+  // 判断坐标是否在当前node节点内
+  public bound(x: number, y: number): boolean {
+    if (!this.getParent()) return true;
+    return this.getRect().bound(x, y) 
+  }
+
+  public isContainer() {
+    return this.getBox().container
   }
 
   public getType() {
@@ -151,9 +207,8 @@ export class Node extends Emitter<Topic> {
   }
 
   public setXY(vec: [number, number]) {
-    this.data = this.data
-      .set("x", vec[0] + this.data.get("x"))
-      .set("y", vec[1] + this.data.get("y"))
+    this.getBox().left.setValue(vec[0])
+    this.getBox().top.setValue(vec[1])
   }
 
   public printData() {

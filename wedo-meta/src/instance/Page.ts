@@ -10,13 +10,13 @@ type ComponentsLoader = {
 }
 
 export class Page extends Emitter<Topic>{
-  private root: NodeType;
+  private root!: NodeType;
   private name: string;
   private loader: ComponentsLoader;
   private id_base;
   private nodes: Array<Node>;
   private links: Record<number, Node>;
-  private pageNode: NodeType;
+  private pageNode!: NodeType;
 
   constructor(name: string, json: JsonPage, loader: ComponentsLoader) {
     super()
@@ -24,8 +24,17 @@ export class Page extends Emitter<Topic>{
     this.loader = loader;
     this.id_base = 1;
     this.nodes = [];
+    this.links = {};
 
-    const meta = this.loader.loadByName("container", "root")
+    this.init(json);
+  }
+
+  createId() {
+    return this.id_base++
+  }
+
+  private async init(json: JsonPage) {
+    const meta = await this.loader.loadByName("container", "root")
     const box = new BoxDescriptor({
       left: 0,
       top: 0,
@@ -35,13 +44,17 @@ export class Page extends Emitter<Topic>{
     this.root = new Node(meta, meta.createData(this.createId(), box))
     this.linkPage(this.root)
 
-    this.links = {};
+    const pageNode = await this.fromJson(json.page);
+    pageNode.setAllowDrag(false);
+    this.root.addToAbsolute(pageNode)
+    this.pageNode = pageNode
 
+      // @ts-ignore
+    // 调试用
+    window["root"] = this.root
 
-  }
-
-  createId() {
-    return this.id_base++
+    // @ts-ignore
+    window['page'] = this
   }
 
   private linkPage(node: Node) {
@@ -58,7 +71,7 @@ export class Page extends Emitter<Topic>{
     }
     const id = json.id || this.createId();
 
-    let node : Node
+    let node: Node
     if (json.id) {
       // todo LinkNode
       const instanceData = meta.createDataFromJson(json);
@@ -68,13 +81,46 @@ export class Page extends Emitter<Topic>{
       node = new Node(meta, instanceData)
     }
     this.linkPage(node);
+    if (!json.id) {
+      json.children && json.children.forEach(async child => {
+        node.addToRelative(await this.fromJson(child))
+      });
+    } else {
+      if (json.children && !json.linkedId) {
+        const nodes: Array<Node> = [];
+        json.children.forEach(async child => {
+          const childNode = await this.fromJson(child);
+          childNode.setParent(node);
+          nodes.push(childNode);
+        })
+        node.setChildren(nodes)
+      }
+    }
 
     return node;
+  }
 
+  public getNodeById(id: number) {
+    return this.nodes[id]
+  }
 
+  public async createFromJSON(json: JsonNode): Promise<Node> {
+    return await this.fromJson(json)
+  }
 
+  public createFromMetaNew(meta: ComponentMeta, position: [number, number]) {
+    const box = meta.box.clone()
+    box.left.setValue(position[0])
+    box.top.setValue(position[1])
+    const id = this.createId()
+    const nodeData = meta.createData(id, box)
+    const node = new Node(meta, nodeData);
+    this.linkPage(node);
+    return node;
+  }
 
-
+  public getRoot() {
+    return this.root;
   }
 
 

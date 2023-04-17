@@ -17,6 +17,25 @@ export class Rect {
 
   static ZERO = new Rect(0, 0, 0, 0)
 
+  right() : number{
+    return this.left + this.width
+  }
+
+  bottom() : number{
+    return this.top + this.height
+  }
+
+  boundX(x : number){
+    return this.left <= x && this.right() >= x
+  }
+
+  boundY(y : number) : boolean{
+    return this.top <= y && this.bottom() >= y 
+  }
+
+  bound(x : number, y : number) : boolean{
+    return this.boundX(x) && this.boundY(y)
+  }
 
   public getWidth() {
     return this.width

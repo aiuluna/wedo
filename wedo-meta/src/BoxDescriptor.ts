@@ -133,14 +133,14 @@ export class SizeUnit {
     const realtiveMax = this.getMax(rect);
     if (this.mode === 'fill') {
       return realtiveMax
-    } 
+    }
     if (this.unit === 'px') {
       return this.value
     } else if (this.unit === '%') {
       return this.value / 100 * realtiveMax
     }
 
-    throw new Error("invalid sizeunit.")	
+    throw new Error("invalid sizeunit.")
 
   }
 
@@ -166,6 +166,17 @@ export class SizeUnit {
     const parent = node?.getParent()
     const prect = parent ? parent.getRect() : node?.getRect()
     return prect || Rect.ZERO
+  }
+
+  public clone() {
+    const unit = new SizeUnit(
+      this.value,
+      this.unit,
+      this.mode,
+      this.key
+    )
+    unit.parent = this.parent
+    return unit
   }
 
 }
@@ -224,6 +235,27 @@ export class BoxDescriptor {
 
   public setNode(node: Node): void {
     this.node = node;
+  }
+
+  public clone() {
+    const box = new BoxDescriptor()
+    box.left = this.left.clone()
+    box.top = this.top.clone()
+    box.width = this.width.clone()
+    box.height = this.height.clone()
+    box.marginBottom = this.marginBottom.clone()
+    box.marginLeft = this.marginLeft.clone()
+    box.marginRight = this.marginRight.clone()
+    box.marginTop = this.marginTop.clone()
+
+    box.movable = this.movable
+    box.container = this.container
+    box.selectable = this.selectable
+    box.resizable = this.resizable
+    box.position = this.position
+    box.flexDirection = this.flexDirection
+    box.display = this.display
+    return box
   }
 }
 
