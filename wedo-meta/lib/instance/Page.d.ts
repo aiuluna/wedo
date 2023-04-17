@@ -21,7 +21,7 @@ export declare class Page extends Emitter<Topic> {
     private fromJson;
     getNodeById(id: number): Node;
     createFromJSON(json: JsonNode): Promise<Node>;
-    createFromMetaNew(meta: ComponentMeta, position: [number, number]): void;
+    createFromMetaNew(meta: ComponentMeta, position: [number, number]): Node;
     getRoot(): Node;
 }
 export {};

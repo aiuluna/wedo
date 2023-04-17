@@ -6,7 +6,11 @@ export var Topic;
     Topic[Topic["Resized"] = 3] = "Resized";
     Topic[Topic["NodeMoved"] = 4] = "NodeMoved";
     Topic[Topic["ShadowReceiverChanged"] = 5] = "ShadowReceiverChanged";
-    Topic[Topic["DragDataUpdated"] = 6] = "DragDataUpdated";
-    Topic[Topic["NodeChildrenUpdated"] = 7] = "NodeChildrenUpdated";
-    Topic[Topic["NodePositionMoved"] = 8] = "NodePositionMoved";
+    // 添加新节点
+    Topic[Topic["NewNodeAdded"] = 6] = "NewNodeAdded";
+    // 选中节点变化
+    Topic[Topic["SelectionChanged"] = 7] = "SelectionChanged";
+    Topic[Topic["DragDataUpdated"] = 8] = "DragDataUpdated";
+    Topic[Topic["NodeChildrenUpdated"] = 9] = "NodeChildrenUpdated";
+    Topic[Topic["NodePositionMoved"] = 10] = "NodePositionMoved";
 })(Topic || (Topic = {}));

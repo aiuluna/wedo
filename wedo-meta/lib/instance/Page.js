@@ -88,6 +88,14 @@ export class Page extends Emitter {
         return await this.fromJson(json);
     }
     createFromMetaNew(meta, position) {
+        const box = meta.box.clone();
+        box.left.setValue(position[0]);
+        box.top.setValue(position[1]);
+        const id = this.createId();
+        const nodeData = meta.createData(id, box);
+        const node = new Node(meta, nodeData);
+        this.linkPage(node);
+        return node;
     }
     getRoot() {
         return this.root;

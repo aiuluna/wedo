@@ -108,7 +108,7 @@ export class Page extends Emitter<Topic>{
     return await this.fromJson(json)
   }
 
-  public createFromMetaNew(meta: ComponentMeta, position: [number, number]) {
+  public createFromMetaNew(meta: ComponentMeta, position: [number, number]): Node {
     const box = meta.box.clone()
     box.left.setValue(position[0])
     box.top.setValue(position[1])
