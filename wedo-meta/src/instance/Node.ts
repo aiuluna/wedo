@@ -5,10 +5,11 @@ import { NodeData } from '../standard.types'
 import { ComponentMeta } from '../meta/ComponentMeta';
 import { BoxDescriptor } from '../BoxDescriptor';
 import { PropMeta } from '../meta/PropMeta';
+import { MountPoint } from './MountPoint';
 
 export class Node extends Emitter<Topic> {
 
-  private mountPoint?: Node | null;
+  private mountPoint?: MountPoint;
   meta: ComponentMeta;
   logger: Logger;
   level: number = 0;
@@ -49,6 +50,10 @@ export class Node extends Emitter<Topic> {
     this.emit(Topic.NodePropUpdated)
   }
 
+  public getMountPoint(): MountPoint | undefined {
+    return this.mountPoint;
+  }
+
   public getName() {
     return this.data.get('name')
   }
@@ -61,6 +66,10 @@ export class Node extends Emitter<Topic> {
     return this.data.get("parent")
   }
 
+  /**
+   * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
+   * @returns Rect
+   */
   public getRect(): Rect {
     if (!this.mountPoint) return Rect.ZERO;
     return this.mountPoint.getRect()
@@ -79,6 +88,11 @@ export class Node extends Emitter<Topic> {
     this.sortChildren(node);
   }
 
+  /**
+   * 给当前节点添加绝对定位的node子节点
+   * @param node 
+   * @param position 绝对定位position
+   */
   public addToAbsolute(node: Node, position?: [number, number]) {
     if (!position) {
       position = [node.getBox().left.toNumber(), node.getBox().top.toNumber()]
@@ -175,7 +189,7 @@ export class Node extends Emitter<Topic> {
    * 获取当前节点的绝对定位坐标
    * @returns [x, y]
    */
-  public absPosition(): Array<number> {
+  public absPosition(): [number, number] {
     // 如果有挂载点，返回挂载节点的绝对定位
     if (this.mountPoint) {
       return this.mountPoint.absPosition()
@@ -228,10 +242,27 @@ export class Node extends Emitter<Topic> {
     this.getBox().top.setValue(vec[1])
   }
 
+  /**
+   * 根据偏移量设置xy
+   * @param vec [diffX, diffY]
+   */
+  public setXYByVec(vec: [number, number]) {
+    const box = this.getBox();
+    this.setXY([box.left.toNumber() + vec[0], box.top.toNumber() + vec[1]])
+  }
+
+  /**
+   * 根据mountPoint的rect更新节点的盒子模型
+   */
+  public updateFromMountPoint() {
+    const rect = this.getRect();
+    const box = this.getBox();
+    box.left.setValue(rect.left);
+    box.top.setValue(rect.top);
+  }
+
   public printData() {
     console.log(this.data.toJS())
   }
-
-
 
 }

@@ -106,8 +106,15 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
 
     this.describe('处理拖拽的逻辑', register => {
       // 最后一个接收容器
-      let lastReceiver : Node | null
+      let lastReceiver: Node | null
 
+      /**
+       * 
+       * @param container 容器节点，表示在该节点下寻找放置的位置
+       * @param rect 相对位置rect
+       * @param exclude 排除的节点
+       * @returns 
+       */
       function selectForDrop(container: Node, rect: Rect, exclude: Node | null) {
         // 获取适合放置rect的最适合的容器
         let receiver = NodeSelector.selectForDrop(container, [rect[0], rect[1]], exclude);
@@ -136,7 +143,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
           // 最新的接收容器不再接收该组件，通知lastReceiver不需要重新排序
           if (receiver !== lastReceiver) {
             lastReceiver && lastReceiver.emit(Topic.NodeGapIndexChanged, null);
-            lastReceiver = receiver;          
+            lastReceiver = receiver;
           }
 
           // todo 对齐线
@@ -151,6 +158,44 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
 
       register(UIStates.Moving, UIStates.Moving, UIEvents.EvtMoving, (node: Node, vec: [number, number]) => {
         handlerSyncMoving(node, vec)
+      })
+
+      register([UIStates.Start, UIStates.Selected, UIStates.Moving], UIStates.Moved, UIEvents.EvtNodeMoved,
+        (node: Node, vec: [number, number]) => {
+          // vec是偏移量，即diffX,diffY
+          node.setXYByVec(vec);
+          node.emit(Topic.NodeMoved)
+          this.emit(Topic.NodeMoved)
+        })
+
+      // 从已完成移动到被选中的自动状态机
+      register(UIStates.Moved, UIStates.Selected, UIEvents.AUTO, () => {
+        if (lastReceiver) {
+          lastReceiver.emit(Topic.NodeGapIndexChanged, null)
+          lastReceiver = null;
+        }
+        // 从所有选中节点遍历，调整原先父节点为当前接收节点，并调整DOM结构
+        this.selection.forEach(node => {
+          const parent = node.getParent()
+          const absPosition = node.absPosition()
+          const rect = node.getRect();
+          const receiver = selectForDrop(this.root, rect, node);
+          // 如果接收节点不是父节点，则将接收节点作为父节点，并通知原父节点子节点已经更新
+          if (receiver !== parent) {
+            receiver?.addToAbsolute(node, absPosition);
+            receiver?.emit(Topic.NodeChildrenUpdated)
+            parent.emit(Topic.NodeChildrenUpdated)
+          }
+          // 如果receiver是flex结构，需要同步子节点的box属性
+          if (receiver?.isFlex()) {
+            receiver.getChildren().forEach((child: Node) => {
+              child.updateFromMountPoint()
+              child.emit(Topic.NodePositionMoved)
+            })
+          }
+
+          // todo 收起对齐线
+        })
       })
     })
 

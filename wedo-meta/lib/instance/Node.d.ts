@@ -3,6 +3,7 @@ import { Topic } from "../Topic";
 import { NodeData } from '../standard.types';
 import { ComponentMeta } from '../meta/ComponentMeta';
 import { BoxDescriptor } from '../BoxDescriptor';
+import { MountPoint } from './MountPoint';
 export declare class Node extends Emitter<Topic> {
     private data;
     private mountPoint?;
@@ -14,12 +15,18 @@ export declare class Node extends Emitter<Topic> {
     setInstanceData(key: string, value: any): void;
     updateInstanceData(key: string, updator: (value: any) => any): void;
     updateInstanceByPath(path: Array<string>, value: any): void;
+    getMountPoint(): MountPoint | undefined;
     getName(): any;
     getData(): NodeData;
     getParent(): Node;
     getRect(): Rect;
     getBox(): BoxDescriptor;
     addToRelative(node: Node, position?: [number, number]): void;
+    /**
+     * 给当前节点添加绝对定位的node子节点
+     * @param node
+     * @param position 绝对定位position
+     */
     addToAbsolute(node: Node, position?: [number, number]): void;
     setAllowDrag(allowDrag: boolean): void;
     private sortChildren;
@@ -37,7 +44,7 @@ export declare class Node extends Emitter<Topic> {
      * 获取当前节点的绝对定位坐标
      * @returns [x, y]
      */
-    absPosition(): Array<number>;
+    absPosition(): [number, number];
     bound(x: number, y: number): boolean;
     isContainer(): boolean;
     getType(): any;
@@ -47,5 +54,14 @@ export declare class Node extends Emitter<Topic> {
     getH(): any;
     getChildren(): any;
     setXY(vec: [number, number]): void;
+    /**
+     * 根据偏移量设置xy
+     * @param vec [diffX, diffY]
+     */
+    setXYByVec(vec: [number, number]): void;
+    /**
+     * 根据mountPoint的rect更新节点的盒子模型
+     */
+    updateFromMountPoint(): void;
     printData(): void;
 }

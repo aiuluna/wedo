@@ -39,6 +39,9 @@ export class Node extends Emitter {
         this.data = PropMeta.setPropValue(path, this.data, value);
         this.emit(Topic.NodePropUpdated);
     }
+    getMountPoint() {
+        return this.mountPoint;
+    }
     getName() {
         return this.data.get('name');
     }
@@ -64,6 +67,11 @@ export class Node extends Emitter {
         node.setXY(position);
         this.sortChildren(node);
     }
+    /**
+     * 给当前节点添加绝对定位的node子节点
+     * @param node
+     * @param position 绝对定位position
+     */
     addToAbsolute(node, position) {
         if (!position) {
             position = [node.getBox().left.toNumber(), node.getBox().top.toNumber()];
@@ -180,6 +188,23 @@ export class Node extends Emitter {
     setXY(vec) {
         this.getBox().left.setValue(vec[0]);
         this.getBox().top.setValue(vec[1]);
+    }
+    /**
+     * 根据偏移量设置xy
+     * @param vec [diffX, diffY]
+     */
+    setXYByVec(vec) {
+        const box = this.getBox();
+        this.setXY([box.left.toNumber() + vec[0], box.top.toNumber() + vec[1]]);
+    }
+    /**
+     * 根据mountPoint的rect更新节点的盒子模型
+     */
+    updateFromMountPoint() {
+        const rect = this.getRect();
+        const box = this.getBox();
+        box.left.setValue(rect.left);
+        box.top.setValue(rect.top);
     }
     printData() {
         console.log(this.data.toJS());
