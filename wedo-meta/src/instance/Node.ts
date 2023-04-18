@@ -9,7 +9,7 @@ import { PropMeta } from '../meta/PropMeta';
 export class Node extends Emitter<Topic> {
 
   private mountPoint?: Node | null;
-  meta: ComponentMeta; 
+  meta: ComponentMeta;
   logger: Logger;
   level: number = 0;
   // constructor(type: string, x: number, y: number, w: number, h: number) {
@@ -24,7 +24,7 @@ export class Node extends Emitter<Topic> {
   //   })
   // }
 
-  constructor(meta: ComponentMeta, private data: NodeData, ) {
+  constructor(meta: ComponentMeta, private data: NodeData,) {
     super()
     this.data = data;
     this.meta = meta;
@@ -41,7 +41,7 @@ export class Node extends Emitter<Topic> {
   }
 
   public updateInstanceData(key: string, updator: (value: any) => any) {
-    this.data = this.data.update(key, updator) 
+    this.data = this.data.update(key, updator)
   }
 
   public updateInstanceByPath(path: Array<string>, value: any) {
@@ -62,7 +62,7 @@ export class Node extends Emitter<Topic> {
   }
 
   public getRect(): Rect {
-    if(!this.mountPoint) return Rect.ZERO;
+    if (!this.mountPoint) return Rect.ZERO;
     return this.mountPoint.getRect()
   }
 
@@ -76,14 +76,14 @@ export class Node extends Emitter<Topic> {
     }
     this.add(node);
     node.setXY(position);
-    this.sortChildren(node);    
+    this.sortChildren(node);
   }
 
   public addToAbsolute(node: Node, position?: [number, number]) {
-    if(!position) {
+    if (!position) {
       position = [node.getBox().left.toNumber(), node.getBox().top.toNumber()]
     }
-    this.add(node);   
+    this.add(node);
     // 子节点位置 
     const [x, y] = position;
     // 当前节点位置
@@ -142,7 +142,7 @@ export class Node extends Emitter<Topic> {
   // 删除子节点
   public remove(node: Node) {
     this.updateInstanceData('children', (children: Array<Node>) => {
-        return children.filter(child => child !== node)
+      return children.filter(child => child !== node)
     })
   }
 
@@ -161,13 +161,30 @@ export class Node extends Emitter<Topic> {
     this.setInstanceData('parent', node)
   }
 
-  public absPosition():Array<number> {
+  /**
+   * 获取当前节点的绝对定位的Rect
+   * @returns 
+   */
+  public absRect(): Rect {
+    const rect = this.getRect();
+    const [x, y] = this.absPosition();
+    return new Rect(x, y, rect.left, rect.height)
+  }
+
+  /**
+   * 获取当前节点的绝对定位坐标
+   * @returns [x, y]
+   */
+  public absPosition(): Array<number> {
+    // 如果有挂载点，返回挂载节点的绝对定位
     if (this.mountPoint) {
       return this.mountPoint.absPosition()
     }
     const parent = this.getParent()
     const rect = this.getRect()
+    // 如果没有父节点，返回当前矩形的x,y
     if (!parent) return [rect.left, rect.top];
+    // 父节点的x,y坐标加上当前矩形相对父节点的x,y坐标
     const [x, y] = parent.absPosition();
     return [x + rect.left, y + rect.top]
   }
@@ -175,7 +192,7 @@ export class Node extends Emitter<Topic> {
   // 判断坐标是否在当前node节点内
   public bound(x: number, y: number): boolean {
     if (!this.getParent()) return true;
-    return this.getRect().bound(x, y) 
+    return this.getRect().bound(x, y)
   }
 
   public isContainer() {
@@ -216,5 +233,5 @@ export class Node extends Emitter<Topic> {
   }
 
 
-  
+
 }

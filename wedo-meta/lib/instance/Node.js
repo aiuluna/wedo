@@ -123,14 +123,30 @@ export class Node extends Emitter {
             this.level = node.level + 1;
         this.setInstanceData('parent', node);
     }
+    /**
+     * 获取当前节点的绝对定位的Rect
+     * @returns
+     */
+    absRect() {
+        const rect = this.getRect();
+        const [x, y] = this.absPosition();
+        return new Rect(x, y, rect.left, rect.height);
+    }
+    /**
+     * 获取当前节点的绝对定位坐标
+     * @returns [x, y]
+     */
     absPosition() {
+        // 如果有挂载点，返回挂载节点的绝对定位
         if (this.mountPoint) {
             return this.mountPoint.absPosition();
         }
         const parent = this.getParent();
         const rect = this.getRect();
+        // 如果没有父节点，返回当前矩形的x,y
         if (!parent)
             return [rect.left, rect.top];
+        // 父节点的x,y坐标加上当前矩形相对父节点的x,y坐标
         const [x, y] = parent.absPosition();
         return [x + rect.left, y + rect.top];
     }

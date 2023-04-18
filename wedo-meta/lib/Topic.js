@@ -10,7 +10,9 @@ export var Topic;
     Topic[Topic["NewNodeAdded"] = 6] = "NewNodeAdded";
     // 选中节点变化
     Topic[Topic["SelectionChanged"] = 7] = "SelectionChanged";
-    Topic[Topic["DragDataUpdated"] = 8] = "DragDataUpdated";
-    Topic[Topic["NodeChildrenUpdated"] = 9] = "NodeChildrenUpdated";
-    Topic[Topic["NodePositionMoved"] = 10] = "NodePositionMoved";
+    // Node的children需要重新排序
+    Topic[Topic["NodeGapIndexChanged"] = 8] = "NodeGapIndexChanged";
+    Topic[Topic["DragDataUpdated"] = 9] = "DragDataUpdated";
+    Topic[Topic["NodeChildrenUpdated"] = 10] = "NodeChildrenUpdated";
+    Topic[Topic["NodePositionMoved"] = 11] = "NodePositionMoved";
 })(Topic || (Topic = {}));

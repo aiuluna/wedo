@@ -12,6 +12,8 @@ export enum Topic {
   NewNodeAdded,
   // 选中节点变化
   SelectionChanged,
+  // Node的children需要重新排序
+  NodeGapIndexChanged,
   DragDataUpdated,
   NodeChildrenUpdated,
   NodePositionMoved

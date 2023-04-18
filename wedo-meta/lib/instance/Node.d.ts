@@ -28,6 +28,15 @@ export declare class Node extends Emitter<Topic> {
     remove(node: Node): void;
     setChildren(children: Array<Node>): void;
     setParent(node: Node | null): void;
+    /**
+     * 获取当前节点的绝对定位的Rect
+     * @returns
+     */
+    absRect(): Rect;
+    /**
+     * 获取当前节点的绝对定位坐标
+     * @returns [x, y]
+     */
     absPosition(): Array<number>;
     bound(x: number, y: number): boolean;
     isContainer(): boolean;

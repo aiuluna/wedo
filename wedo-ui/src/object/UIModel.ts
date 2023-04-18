@@ -6,7 +6,8 @@ import { UIEvents, UIStates } from "./uiModel.types";
 import { ComponentsLoader } from "@wedo/loader/lib";
 import md5 from 'md5'
 import { NodeSelector } from "./NodeSelector";
-import { throttle } from "@wedo/utils";
+import { Rect, throttle } from "@wedo/utils";
+import { getFlexGap } from "../util/getFlexGap";
 
 export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
   // todo 基准线
@@ -88,12 +89,12 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
       })
 
       // 注册状态机，自动从已添加状态变为已选中状态
-      register(UIStates.Added, UIStates.Selected, UIEvents.AUTO, () => {})
+      register(UIStates.Added, UIStates.Selected, UIEvents.AUTO, () => { })
 
     })
 
     this.describe('处理选中的逻辑', (register) => {
-      register([UIStates.Start, UIStates.Selected], UIStates.Selected, UIEvents.EvtSelected, (node: Node) => {        
+      register([UIStates.Start, UIStates.Selected], UIStates.Selected, UIEvents.EvtSelected, (node: Node) => {
         this.selection.replace(node)
         this.emit(Topic.SelectionChanged)
       })
@@ -104,8 +105,42 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
     })
 
     this.describe('处理拖拽的逻辑', register => {
-      function handlerSyncMoving(node: Node, vec: [number, number]) {
-        return throttle(() => {
+      // 最后一个接收容器
+      let lastReceiver : Node | null
+
+      function selectForDrop(container: Node, rect: Rect, exclude: Node | null) {
+        // 获取适合放置rect的最适合的容器
+        let receiver = NodeSelector.selectForDrop(container, [rect[0], rect[1]], exclude);
+        // 判断容器存在并且容器没有全包含rect
+        if (receiver && !receiver.absRect().contains(rect)) {
+          // 如果父节点是flex布局，接受容器就变为父节点
+          const parent = receiver.getParent();
+          if (parent && parent.isFlex()) {
+            receiver = parent;
+          }
+        }
+        return receiver;
+      }
+
+      const handlerSyncMoving = (node: Node, vec: [number, number]) => {
+        return throttle((node: Node, vec: [number, number]) => {
+          // 获取当前节点的绝对定位的rect
+          const absRect = node.absRect();
+          // 获取当前位置适合放置的container，不包括node本身
+          const receiver = selectForDrop(this.root, absRect, node);
+          // 判断如果接收节点是flex，就要放到容器里并且通知重新排序receiver的children
+          if (receiver && receiver.isFlex()) {
+            const flexGapIdx = getFlexGap(receiver.getChildren(), node, receiver.getBox().flexDirection === 'row' ? 'row' : 'column')
+            receiver.emit(Topic.NodeGapIndexChanged, flexGapIdx)
+          }
+          // 最新的接收容器不再接收该组件，通知lastReceiver不需要重新排序
+          if (receiver !== lastReceiver) {
+            lastReceiver && lastReceiver.emit(Topic.NodeGapIndexChanged, null);
+            lastReceiver = receiver;          
+          }
+
+          // todo 对齐线
+
 
         }, 100)
       }
