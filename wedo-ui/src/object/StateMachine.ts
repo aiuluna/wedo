@@ -31,7 +31,7 @@ class StateMachine<S extends string | number, A extends string | number, Topic e
     this.addTransferTable(from, to, action, fn)
   }
 
-  describe(desc: string, callback: (fn: RegFuncType<S, A>) => void) {
+  describe(desc: string, callback: ((fn: RegFuncType<S, A>) => void)) {
     callback(this.register)
   }
 
@@ -50,6 +50,10 @@ class StateMachine<S extends string | number, A extends string | number, Topic e
 
   underState(s: S) {
     return this.state === s
+  }
+
+  getState() {
+    return this.state
   }
 }
 

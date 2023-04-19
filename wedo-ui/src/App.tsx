@@ -1,8 +1,29 @@
-import React from 'react'
+import { StrictMode } from "react";
 import { createRoot } from 'react-dom/client'
-import UIEditor from './components/render/UIEditor'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom"
+import Editor from './page/Editor'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)
-root.render(<UIEditor />)
+
+const App = () => {
+
+  return <BrowserRouter>
+    <Routes>
+    
+      <Route path="/" element={<Editor />}>
+      </Route>
+    </Routes>
+  </BrowserRouter>
+}
+
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+)
 

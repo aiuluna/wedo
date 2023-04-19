@@ -251,6 +251,14 @@ export class Node extends Emitter<Topic> {
     this.setXY([box.left.toNumber() + vec[0], box.top.toNumber() + vec[1]])
   }
 
+  public setXYWH(left: number, top: number, width: number, height: number) {
+    const box = this.getBox();
+    box.left.setValue(left);
+    box.top.setValue(top);
+    box.width.setValue(width);
+    box.height.setValue(height);
+  }
+
   /**
    * 根据mountPoint的rect更新节点的盒子模型
    */

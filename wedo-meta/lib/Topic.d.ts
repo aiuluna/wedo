@@ -8,7 +8,7 @@ export declare enum Topic {
     NewNodeAdded = 6,
     SelectionChanged = 7,
     NodeGapIndexChanged = 8,
-    DragDataUpdated = 9,
-    NodeChildrenUpdated = 10,
-    NodePositionMoved = 11
+    NodePositionMoved = 9,
+    DragDataUpdated = 10,
+    NodeChildrenUpdated = 11
 }

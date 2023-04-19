@@ -1,4 +1,4 @@
-export enum UIStates{
+export enum UIStates {
   Start,
   StartAdd,
   Adding,
@@ -23,4 +23,15 @@ export enum UIEvents {
   EvtNodeSyncMoving,
   EvtStartResize
 
+}
+
+export enum CubeType {
+  TOPLEFT = 1,
+  TOPMIDDLE,
+  TOPRIGHT,
+  MIDDLERIGHT,
+  BOTTOMRIGHT,
+  BOTTOMMIDDLE,
+  BOTTOMLEFT,
+  MIDDLELEFT
 }

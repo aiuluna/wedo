@@ -19,6 +19,10 @@ export declare class Node extends Emitter<Topic> {
     getName(): any;
     getData(): NodeData;
     getParent(): Node;
+    /**
+     * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
+     * @returns Rect
+     */
     getRect(): Rect;
     getBox(): BoxDescriptor;
     addToRelative(node: Node, position?: [number, number]): void;
@@ -59,6 +63,7 @@ export declare class Node extends Emitter<Topic> {
      * @param vec [diffX, diffY]
      */
     setXYByVec(vec: [number, number]): void;
+    setXYWH(left: number, top: number, width: number, height: number): void;
     /**
      * 根据mountPoint的rect更新节点的盒子模型
      */

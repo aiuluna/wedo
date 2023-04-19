@@ -51,6 +51,10 @@ export class Node extends Emitter {
     getParent() {
         return this.data.get("parent");
     }
+    /**
+     * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
+     * @returns Rect
+     */
     getRect() {
         if (!this.mountPoint)
             return Rect.ZERO;
@@ -196,6 +200,13 @@ export class Node extends Emitter {
     setXYByVec(vec) {
         const box = this.getBox();
         this.setXY([box.left.toNumber() + vec[0], box.top.toNumber() + vec[1]]);
+    }
+    setXYWH(left, top, width, height) {
+        const box = this.getBox();
+        box.left.setValue(left);
+        box.top.setValue(top);
+        box.width.setValue(width);
+        box.height.setValue(height);
     }
     /**
      * 根据mountPoint的rect更新节点的盒子模型

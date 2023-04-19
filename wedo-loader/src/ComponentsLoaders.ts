@@ -93,6 +93,7 @@ export class ComponentsLoader extends Emitter<Topic>{
       const [group, name] = key.split('.');
       await this.loadByName(group, name)
     }
+    console.log('222')
     // todo 远程loadRemote
     this.state = 1;
     this.emit(Topic.RemoteComponentsLoaded);

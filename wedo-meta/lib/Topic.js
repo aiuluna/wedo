@@ -6,13 +6,10 @@ export var Topic;
     Topic[Topic["Resized"] = 3] = "Resized";
     Topic[Topic["NodeMoved"] = 4] = "NodeMoved";
     Topic[Topic["ShadowReceiverChanged"] = 5] = "ShadowReceiverChanged";
-    // 添加新节点
     Topic[Topic["NewNodeAdded"] = 6] = "NewNodeAdded";
-    // 选中节点变化
     Topic[Topic["SelectionChanged"] = 7] = "SelectionChanged";
-    // Node的children需要重新排序
     Topic[Topic["NodeGapIndexChanged"] = 8] = "NodeGapIndexChanged";
-    Topic[Topic["DragDataUpdated"] = 9] = "DragDataUpdated";
-    Topic[Topic["NodeChildrenUpdated"] = 10] = "NodeChildrenUpdated";
-    Topic[Topic["NodePositionMoved"] = 11] = "NodePositionMoved";
+    Topic[Topic["NodePositionMoved"] = 9] = "NodePositionMoved";
+    Topic[Topic["DragDataUpdated"] = 10] = "DragDataUpdated";
+    Topic[Topic["NodeChildrenUpdated"] = 11] = "NodeChildrenUpdated";
 })(Topic || (Topic = {}));
