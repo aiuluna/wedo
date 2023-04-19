@@ -1,27 +1,38 @@
+/* 隐藏滚动条 */
+body ::-webkit-scrollbar {
+  display: none;
+  /* Chrome、Safari 和 Opera */
+}
+body {
+  -ms-overflow-style: none; /* IE 和 Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 // #region 选择框
 
 // #endregion
 
 // #region 元素
-.element-root{
+.element-root {
   position: relative;
-  border : 1px solid #eee;
-  margin : -1px 0px 0px -1px;
-  background : #ececec;
+  border: 1px solid #eee;
+  margin: -1px 0px 0px -1px;
+  background: #ececec;
 }
 
 .element {
-  position : absolute;
+  position: absolute;
+
   img {
     pointer-events: none;
   }
-  
+
 }
 
 .element-inner {
-  transition : background-color .2s ease;
-  width : 100%;
-  height : 100%;
+  transition: background-color .2s ease;
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -30,10 +41,10 @@
 
 
 .container {
-  display : flex;
-  flex : 1;
-  overflow : hidden;
-  height : 100%;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
 
 }
 
@@ -41,7 +52,7 @@
 
 .root-w::-webkit-scrollbar {
   width: 10px;
-  height : 10px; 
+  height: 10px;
 }
 
 .root-w::-webkit-scrollbar-track {
@@ -49,7 +60,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0, 0, 0, .3);
   outline: 1px solid slategrey;
 }
 
@@ -57,15 +68,16 @@
 
 
 .footer {
-  display : flex;
+  display: flex;
   align-items: center;
-  height : 18px;
-  padding-left : 10px;
-  background:black;
+  height: 18px;
+  padding-left: 10px;
+  background: black;
+
   h2 {
-    margin : 0;   
+    margin: 0;
     font-family: sans-serif;
-    color : white;
+    color: white;
     letter-spacing: 3px;
   }
 }
@@ -73,54 +85,57 @@
 /** 右侧整体 **/
 
 .right {
-  width : 300px;  
+  width: 300px;
   flex-shrink: 0;
 }
 
 /** 属性编辑器 **/
 
 .prop-editor {
-  width :300px;
+  width: 300px;
   min-height: 600px;
 }
 
 
 .preview-container {
-  width : 100%;
+  width: 100%;
   position: relative;
-  margin : 0 auto;
-  background-color : #ccc;
+  margin: 0 auto;
+  background-color: #ccc;
   min-height: 100%;
   padding-bottom: 100px;
-  padding-top : 20px;
+  padding-top: 20px;
 }
 
 .explorer {
-  width : 200px;
-  height : 100%;
+  width: 200px;
+  height: 100%;
   background: #333;
-  color : white;
+  color: white;
+
   input {
-    outline : none;
+    outline: none;
     background: #333;
-    color : white;
-    border : none;
+    color: white;
+    border: none;
   }
 }
 
 .code-editor {
-  width : 100%;
-  height : 100%;
+  width: 100%;
+  height: 100%;
 }
 
-.editor-dir, .editor-file {
+.editor-dir,
+.editor-file {
   line-height: 30px;
-  padding-left : 10px;
+  padding-left: 10px;
 }
 
-.editor-file.active{
+.editor-file.active {
   background-color: #666;
 }
+
 .editor-dir.active {
   background-color: #666;
 }

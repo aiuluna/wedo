@@ -4,6 +4,7 @@ export declare class ComponentsLoader extends Emitter<Topic> {
     private static instance;
     static defaultProps: ComponentMetaConfig;
     private state;
+    list: Array<ComponentMeta>;
     constructor();
     /**
      * getInstance

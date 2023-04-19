@@ -32,7 +32,7 @@ class StateMachine<S extends string | number, A extends string | number, Topic e
   }
 
   describe(desc: string, callback: ((fn: RegFuncType<S, A>) => void)) {
-    callback(this.register)
+    callback(this.register.bind(this))
   }
 
   dispatch(action: A, ...data: any) {

@@ -1,5 +1,5 @@
 export declare const metaSchema: {
-    id: string;
+    $id: string;
     type: string;
     required: string[];
     properties: {

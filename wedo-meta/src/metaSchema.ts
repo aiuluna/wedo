@@ -1,5 +1,5 @@
 export const metaSchema = {
-  id : "/meta",
+  $id : "/meta",
   type : 'object',
   required: ["name", "imageUrl", "title", "group", "componentType", "box"],
   properties : {

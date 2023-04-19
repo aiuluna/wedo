@@ -1,7 +1,8 @@
 import { Topic, ComponentMeta, metaSchema } from '@wedo/meta';
 import { Emitter } from '@wedo/utils';
 import * as R from 'ramda';
-import { Validator } from 'jsonschema';
+// import { Validator } from 'jsonschema'
+import Ajv from "ajv";
 const metas = {};
 const ymls = {};
 // @ts-ignore
@@ -24,7 +25,6 @@ for (const path in modules) {
     const n = a.split('/').pop();
     if (n && n !== 'default') {
         const config = (await modules[path]()).default;
-        console.log(config);
         ymls[config.group + '.' + config.name] = config;
     }
 }
@@ -32,8 +32,10 @@ export class ComponentsLoader extends Emitter {
     static instance;
     static defaultProps;
     state = 0;
+    list;
     constructor() {
         super();
+        this.list = [];
         this.loadDefault();
     }
     /**
@@ -81,10 +83,10 @@ export class ComponentsLoader extends Emitter {
             const [group, name] = key.split('.');
             await this.loadByName(group, name);
         }
-        console.log('222');
         // todo 远程loadRemote
         this.state = 1;
         this.emit(Topic.RemoteComponentsLoaded);
+        this.list = Object.values(metas).filter(x => x.intrinsic !== true);
     }
 }
 function mergeLeft(a, b) {
@@ -123,9 +125,15 @@ function mergeLeft(a, b) {
     return a;
 }
 function validatorConfig(file, config) {
-    const v = new Validator();
-    const result = v.validate(config, metaSchema);
-    if (result.errors.length > 0) {
-        throw new Error(`Validation failed in :${file}` + result.errors.join('\n'));
+    const ajv = new Ajv();
+    const validate = ajv.compile(metaSchema);
+    const result = validate(config);
+    if (!result) {
+        throw new Error(`Validation failed in :${file}` + validate.errors?.join('\n'));
     }
+    // const v = new Validator()
+    // const result = v.validate(config, metaSchema)
+    // if (result.errors.length > 0) {
+    //   throw new Error(`Validation failed in :${file}` + result.errors.join('\n'))
+    // }
 }
