@@ -16,7 +16,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
   ctrlDown: boolean;
   altDown: boolean;
   mouseDown: boolean;
-  root: Node;
+  root: Node | undefined;
   startSelVer: number;
   selection: Selection;
   contentHash: string;
@@ -27,11 +27,12 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
   dropNode?: Node | null;
   copyList: Array<Node> = [];
 
-  constructor(json: JsonPage, pageName: string) {
+  static instance: Page | null = null;
+
+  private constructor(json: JsonPage, pageName: string) {
     super(UIStates.Start)
     this.selection = new Selection()
     this.page = new Page(pageName, json, ComponentsLoader.getInstance())
-    this.root = this.page.getRoot()
     this.propertyEditor = new PropertyEditor(this)
     this.ctrlDown = false;
     this.altDown = false;
@@ -42,7 +43,23 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
     // @ts-ignore
     // 调试用
     window["ui"] = this
+    // For debug 
+    // @ts-ignore
+    window.editor = this
+  }
 
+  static async getInstance(json: JsonPage, pageName: string) {
+    // if (UIModel.instance) return UIModel.instance;
+    const _instance = new UIModel(json, pageName);
+    await Promise.resolve().then(() => {
+      // 让前面的微队列先执行完就能拿到root
+      _instance.root = _instance.page.getRoot();
+      _instance.registerAll()
+    })
+    return _instance;
+  }
+
+  private registerAll() {
     this.describe('拖拽新元素的逻辑', (register) => {
       // 开始拖拽
       register([UIStates.Start, UIStates.Selected], UIStates.StartAdd, UIEvents.EvtStartDragAdd, (meta: ComponentMeta) => {
@@ -51,7 +68,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
       // 拖拽中
       register([UIStates.StartAdd, UIStates.Adding], UIStates.Adding, UIEvents.EvtAddDraging, (position: [number, number]) => {
         this.dropComponentPosition = position;
-        const receiver = NodeSelector.selectForDrop(this.root, position, null);
+        const receiver = NodeSelector.selectForDrop(this.root!, position, null);
         this.emit(Topic.ShadowReceiverChanged, receiver)
       })
 
@@ -62,7 +79,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
         // 创建当前位置的拖拽节点副本
         const node = this.page.createFromMetaNew(this.dropComponentMeta!, position);
         // 选择当前位置最适合的接收容器
-        const receiver = NodeSelector.selectForDrop(this.root, position, null)
+        const receiver = NodeSelector.selectForDrop(this.root!, position, null)
         // 接收容器的矩形区域
         const rect = receiver!.getRect();
         // 获取当前节点的相对接收容器的rect的宽高
@@ -134,7 +151,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
           // 获取当前节点的绝对定位的rect
           const absRect = node.absRect();
           // 获取当前位置适合放置的container，不包括node本身
-          const receiver = selectForDrop(this.root, absRect, node);
+          const receiver = selectForDrop(this.root!, absRect, node);
           // 判断如果接收节点是flex，就要放到容器里并且通知重新排序receiver的children
           if (receiver && receiver.isFlex()) {
             const flexGapIdx = getFlexGap(receiver.getChildren(), node, receiver.getBox().flexDirection === 'row' ? 'row' : 'column')
@@ -179,7 +196,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
           const parent = node.getParent()
           const absPosition = node.absPosition()
           const rect = node.getRect();
-          const receiver = selectForDrop(this.root, rect, node);
+          const receiver = selectForDrop(this.root!, rect, node);
           // 如果接收节点不是父节点，则将接收节点作为父节点，并通知原父节点子节点已经更新
           if (receiver !== parent) {
             receiver?.addToAbsolute(node, absPosition);
@@ -228,7 +245,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
             nextRect.width,
             nextRect.height
           )
-          
+
           resizeNode.emit(Topic.Resized)
 
         }
@@ -242,22 +259,17 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
         this.emit(Topic.Resized)
       })
     })
-
-    
-    // For debug 
-    // @ts-ignore
-    window.editor = this
   }
 
   public getStateDesc() {
     return UIStates[this.getState()]
   }
 
-  public getSelection(){
+  public getSelection() {
     return this.selection
   }
 
-  public clearSelection(){
+  public clearSelection() {
     this.selection.clear()
   }
 }

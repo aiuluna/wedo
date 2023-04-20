@@ -1,8 +1,11 @@
 import { Rect } from "@wedo/utils";
 
+/**
+ * 新的画布对象
+ */
 export class CordNew {
-  viewPort: Rect;
-  stage: Rect;
+  viewPort: Rect; // 表示画布的可视区域，初始化时是Rect.ZERO
+  stage: Rect; // 表示画布的大小和位置
   scrollX: number;
   scrollY: number;
   constructor(stage: Rect) {
@@ -13,7 +16,7 @@ export class CordNew {
   }
 
   /**
-   * 返回相对当前画布的clientX
+   * 计算相对于当前画布的客户端坐标ClientX
    * @param clientX 当前节点的clientX
    * @returns 
    */
@@ -22,7 +25,7 @@ export class CordNew {
   }
 
   /**
-   * 返回相对当前画布的clientY
+   * 计算相对于当前画布的客户端坐标ClientY
    * @param clientY 当前节点的clientY
    * @returns 
    */

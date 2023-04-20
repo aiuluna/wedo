@@ -22,15 +22,7 @@ export class Page extends Emitter {
         return this.id_base++;
     }
     async init(json) {
-        const meta = await this.loader.loadByName("container", "root");
-        const box = new BoxDescriptor({
-            left: 0,
-            top: 0,
-            width: 3200,
-            height: 3200
-        }, meta);
-        this.root = new Node(meta, meta.createData(this.createId(), box));
-        this.linkPage(this.root);
+        await this.initRoot();
         const pageNode = await this.fromJson(json.page);
         pageNode.setAllowDrag(false);
         this.root.addToAbsolute(pageNode);
@@ -40,6 +32,17 @@ export class Page extends Emitter {
         window["root"] = this.root;
         // @ts-ignore
         window['page'] = this;
+    }
+    async initRoot() {
+        const meta = await this.loader.loadByName("container", "root");
+        const box = new BoxDescriptor({
+            left: 0,
+            top: 0,
+            width: 3200,
+            height: 3200
+        }, meta);
+        this.root = new Node(meta, meta.createData(this.createId(), box));
+        this.linkPage(this.root);
     }
     linkPage(node) {
         this.nodes[node.getId()] = node;

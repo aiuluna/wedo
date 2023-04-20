@@ -1,7 +1,7 @@
 group : basic
 name : "image"
 componentType: react
-imageUrl : https://voice-static.oss-accelerate.aliyuncs.com//img/e21bdefe4cb8a7ac9e7faa3b3ae6aec1e9b8b7bb.png
+imageUrl : //cdn.myweimai.com/images/697c8837bc8b3849f64724bc27bd2ff4_48x48.png
 title : 图片
 box : 
   width : 100

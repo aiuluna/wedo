@@ -33,17 +33,8 @@ export class Page extends Emitter<Topic>{
     return this.id_base++
   }
 
-  private async init(json: JsonPage) {
-    const meta = await this.loader.loadByName("container", "root")
-    const box = new BoxDescriptor({
-      left: 0,
-      top: 0,
-      width: 3200,
-      height: 3200
-    }, meta)
-    this.root = new Node(meta, meta.createData(this.createId(), box))
-    this.linkPage(this.root)
-
+  private async init(json: JsonPage) {   
+    await this.initRoot() 
     const pageNode = await this.fromJson(json.page);
     pageNode.setAllowDrag(false);
     this.root.addToAbsolute(pageNode)
@@ -55,6 +46,18 @@ export class Page extends Emitter<Topic>{
 
     // @ts-ignore
     window['page'] = this
+  }
+
+  private async initRoot() {
+    const meta = await this.loader.loadByName("container", "root")
+    const box = new BoxDescriptor({
+      left: 0,
+      top: 0,
+      width: 3200,
+      height: 3200
+    }, meta)
+    this.root = new Node(meta, meta.createData(this.createId(), box))
+    this.linkPage(this.root)
   }
 
   private linkPage(node: Node) {
@@ -119,7 +122,7 @@ export class Page extends Emitter<Topic>{
     return node;
   }
 
-  public getRoot() {
+  public getRoot(): Node {
     return this.root;
   }
 

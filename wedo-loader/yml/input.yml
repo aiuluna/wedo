@@ -1,7 +1,7 @@
 group : basic
 name : input 
 componentType: react
-imageUrl : https://voice-static.oss-accelerate.aliyuncs.com//img/0806f4bf95c45186dbd4895ecb1c79544beff60d.png
+imageUrl : //cdn.myweimai.com/images/8b0dd3cd0680d248a43f42c587150ae2_48x48.png
 title : 输入框 
 box:
   width : 100

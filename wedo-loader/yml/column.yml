@@ -1,7 +1,7 @@
 group : container 
 name: column 
 componentType: react
-imageUrl : https://voice-static.oss-accelerate.aliyuncs.com/img/4d10b18f29340958d103c152e9c8502e606ddba2.png
+imageUrl : //cdn.myweimai.com/images/197e867d47a25d65f0d6909c07e0e2f6_48x48.png
 title : 列布局
 url : local.Column
 box :

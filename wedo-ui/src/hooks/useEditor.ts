@@ -36,7 +36,8 @@ const useEditor = (pageName: string): [UIModel | null] => {
 
 
   const loadPage = async () => {
-    setEditor(new UIModel(json, pageName))
+    const _editor = await UIModel.getInstance(json, pageName)
+    setEditor(_editor)
   }
 
   return [editor]

@@ -1,7 +1,7 @@
 group : container 
 name: div
 componentType: react
-imageUrl : https://voice-static.oss-accelerate.aliyuncs.com//img/5aee98f58f9584472592617cdd4182391f59820d.png
+imageUrl : //cdn.myweimai.com/images/b387c2b72d96b46f9aa6013f4d0a0867_48x48.png
 title : 自由布局 
 url : local.Div
 style :

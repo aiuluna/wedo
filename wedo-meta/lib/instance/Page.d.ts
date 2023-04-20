@@ -17,6 +17,7 @@ export declare class Page extends Emitter<Topic> {
     constructor(name: string, json: JsonPage, loader: ComponentsLoader);
     createId(): number;
     private init;
+    private initRoot;
     private linkPage;
     private fromJson;
     getNodeById(id: number): Node;

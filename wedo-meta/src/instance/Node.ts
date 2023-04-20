@@ -114,7 +114,7 @@ export class Node extends Emitter<Topic> {
   private sortChildren(node: Node) {
     this.updateInstanceData('children', (_children) => {
       let children = _children as Array<Node>;
-      children.concat(node)
+      children = children.concat(node)
       if (this.isFlex()) {
         children = children.sort((a, b) => a.getRect().left - b.getRect().left)
       }
@@ -234,7 +234,15 @@ export class Node extends Emitter<Topic> {
   }
 
   public getChildren() {
-    return this.data.get('children').toJS()
+    const children : Array<Node> = this.data.get("children").concat()
+    const box = this.getBox()
+    if(box.display === 'flex' && box.flexDirection === 'row') {
+      children.sort((a, b) => a.absRect().left - b.absRect().left)
+    }
+    if(box.display === 'flex' && box.flexDirection === 'column') {
+      children.sort((a, b) => a.absRect().top - b.absRect().top)
+    }
+    return children
   }
 
   public setXY(vec: [number, number]) {

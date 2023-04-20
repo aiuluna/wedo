@@ -1,7 +1,7 @@
 group : basic
 name : icon 
 componentType: react
-imageUrl : https://voice-static.oss-accelerate.aliyuncs.com//img/958420d72549b0c9b9c2ec580faabb3399c5581d.png
+imageUrl : //cdn.myweimai.com/images/0de5eee95101a01200f218db8caca3b6_48x48.png
 title : 图标 
 box : 
   width : 40

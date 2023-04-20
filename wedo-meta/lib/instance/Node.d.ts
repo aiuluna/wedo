@@ -56,7 +56,7 @@ export declare class Node extends Emitter<Topic> {
     getY(): any;
     getW(): any;
     getH(): any;
-    getChildren(): any;
+    getChildren(): Node[];
     setXY(vec: [number, number]): void;
     /**
      * 根据偏移量设置xy

@@ -1,7 +1,7 @@
 group: "basic"
 name: button
 componentType: react
-imageUrl: 'https://voice-static.oss-accelerate.aliyuncs.com//img/70680ec911a742b4ff60b041308f1424dc701efc.png'
+imageUrl: '//cdn.myweimai.com/images/19fc3236e8b0063a6f35a30732e6ae75_48x48.png'
 title: '按钮'
 box:
   width: 75

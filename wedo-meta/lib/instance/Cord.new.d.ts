@@ -1,4 +1,7 @@
 import { Rect } from "@wedo/utils";
+/**
+ * 新的画布对象
+ */
 export declare class CordNew {
     viewPort: Rect;
     stage: Rect;
@@ -6,13 +9,13 @@ export declare class CordNew {
     scrollY: number;
     constructor(stage: Rect);
     /**
-     * 返回相对当前画布的clientX
+     * 计算相对于当前画布的客户端坐标ClientX
      * @param clientX 当前节点的clientX
      * @returns
      */
     worldX(clientX: number): number;
     /**
-     * 返回相对当前画布的clientY
+     * 计算相对于当前画布的客户端坐标ClientY
      * @param clientY 当前节点的clientY
      * @returns
      */

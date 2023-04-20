@@ -1,7 +1,7 @@
 group : basic
 name : "text"
 componentType: react
-imageUrl : "https://voice-static.oss-accelerate.aliyuncs.com//img/9a0e8542a8728d8034f351ed6a46e5deb3fddedb.png"
+imageUrl : "//cdn.myweimai.com/images/77f67f8677b948975bd265d21f42387d_48x48.png"
 title : "文本"
 box :
   width : 75

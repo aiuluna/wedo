@@ -1,7 +1,7 @@
 group : container 
 name : row 
 componentType: react
-imageUrl : https://voice-static.oss-accelerate.aliyuncs.com/img/4d10b18f29340958d103c152e9c8502e606ddba2.png
+imageUrl : //cdn.myweimai.com/images/829f83506a7e8ad20181042f73191ddd_48x48.png
 title : 行布局
 box:
   width : fill 

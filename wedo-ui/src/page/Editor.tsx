@@ -3,6 +3,8 @@ import style from "./ui.module.scss"
 import { useParams } from 'react-router-dom'
 import useEditor from "../hooks/useEditor";
 import ComponentList from "../components/ComponentList";
+import Panel from "../components/render/Panel";
+import NodeRender from "../components/render/NodeRender";
 
 const BottomBar = () => {
   return <div className={style.footer}></div>
@@ -27,6 +29,10 @@ const Wedo = () => {
     {/* <TitleBar pageName={pageName} name="skedo" /> */}
     <div className={style.container}>
       <ComponentList editor={editor} />
+      <Panel editor={editor}>
+        {/* <LocalComponent /> */}
+        <NodeRender node={editor.page.getRoot()}/>
+      </Panel>
       {/* <Panel editor={editor}>
         <NodeRender node={editor.page.root} />
       </Panel>
