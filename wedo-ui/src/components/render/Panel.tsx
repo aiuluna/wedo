@@ -7,6 +7,7 @@ import classes from './render.module.scss'
 import "./render.scss"
 import { UIEvents } from "../../object/uiModel.types"
 import Shadow from "./Shadow"
+import { Topic } from "@wedo/meta"
 
 type VecRef = {
   vec: [number, number] | null
@@ -21,7 +22,7 @@ export default ({ children, editor }: {
   const [position, setPosition] = useThrottledState<[number, number]>([0, 0], 16)
   const renderContext = useContext(RenderContext);
 
-
+  // 提前执行将editor放到context上
   useMemo(() => {
     renderContext.editor = editor
   }, [])
@@ -38,6 +39,10 @@ export default ({ children, editor }: {
           e.preventDefault()
           // 触发鼠标移动事件
           editor.dispatch(UIEvents.EvtMoving, [e.clientX, e.clientY])
+
+          // editor.selection.forEach((node) => {
+          //   node.emit(Topic.MouseMoveEventPass, e)
+          // })
 
           // 处理拖拽新元素事件
           const meta = editor.dropComponentMeta;

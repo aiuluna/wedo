@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { Actions } from '../../object/editor.types'
 import { Node, Topic } from '@wedo/meta'
-import { Draggable } from '../draggable/Draggable'
+import { Draggable } from '../draggable-old/Draggable'
 import { EditorContext } from './UIEditor'
 
 type WedoComponent = {
