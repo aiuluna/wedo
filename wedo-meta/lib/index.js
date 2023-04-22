@@ -7,3 +7,5 @@ export * from './meta/PropMeta';
 export * from './standard.types';
 export * from './metaSchema';
 export * from './instance/Page';
+export * from './Bridge';
+export * from './standard.types';

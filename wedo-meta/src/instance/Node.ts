@@ -6,13 +6,16 @@ import { ComponentMeta } from '../meta/ComponentMeta';
 import { BoxDescriptor } from '../BoxDescriptor';
 import { PropMeta } from '../meta/PropMeta';
 import { MountPoint } from './MountPoint';
+import { CordNew } from './Cord.new';
 
 export class Node extends Emitter<Topic> {
+  
+  meta: ComponentMeta;
 
   private mountPoint?: MountPoint;
-  meta: ComponentMeta;
-  logger: Logger;
-  level: number = 0;
+  private logger: Logger;
+  private level: number = 0;
+  private tmpData: any;
   // constructor(type: string, x: number, y: number, w: number, h: number) {
   //   super()
   //   this.data = ImmutableMap({
@@ -48,6 +51,10 @@ export class Node extends Emitter<Topic> {
   public updateInstanceByPath(path: Array<string>, value: any) {
     this.data = PropMeta.setPropValue(path, this.data, value)
     this.emit(Topic.NodePropUpdated)
+  }
+
+  public mount(ele: HTMLElement, cord: CordNew) {
+    this.mountPoint = new MountPoint(ele, this, cord)
   }
 
   public getMountPoint(): MountPoint | undefined {
@@ -121,11 +128,6 @@ export class Node extends Emitter<Topic> {
       return children
     })
   }
-
-  public isFlex() {
-    return this.getBox().display === 'flex'
-  }
-
 
   public add(child: Node) {
     // this.data = this.data.update('children', children => children.push(child))
@@ -208,9 +210,27 @@ export class Node extends Emitter<Topic> {
     if (!this.getParent()) return true;
     return this.getRect().bound(x, y)
   }
+  
+  /**
+   * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
+   * @param data 
+   */
+  public memory(data: any) {
+    this.tmpData = data;
+    this.emit(Topic.MemorizedDataChanged)
+  }
 
   public isContainer() {
     return this.getBox().container
+  }
+
+  public isFlex() {
+    return this.getBox().display === 'flex'
+  }
+
+  public isDraggable() {
+    const name = this.getName();
+    return this.getBox().movable && name !== 'page' && name !== 'root'
   }
 
   public getType() {
@@ -234,15 +254,33 @@ export class Node extends Emitter<Topic> {
   }
 
   public getChildren() {
-    const children : Array<Node> = this.data.get("children").concat()
+    const children: Array<Node> = this.data.get("children").concat()
     const box = this.getBox()
-    if(box.display === 'flex' && box.flexDirection === 'row') {
+    if (box.display === 'flex' && box.flexDirection === 'row') {
       children.sort((a, b) => a.absRect().left - b.absRect().left)
     }
-    if(box.display === 'flex' && box.flexDirection === 'column') {
+    if (box.display === 'flex' && box.flexDirection === 'column') {
       children.sort((a, b) => a.absRect().top - b.absRect().top)
     }
     return children
+  }
+
+  public getPassProps(): ImmutableMap<string, any> {
+    return this.data.get('passProps')
+  }
+
+  public getStyleObject() {
+    return this.data.get('style').toJS()
+  }
+ 
+  public getMemorizedData(): any {
+    if (typeof this.tmpData !== 'undefined') {
+      return this.tmpData
+    }
+    if (this.getParent()) {
+      return this.getParent().getMemorizedData()
+    }
+    return null
   }
 
   public setXY(vec: [number, number]) {
@@ -265,6 +303,11 @@ export class Node extends Emitter<Topic> {
     box.top.setValue(top);
     box.width.setValue(width);
     box.height.setValue(height);
+  }
+
+  public setPassPropValue(key: Array<string>, value: any) {
+    const passProps = this.getPassProps().setIn(key, value);
+    this.setInstanceData('passProps', passProps);
   }
 
   /**
