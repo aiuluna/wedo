@@ -39,7 +39,7 @@ const ComponentList = ({ editor }: ComponentListProps) => {
                   draggable
                   className={style["component-list-item"]}
                   onDragStart={(evt) => {
-                    // evt.preventDefault()
+                    evt.preventDefault()
                     editor.dispatch(UIEvents.EvtStartDragAdd, compMeta)
                   }}
                 >

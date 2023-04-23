@@ -1,9 +1,5 @@
 import { Map as ImmutableMap } from 'immutable';
-<<<<<<< HEAD
-import { Emitter, Rect, Logger } from "@wedo/utils";
-=======
 import { Emitter, Rect } from "@wedo/utils";
->>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
 import { Topic } from "../Topic";
 import { NodeData } from '../standard.types';
 import { ComponentMeta } from '../meta/ComponentMeta';
@@ -24,17 +20,6 @@ export declare class Node extends Emitter<Topic> {
     updateInstanceByPath(path: Array<string>, value: any): void;
     mount(ele: HTMLElement, cord: CordNew): void;
     getMountPoint(): MountPoint | undefined;
-    getName(): any;
-    getData(): NodeData;
-    getParent(): Node;
-    getPassProps(): ImmutableMap<string, any>;
-    getStyleObject(): ImmutableMap<string, any>;
-    /**
-     * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
-     * @returns Rect
-     */
-    getRect(): Rect;
-    getBox(): BoxDescriptor;
     addToRelative(node: Node, position?: [number, number]): void;
     /**
      * 给当前节点添加绝对定位的node子节点
@@ -44,12 +29,6 @@ export declare class Node extends Emitter<Topic> {
     addToAbsolute(node: Node, position?: [number, number]): void;
     setAllowDrag(allowDrag: boolean): void;
     private sortChildren;
-<<<<<<< HEAD
-    isFlex(): boolean;
-    isContainer(): boolean;
-    isDraggable(): boolean;
-=======
->>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
     add(child: Node): void;
     remove(node: Node): void;
     setChildren(children: Array<Node>): void;
@@ -66,8 +45,6 @@ export declare class Node extends Emitter<Topic> {
      */
     absPosition(): [number, number];
     bound(x: number, y: number): boolean;
-<<<<<<< HEAD
-=======
     /**
      * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
      * @param data
@@ -76,7 +53,15 @@ export declare class Node extends Emitter<Topic> {
     isContainer(): boolean;
     isFlex(): boolean;
     isDraggable(): boolean;
->>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
+    getName(): any;
+    getData(): NodeData;
+    getParent(): Node;
+    /**
+     * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
+     * @returns Rect
+     */
+    getRect(): Rect;
+    getBox(): BoxDescriptor;
     getType(): any;
     getX(): any;
     getY(): any;

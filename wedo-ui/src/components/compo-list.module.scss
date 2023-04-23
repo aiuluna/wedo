@@ -4,11 +4,10 @@
 .component-list {
   background : #ececec;
   width : 182px; 
-  height : 100%;
+  height : 100vh;
   flex-shrink: 0;
   position: relative;
   overflow-y: scroll;
-  height : 100%;
   .component-list-inner {
     position : relative;
     h2{

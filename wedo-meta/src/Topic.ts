@@ -13,7 +13,8 @@ export enum Topic {
   NodeGapIndexChanged, // Node的children需要重新排序
   NodePositionMoved, // 节点位置变化
 
-  MouseMoveEventPass,
+  MouseMoveEventPass, // 鼠标移动事件
+  MouseUpEventPass, // 鼠标抬起事件
   MemorizedDataChanged, //缓存数据变更 
   DragDataUpdated,
   NodeChildrenUpdated,

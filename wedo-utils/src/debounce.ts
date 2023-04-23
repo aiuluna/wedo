@@ -7,7 +7,7 @@ declare type FN = (...args: Array<any>) => void
  * @param immediate 立即执行标志
  * @returns 
  */
-export function debounce(fn: FN, delay = 13, immediate = false) {
+export function debounce(fn: FN, delay = 300, immediate = false) {
   let timeId: number | undefined;
   return function (this: any, ...args: Array<any>) {
     const context = this;

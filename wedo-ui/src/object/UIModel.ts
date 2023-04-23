@@ -111,10 +111,12 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
     })
 
     this.describe('处理选中的逻辑', (register) => {
+      // 将当前节点选中，放到editor.selection中
       register([UIStates.Start, UIStates.Selected], UIStates.Selected, UIEvents.EvtSelected, (node: Node) => {
         this.selection.replace(node)
         this.emit(Topic.SelectionChanged)
       })
+      // 取消选中
       register([UIStates.Selected], UIStates.Start, UIEvents.EvtCancelSelect, () => {
         // this.selection.clear()
         // this.emit(Topic.SelectionChanged)
@@ -170,7 +172,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
       }
 
       register(UIStates.Selected, UIStates.Moving, UIEvents.EvtNodeSyncMoving, (node: Node, vec: [number, number]) => {
-
+        console.log('select -> moving')
       })
 
       register(UIStates.Moving, UIStates.Moving, UIEvents.EvtNodeSyncMoving, (node: Node, vec: [number, number]) => {
@@ -271,5 +273,9 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
 
   public clearSelection() {
     this.selection.clear()
+  }
+
+  handleHotKeys(handlers: Array<string>) {
+
   }
 }

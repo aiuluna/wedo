@@ -6,12 +6,12 @@ import { Subscription } from "rxjs";
 type SubscribeGroup = [emitter: Emitter<Topic>, topic: Topic | Topic[]]
 
 // 两种类型 [[emitter, []]], [emitter, []]
-function isGroupArray (groups: SubscribeGroup | SubscribeGroup []): groups is SubscribeGroup[] {
+function isGroupArray(groups: SubscribeGroup | SubscribeGroup[]): groups is SubscribeGroup[] {
   return !(groups[0] as any).emit
 }
 
-const useSubscribe = (group: SubscribeGroup | SubscribeGroup[], callback: (...args: Array<any>) => any ) => {
-  
+const useSubscribe = (group: SubscribeGroup | SubscribeGroup[], callback: (...args: Array<any>) => any) => {
+
   function createSub(sub: SubscribeGroup): Subscription {
     const [emitter, topic] = sub;
     return emitter.on(topic).subscribe(callback)
@@ -27,7 +27,9 @@ const useSubscribe = (group: SubscribeGroup | SubscribeGroup[], callback: (...ar
       subs.push(createSub(group))
     }
 
-    return subs.forEach(s => s.unsubscribe())
+    return () => {
+      subs.forEach(s => s.unsubscribe())
+    }
   }, [])
 }
 

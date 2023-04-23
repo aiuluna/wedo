@@ -1,4 +1,6 @@
-import { Bridge } from "@wedo/meta"
+import { Bridge, Node } from "@wedo/meta"
+import { useContext } from "react"
+import RenderContext from "../render/RenderContext"
 
 export const ListRender = ({
   bridge,
@@ -7,10 +9,23 @@ export const ListRender = ({
   gapIndex
 }: {
   bridge: Bridge,
-  children?: JSX.Element,
+  children?: Array<Node | string>,
   childrenProps?: any,
   gapIndex?: number
 }) => {
+  const ctx = useContext(RenderContext);
+  if (!children) children = bridge.getNode().getChildren();
+
   return <>
+    {children.map((childNode, idx) => {
+      if (typeof childNode === 'string') {
+
+      } else {
+        return bridge.render('react', childNode, {
+          key: childNode.getId() + '',
+          childrenProps
+        })
+      }
+    })}
   </>
 }

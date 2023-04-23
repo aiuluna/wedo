@@ -1,4 +1,3 @@
-
 // @ts-ignore
 const modules = await import.meta.glob('../localComponents/*.tsx');
 const localComponentsMap: { [key: string]: React.ComponentClass } = {}

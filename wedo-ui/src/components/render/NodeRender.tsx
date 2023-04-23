@@ -7,6 +7,7 @@ import useSubscribe from "../../hooks/useSubscribe"
 import Draggable from "../draggable/Draggable"
 import { UIEvents } from "../../object/uiModel.types"
 import { Bridge, RenderOptions } from '@wedo/meta'
+import Selectable from "../selectable/Selectable"
 
 function __render(node: Node, options: RenderOptions) {
   const reactElement = (
@@ -49,6 +50,15 @@ function Styled({
     node.mount(ref.current!, cord)
   }, [])
 
+  // 鼠标移动事件在此处绑定监听，panel中监听到mousemove事件后会对选中的节点触发移动事件
+  useSubscribe([node, Topic.MouseMoveEventPass], (e: React.MouseEvent) => {
+    dragHandlers && dragHandlers.onMouseMove && dragHandlers.onMouseMove(e)
+  })
+
+  useSubscribe([node, Topic.MouseUpEventPass], (e: React.MouseEvent) => {
+    dragHandlers && dragHandlers.onMouseUp && dragHandlers.onMouseUp(e)
+  })
+
   const box = node.getBox();
 
   return <div
@@ -67,12 +77,13 @@ function Styled({
     }}
   >
     {React.cloneElement(children, {
-      ...children.props
+      ...children.props,
+      onMouseDown: dragHandlers?.onMouseDown,
     })}
   </div>
 }
 
-const InnerRender = ({ node, C, inheritProps }: NodeRenderProps & { C: React.ComponentType }) => {
+const InnerRender = ({ node, C, inheritProps }: NodeRenderProps & { C: any }) => {
   const context = useContext(RenderContext);
   const editor = context.editor!;
   const passProps = node.getPassProps().toJS();
@@ -92,6 +103,14 @@ const InnerRender = ({ node, C, inheritProps }: NodeRenderProps & { C: React.Com
     setVer(x => x + 1)
   })
 
+  function selectionChangeHandler(selected: boolean) {
+    if (selected) {
+      editor.dispatch(UIEvents.EvtSelected, node)
+    } else {
+      editor.dispatch(UIEvents.EvtCancelSelect, node)
+    }
+  }
+
   const box = node.getBox()
   return <Draggable
     style={inheritProps?.style}
@@ -104,19 +123,22 @@ const InnerRender = ({ node, C, inheritProps }: NodeRenderProps & { C: React.Com
     }}
     onDragEnd={e => {
       if (node.isDraggable()) {
+        console.log('dispatch UIEvents.EvtNodeMoved' + UIEvents.EvtNodeMoved)
         editor?.dispatch(UIEvents.EvtNodeMoved, node, [e.diffX, e.diffY])
       }
     }}
   >
     <Styled node={node}>
-      <C {...passProps} />
+      <Selectable node={node} onSelectChanged={selectionChangeHandler}>
+        <C {...passProps} bridge={bridge} />
+      </Selectable>
     </Styled>
   </Draggable>
 }
 
 const NodeRender = ({ node, inheritProps }: NodeRenderProps) => {
 
-  const [localComponent, setLocalComponent] = useState<React.ComponentType | null>(null);
+  const [localComponent, setLocalComponent] = useState<React.ComponentType<{}> | null>(null);
 
   useEffect(() => {
     loadLocal()
@@ -132,7 +154,7 @@ const NodeRender = ({ node, inheritProps }: NodeRenderProps) => {
   }
 
   if (!localComponent) return null;
-  return <InnerRender node={node} C={localComponent} inheritProps={inheritProps}/>
+  return <InnerRender node={node} C={localComponent} inheritProps={inheritProps} />
 }
 
 

@@ -48,33 +48,6 @@ export class Node extends Emitter {
     getMountPoint() {
         return this.mountPoint;
     }
-    getName() {
-        return this.data.get('name');
-    }
-    getData() {
-        return this.data;
-    }
-    getParent() {
-        return this.data.get("parent");
-    }
-    getPassProps() {
-        return this.data.get('passProps');
-    }
-    getStyleObject() {
-        return this.data.get('style');
-    }
-    /**
-     * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
-     * @returns Rect
-     */
-    getRect() {
-        if (!this.mountPoint)
-            return Rect.ZERO;
-        return this.mountPoint.getRect();
-    }
-    getBox() {
-        return this.data.get('box');
-    }
     addToRelative(node, position) {
         if (!position) {
             position = [node.getBox().left.toNumber(), node.getBox().top.toNumber()];
@@ -114,19 +87,6 @@ export class Node extends Emitter {
             return children;
         });
     }
-<<<<<<< HEAD
-    isFlex() {
-        return this.getBox().display === 'flex';
-    }
-    isContainer() {
-        return this.getBox().container;
-    }
-    isDraggable() {
-        const name = this.getName();
-        return this.getBox().movable && name !== 'root' && name !== 'page';
-    }
-=======
->>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
     add(child) {
         // this.data = this.data.update('children', children => children.push(child))
         if (child === this) {
@@ -193,8 +153,6 @@ export class Node extends Emitter {
             return true;
         return this.getRect().bound(x, y);
     }
-<<<<<<< HEAD
-=======
     /**
      * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
      * @param data
@@ -213,7 +171,27 @@ export class Node extends Emitter {
         const name = this.getName();
         return this.getBox().movable && name !== 'page' && name !== 'root';
     }
->>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
+    getName() {
+        return this.data.get('name');
+    }
+    getData() {
+        return this.data;
+    }
+    getParent() {
+        return this.data.get("parent");
+    }
+    /**
+     * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
+     * @returns Rect
+     */
+    getRect() {
+        if (!this.mountPoint)
+            return Rect.ZERO;
+        return this.mountPoint.getRect();
+    }
+    getBox() {
+        return this.data.get('box');
+    }
     getType() {
         return this.data.get('type');
     }

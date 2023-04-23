@@ -10,11 +10,9 @@ export var Topic;
     Topic[Topic["SelectionChanged"] = 7] = "SelectionChanged";
     Topic[Topic["NodeGapIndexChanged"] = 8] = "NodeGapIndexChanged";
     Topic[Topic["NodePositionMoved"] = 9] = "NodePositionMoved";
-<<<<<<< HEAD
     Topic[Topic["MouseMoveEventPass"] = 10] = "MouseMoveEventPass";
-=======
-    Topic[Topic["MemorizedDataChanged"] = 10] = "MemorizedDataChanged";
->>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
-    Topic[Topic["DragDataUpdated"] = 11] = "DragDataUpdated";
-    Topic[Topic["NodeChildrenUpdated"] = 12] = "NodeChildrenUpdated";
+    Topic[Topic["MouseUpEventPass"] = 11] = "MouseUpEventPass";
+    Topic[Topic["MemorizedDataChanged"] = 12] = "MemorizedDataChanged";
+    Topic[Topic["DragDataUpdated"] = 13] = "DragDataUpdated";
+    Topic[Topic["NodeChildrenUpdated"] = 14] = "NodeChildrenUpdated";
 })(Topic || (Topic = {}));

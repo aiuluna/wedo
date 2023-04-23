@@ -8,6 +8,7 @@ import "./render.scss"
 import { UIEvents } from "../../object/uiModel.types"
 import Shadow from "./Shadow"
 import { Topic } from "@wedo/meta"
+import { Rect, debounce } from "@wedo/utils"
 
 type VecRef = {
   vec: [number, number] | null
@@ -28,6 +29,20 @@ export default ({ children, editor }: {
   }, [])
 
   useEffect(() => {
+    // 设置cord的大小位置
+    if (rect !== Rect.ZERO) {
+      renderContext.cord.setViewPort(rect)
+    }
+    let keys = new Set<string>()
+    window.addEventListener('keydown', (e) => {
+      keys.add(e.key)
+    })
+
+    window.addEventListener('keyup', debounce((e) => {
+      // editor.h
+      keys.delete(e.key)
+      keys.clear()
+    }, 100))
 
   }, [rect])
 
@@ -40,9 +55,10 @@ export default ({ children, editor }: {
           // 触发鼠标移动事件
           editor.dispatch(UIEvents.EvtMoving, [e.clientX, e.clientY])
 
-          // editor.selection.forEach((node) => {
-          //   node.emit(Topic.MouseMoveEventPass, e)
-          // })
+          // 触发选中的所有node的鼠标移动事件
+          editor.selection.forEach((node) => {
+            node.emit(Topic.MouseMoveEventPass, e)
+          })
 
           // 处理拖拽新元素事件
           const meta = editor.dropComponentMeta;
@@ -57,15 +73,32 @@ export default ({ children, editor }: {
           e.preventDefault()
           vec.current.vec = null;
           startVec.current.vec = null;
+          editor.selection.forEach(node => {
+            node.emit(Topic.MouseUpEventPass, e)
+          })
+          editor.emit(Topic.MouseUpEventPass, e)
+
           editor.dispatch(UIEvents.EvtDrop)
           setPosition([0, 0])
         }}
       >
-        <Shadow
-          position={position}
-          meta={editor.dropComponentMeta}
-        />
-        {children}
+        <div
+          className={classes["panel-scrollview"]}
+          ref={ref}
+          onScroll={(e) => {
+            renderContext.cord.updateScroll(
+              ref.current!.scrollLeft,
+              ref.current!.scrollTop
+            )
+          }}
+        >
+          <Shadow
+            position={position}
+            meta={editor.dropComponentMeta}
+          />
+          {children}
+        </div>
+
       </div>
 
     </RenderContext.Provider>
