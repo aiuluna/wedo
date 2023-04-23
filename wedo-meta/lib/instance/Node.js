@@ -127,7 +127,7 @@ export class Node extends Emitter {
     absRect() {
         const rect = this.getRect();
         const [x, y] = this.absPosition();
-        return new Rect(x, y, rect.left, rect.height);
+        return new Rect(x, y, rect.width, rect.height);
     }
     /**
      * 获取当前节点的绝对定位坐标
@@ -169,7 +169,11 @@ export class Node extends Emitter {
     }
     isDraggable() {
         const name = this.getName();
-        return this.getBox().movable && name !== 'page' && name !== 'root';
+        return this.getBox().movable && name !== 'root' && name !== 'page';
+    }
+    isResizable() {
+        const name = this.getName();
+        return this.getBox().resizable && name !== 'root' && name !== 'page';
     }
     getName() {
         return this.data.get('name');

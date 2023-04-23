@@ -1,7 +1,6 @@
 export enum Topic {
   RemoteComponentsLoaded,
 
-  PropertyChanged,
   NodePropUpdated, // node属性已更新
 
   Resized, // 调整大小的结束状态
@@ -16,6 +15,10 @@ export enum Topic {
   MouseMoveEventPass, // 鼠标移动事件
   MouseUpEventPass, // 鼠标抬起事件
   MemorizedDataChanged, //缓存数据变更 
+  
+  PropertyChanged, // 属性值PropItem已更新
+  PropertyModelUpdated, // 属性模型PropEditor已更新
+
   DragDataUpdated,
   NodeChildrenUpdated,
   

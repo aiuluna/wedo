@@ -249,7 +249,6 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
           )
 
           resizeNode.emit(Topic.Resized)
-
         }
       })
 

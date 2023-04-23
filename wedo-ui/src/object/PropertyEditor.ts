@@ -5,15 +5,24 @@ import Selection from "./Selection";
 import { UIModel } from "./UIModel";
 
 export default class PropertyEditor extends Emitter<Topic>{
-  private groups: Array<GroupMeta>
-  private props: { [key: string]: PropItem }
-  // selection: Selection;
+  groups: Array<GroupMeta>
+  props: { [key: string]: PropItem }
+  selection: Selection;
 
   constructor(editor: UIModel) {
     super()
     this.groups = [];
     this.props = {};
-    // this.selection = editor.selection;
+    this.selection = editor.selection;
+
+    editor.on(Topic.SelectionChanged).subscribe(() => {
+      // 重置为新的node的propEditor
+      this.handleSelectionChange(this.selection)
+      this.emit(Topic.PropertyModelUpdated)
+      this.getProps().forEach(prop => {
+        prop.update()
+      })
+    })
 
     editor.on([Topic.Resized, Topic.NodeMoved]).subscribe(() => {
       this.getProps().forEach(prop => {
@@ -27,6 +36,10 @@ export default class PropertyEditor extends Emitter<Topic>{
     return Object.values(this.props)
   }
 
+  /**
+   * 根据node将group和props数据都合并到this.groups和this.props中
+   * @param node 
+   */
   addNode(node: Node) {
     const meta = node.meta;
 
@@ -49,5 +62,13 @@ export default class PropertyEditor extends Emitter<Topic>{
         this.props[key] = new PropItem(prop, node)
       }
     }
+  }
+
+  handleSelectionChange(selection: Selection) {
+    this.groups = [];
+    this.props = {};
+    selection.forEach(node => {
+      this.addNode(node)
+    })
   }
 }

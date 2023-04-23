@@ -26,7 +26,7 @@ export class PropMeta {
             return data.get('rect')[path[1]];
         }
         if (path[0] === 'box') {
-            return data.get('rect')[path[1]];
+            return data.get('box')[path[1]];
         }
         return data.getIn(path);
     }

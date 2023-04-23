@@ -48,7 +48,6 @@ editor:
           type: integer
           default: 3px
           path: passProps.style.paddingLeft
-
     - name: font
       title: 字体
       props:

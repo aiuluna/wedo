@@ -17,7 +17,7 @@ export interface PropConfig {
 export class PropMeta {
   disable?: boolean;
   path: Array<string>;
-  config: PropConfig; 
+  config: PropConfig;
   constructor(config: PropConfig) {
     this.config = config;
     this.path = config.path.split('.');
@@ -42,9 +42,9 @@ export class PropMeta {
   static getPropValue(path: Array<string>, data: NodeData) {
     if (path[0] === 'rect') {
       return data.get('rect')[path[1]]
-    } 
+    }
     if (path[0] === 'box') {
-      return data.get('rect')[path[1]]
+      return data.get('box')[path[1]]
     }
     return data.getIn(path)
   }

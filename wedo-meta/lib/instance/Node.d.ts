@@ -53,6 +53,7 @@ export declare class Node extends Emitter<Topic> {
     isContainer(): boolean;
     isFlex(): boolean;
     isDraggable(): boolean;
+    isResizable(): boolean;
     getName(): any;
     getData(): NodeData;
     getParent(): Node;

@@ -165,7 +165,7 @@ export class Node extends Emitter<Topic> {
   public absRect(): Rect {
     const rect = this.getRect();
     const [x, y] = this.absPosition();
-    return new Rect(x, y, rect.left, rect.height)
+    return new Rect(x, y, rect.width, rect.height)
   }
 
   /**
@@ -211,7 +211,12 @@ export class Node extends Emitter<Topic> {
 
   public isDraggable() {
     const name = this.getName();
-    return this.getBox().movable && name !== 'page' && name !== 'root'
+    return this.getBox().movable && name !== 'root' && name !== 'page'
+  }
+
+  public isResizable() {
+    const name = this.getName();
+    return  this.getBox().resizable && name !== 'root' && name !== 'page'
   }
 
 

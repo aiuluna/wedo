@@ -4,6 +4,8 @@ import { MouseEventHandler, useContext, useEffect, useMemo, useState } from "rea
 import styles from './selectable.module.scss'
 import RenderContext from "../render/RenderContext";
 import useSubscribe from "../../hooks/useSubscribe";
+import Resizer from "../../object/Resizer";
+import { UIEvents } from "../../object/uiModel.types";
 
 type SelectionProps = {
   node: Node,
@@ -61,6 +63,19 @@ const Selectable = ({ node, onSelectChanged, children, onMouseDown, onMouseUp }:
       }}
     />
     {children}
+    {selectedValue && node.isResizable() && Resizer.resizerdata.map(([name, type]) => {
+      return (<div
+        key={name + ""}
+        onMouseDown={e => {
+          e.preventDefault()
+          e.stopPropagation()
+          ctx.editor?.dispatch(UIEvents.EvtStartResize, type, [e.clientX, e.clientY], node)
+        }}
+        data-cube={type}
+        className={`${styles.cube} ${
+          styles["cube_" + name]
+        }`}/>)
+    })}
   </div>
 }
 
