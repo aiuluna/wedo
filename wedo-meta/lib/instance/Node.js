@@ -1,6 +1,8 @@
+import { fromJS } from 'immutable';
 import { Emitter, Rect, Logger } from "@wedo/utils";
 import { Topic } from "../Topic";
 import { PropMeta } from '../meta/PropMeta';
+import { MountPoint } from './MountPoint';
 export class Node extends Emitter {
     data;
     mountPoint;
@@ -39,6 +41,9 @@ export class Node extends Emitter {
         this.data = PropMeta.setPropValue(path, this.data, value);
         this.emit(Topic.NodePropUpdated);
     }
+    mount(ele, cord) {
+        this.mountPoint = new MountPoint(ele, this, cord);
+    }
     getMountPoint() {
         return this.mountPoint;
     }
@@ -50,6 +55,12 @@ export class Node extends Emitter {
     }
     getParent() {
         return this.data.get("parent");
+    }
+    getPassProps() {
+        return this.data.get('passProps');
+    }
+    getStyleObject() {
+        return this.data.get('style');
     }
     /**
      * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
@@ -105,6 +116,13 @@ export class Node extends Emitter {
     isFlex() {
         return this.getBox().display === 'flex';
     }
+    isContainer() {
+        return this.getBox().container;
+    }
+    isDraggable() {
+        const name = this.getName();
+        return this.getBox().movable && name !== 'root' && name !== 'page';
+    }
     add(child) {
         // this.data = this.data.update('children', children => children.push(child))
         if (child === this) {
@@ -134,6 +152,9 @@ export class Node extends Emitter {
         if (node !== null)
             this.level = node.level + 1;
         this.setInstanceData('parent', node);
+    }
+    setPassProps(passObject) {
+        this.setInstanceData("passProps", fromJS(passObject));
     }
     /**
      * 获取当前节点的绝对定位的Rect
@@ -167,9 +188,6 @@ export class Node extends Emitter {
         if (!this.getParent())
             return true;
         return this.getRect().bound(x, y);
-    }
-    isContainer() {
-        return this.getBox().container;
     }
     getType() {
         return this.data.get('type');

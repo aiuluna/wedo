@@ -1,9 +1,11 @@
+import { Map as ImmutableMap } from 'immutable';
 import { Emitter, Rect, Logger } from "@wedo/utils";
 import { Topic } from "../Topic";
 import { NodeData } from '../standard.types';
 import { ComponentMeta } from '../meta/ComponentMeta';
 import { BoxDescriptor } from '../BoxDescriptor';
 import { MountPoint } from './MountPoint';
+import { CordNew } from './Cord.new';
 export declare class Node extends Emitter<Topic> {
     private data;
     private mountPoint?;
@@ -15,10 +17,13 @@ export declare class Node extends Emitter<Topic> {
     setInstanceData(key: string, value: any): void;
     updateInstanceData(key: string, updator: (value: any) => any): void;
     updateInstanceByPath(path: Array<string>, value: any): void;
+    mount(ele: HTMLElement, cord: CordNew): void;
     getMountPoint(): MountPoint | undefined;
     getName(): any;
     getData(): NodeData;
     getParent(): Node;
+    getPassProps(): ImmutableMap<string, any>;
+    getStyleObject(): ImmutableMap<string, any>;
     /**
      * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
      * @returns Rect
@@ -35,10 +40,13 @@ export declare class Node extends Emitter<Topic> {
     setAllowDrag(allowDrag: boolean): void;
     private sortChildren;
     isFlex(): boolean;
+    isContainer(): boolean;
+    isDraggable(): boolean;
     add(child: Node): void;
     remove(node: Node): void;
     setChildren(children: Array<Node>): void;
     setParent(node: Node | null): void;
+    setPassProps(passObject: any): void;
     /**
      * 获取当前节点的绝对定位的Rect
      * @returns
@@ -50,7 +58,6 @@ export declare class Node extends Emitter<Topic> {
      */
     absPosition(): [number, number];
     bound(x: number, y: number): boolean;
-    isContainer(): boolean;
     getType(): any;
     getX(): any;
     getY(): any;

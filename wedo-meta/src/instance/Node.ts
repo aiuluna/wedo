@@ -1,4 +1,4 @@
-import { List, Map as ImmutableMap } from 'immutable'
+import { List, Map as ImmutableMap, fromJS } from 'immutable'
 import { Emitter, Rect, Logger } from "@wedo/utils";
 import { Topic } from "../Topic";
 import { NodeData } from '../standard.types'
@@ -6,6 +6,7 @@ import { ComponentMeta } from '../meta/ComponentMeta';
 import { BoxDescriptor } from '../BoxDescriptor';
 import { PropMeta } from '../meta/PropMeta';
 import { MountPoint } from './MountPoint';
+import { CordNew } from './Cord.new';
 
 export class Node extends Emitter<Topic> {
 
@@ -50,6 +51,10 @@ export class Node extends Emitter<Topic> {
     this.emit(Topic.NodePropUpdated)
   }
 
+  public mount(ele: HTMLElement, cord: CordNew) {
+    this.mountPoint = new MountPoint(ele, this, cord)
+  }
+
   public getMountPoint(): MountPoint | undefined {
     return this.mountPoint;
   }
@@ -64,6 +69,14 @@ export class Node extends Emitter<Topic> {
 
   public getParent(): Node {
     return this.data.get("parent")
+  }
+
+  public getPassProps(): ImmutableMap<string, any> {
+    return this.data.get('passProps')
+  }
+
+  public getStyleObject(): ImmutableMap<string, any> {
+    return this.data.get('style')
   }
 
   /**
@@ -126,6 +139,14 @@ export class Node extends Emitter<Topic> {
     return this.getBox().display === 'flex'
   }
 
+  public isContainer() {
+    return this.getBox().container
+  }
+
+  public isDraggable() {
+    const name = this.getName()
+    return this.getBox().movable && name !== 'root' && name !== 'page'
+  }
 
   public add(child: Node) {
     // this.data = this.data.update('children', children => children.push(child))
@@ -175,6 +196,10 @@ export class Node extends Emitter<Topic> {
     this.setInstanceData('parent', node)
   }
 
+  public setPassProps(passObject: any) {
+    this.setInstanceData("passProps", fromJS(passObject))
+  }
+
   /**
    * 获取当前节点的绝对定位的Rect
    * @returns 
@@ -209,10 +234,6 @@ export class Node extends Emitter<Topic> {
     return this.getRect().bound(x, y)
   }
 
-  public isContainer() {
-    return this.getBox().container
-  }
-
   public getType() {
     return this.data.get('type')
   }
@@ -234,12 +255,12 @@ export class Node extends Emitter<Topic> {
   }
 
   public getChildren() {
-    const children : Array<Node> = this.data.get("children").concat()
+    const children: Array<Node> = this.data.get("children").concat()
     const box = this.getBox()
-    if(box.display === 'flex' && box.flexDirection === 'row') {
+    if (box.display === 'flex' && box.flexDirection === 'row') {
       children.sort((a, b) => a.absRect().left - b.absRect().left)
     }
-    if(box.display === 'flex' && box.flexDirection === 'column') {
+    if (box.display === 'flex' && box.flexDirection === 'column') {
       children.sort((a, b) => a.absRect().top - b.absRect().top)
     }
     return children
