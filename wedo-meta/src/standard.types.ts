@@ -54,3 +54,11 @@ export type JsonPage = {
 }
 
 export type NodeType = Node 
+
+export type RenderOptions = {
+  key? : string,
+  childrenProps? : Record<string, any>,
+	ele ? : HTMLElement
+}
+
+export type RenderFor = 'react' | 'vue' | 'dom'

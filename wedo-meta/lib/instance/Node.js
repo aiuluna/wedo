@@ -5,10 +5,11 @@ import { PropMeta } from '../meta/PropMeta';
 import { MountPoint } from './MountPoint';
 export class Node extends Emitter {
     data;
-    mountPoint;
     meta;
+    mountPoint;
     logger;
     level = 0;
+    tmpData;
     // constructor(type: string, x: number, y: number, w: number, h: number) {
     //   super()
     //   this.data = ImmutableMap({
@@ -113,6 +114,7 @@ export class Node extends Emitter {
             return children;
         });
     }
+<<<<<<< HEAD
     isFlex() {
         return this.getBox().display === 'flex';
     }
@@ -123,6 +125,8 @@ export class Node extends Emitter {
         const name = this.getName();
         return this.getBox().movable && name !== 'root' && name !== 'page';
     }
+=======
+>>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
     add(child) {
         // this.data = this.data.update('children', children => children.push(child))
         if (child === this) {
@@ -189,6 +193,27 @@ export class Node extends Emitter {
             return true;
         return this.getRect().bound(x, y);
     }
+<<<<<<< HEAD
+=======
+    /**
+     * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
+     * @param data
+     */
+    memory(data) {
+        this.tmpData = data;
+        this.emit(Topic.MemorizedDataChanged);
+    }
+    isContainer() {
+        return this.getBox().container;
+    }
+    isFlex() {
+        return this.getBox().display === 'flex';
+    }
+    isDraggable() {
+        const name = this.getName();
+        return this.getBox().movable && name !== 'page' && name !== 'root';
+    }
+>>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
     getType() {
         return this.data.get('type');
     }
@@ -215,6 +240,21 @@ export class Node extends Emitter {
         }
         return children;
     }
+    getPassProps() {
+        return this.data.get('passProps');
+    }
+    getStyleObject() {
+        return this.data.get('style').toJS();
+    }
+    getMemorizedData() {
+        if (typeof this.tmpData !== 'undefined') {
+            return this.tmpData;
+        }
+        if (this.getParent()) {
+            return this.getParent().getMemorizedData();
+        }
+        return null;
+    }
     setXY(vec) {
         this.getBox().left.setValue(vec[0]);
         this.getBox().top.setValue(vec[1]);
@@ -233,6 +273,10 @@ export class Node extends Emitter {
         box.top.setValue(top);
         box.width.setValue(width);
         box.height.setValue(height);
+    }
+    setPassPropValue(key, value) {
+        const passProps = this.getPassProps().setIn(key, value);
+        this.setInstanceData('passProps', passProps);
     }
     /**
      * 根据mountPoint的rect更新节点的盒子模型

@@ -9,11 +9,13 @@ import { MountPoint } from './MountPoint';
 import { CordNew } from './Cord.new';
 
 export class Node extends Emitter<Topic> {
+  
+  meta: ComponentMeta;
 
   private mountPoint?: MountPoint;
-  meta: ComponentMeta;
-  logger: Logger;
-  level: number = 0;
+  private logger: Logger;
+  private level: number = 0;
+  private tmpData: any;
   // constructor(type: string, x: number, y: number, w: number, h: number) {
   //   super()
   //   this.data = ImmutableMap({
@@ -59,38 +61,6 @@ export class Node extends Emitter<Topic> {
     return this.mountPoint;
   }
 
-  public getName() {
-    return this.data.get('name')
-  }
-
-  public getData(): NodeData {
-    return this.data
-  }
-
-  public getParent(): Node {
-    return this.data.get("parent")
-  }
-
-  public getPassProps(): ImmutableMap<string, any> {
-    return this.data.get('passProps')
-  }
-
-  public getStyleObject(): ImmutableMap<string, any> {
-    return this.data.get('style')
-  }
-
-  /**
-   * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
-   * @returns Rect
-   */
-  public getRect(): Rect {
-    if (!this.mountPoint) return Rect.ZERO;
-    return this.mountPoint.getRect()
-  }
-
-  public getBox(): BoxDescriptor {
-    return this.data.get('box')
-  }
 
   public addToRelative(node: Node, position?: [number, number]) {
     if (!position) {
@@ -135,18 +105,6 @@ export class Node extends Emitter<Topic> {
     })
   }
 
-  public isFlex() {
-    return this.getBox().display === 'flex'
-  }
-
-  public isContainer() {
-    return this.getBox().container
-  }
-
-  public isDraggable() {
-    const name = this.getName()
-    return this.getBox().movable && name !== 'root' && name !== 'page'
-  }
 
   public add(child: Node) {
     // this.data = this.data.update('children', children => children.push(child))
@@ -233,6 +191,55 @@ export class Node extends Emitter<Topic> {
     if (!this.getParent()) return true;
     return this.getRect().bound(x, y)
   }
+  
+  /**
+   * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
+   * @param data 
+   */
+  public memory(data: any) {
+    this.tmpData = data;
+    this.emit(Topic.MemorizedDataChanged)
+  }
+
+  public isContainer() {
+    return this.getBox().container
+  }
+
+  public isFlex() {
+    return this.getBox().display === 'flex'
+  }
+
+  public isDraggable() {
+    const name = this.getName();
+    return this.getBox().movable && name !== 'page' && name !== 'root'
+  }
+
+
+  public getName() {
+    return this.data.get('name')
+  }
+
+  public getData(): NodeData {
+    return this.data
+  }
+
+  public getParent(): Node {
+    return this.data.get("parent")
+  }
+
+
+  /**
+   * 获取当前node的MountPoint的Rect,没有挂载则返回Rect.ZERO
+   * @returns Rect
+   */
+  public getRect(): Rect {
+    if (!this.mountPoint) return Rect.ZERO;
+    return this.mountPoint.getRect()
+  }
+
+  public getBox(): BoxDescriptor {
+    return this.data.get('box')
+  }
 
   public getType() {
     return this.data.get('type')
@@ -266,6 +273,24 @@ export class Node extends Emitter<Topic> {
     return children
   }
 
+  public getPassProps(): ImmutableMap<string, any> {
+    return this.data.get('passProps')
+  }
+
+  public getStyleObject() {
+    return this.data.get('style').toJS()
+  }
+ 
+  public getMemorizedData(): any {
+    if (typeof this.tmpData !== 'undefined') {
+      return this.tmpData
+    }
+    if (this.getParent()) {
+      return this.getParent().getMemorizedData()
+    }
+    return null
+  }
+
   public setXY(vec: [number, number]) {
     this.getBox().left.setValue(vec[0])
     this.getBox().top.setValue(vec[1])
@@ -286,6 +311,11 @@ export class Node extends Emitter<Topic> {
     box.top.setValue(top);
     box.width.setValue(width);
     box.height.setValue(height);
+  }
+
+  public setPassPropValue(key: Array<string>, value: any) {
+    const passProps = this.getPassProps().setIn(key, value);
+    this.setInstanceData('passProps', passProps);
   }
 
   /**

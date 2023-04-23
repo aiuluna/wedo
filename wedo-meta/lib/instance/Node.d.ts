@@ -1,5 +1,9 @@
 import { Map as ImmutableMap } from 'immutable';
+<<<<<<< HEAD
 import { Emitter, Rect, Logger } from "@wedo/utils";
+=======
+import { Emitter, Rect } from "@wedo/utils";
+>>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
 import { Topic } from "../Topic";
 import { NodeData } from '../standard.types';
 import { ComponentMeta } from '../meta/ComponentMeta';
@@ -8,10 +12,11 @@ import { MountPoint } from './MountPoint';
 import { CordNew } from './Cord.new';
 export declare class Node extends Emitter<Topic> {
     private data;
-    private mountPoint?;
     meta: ComponentMeta;
-    logger: Logger;
-    level: number;
+    private mountPoint?;
+    private logger;
+    private level;
+    private tmpData;
     constructor(meta: ComponentMeta, data: NodeData);
     getId(): number;
     setInstanceData(key: string, value: any): void;
@@ -39,9 +44,12 @@ export declare class Node extends Emitter<Topic> {
     addToAbsolute(node: Node, position?: [number, number]): void;
     setAllowDrag(allowDrag: boolean): void;
     private sortChildren;
+<<<<<<< HEAD
     isFlex(): boolean;
     isContainer(): boolean;
     isDraggable(): boolean;
+=======
+>>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
     add(child: Node): void;
     remove(node: Node): void;
     setChildren(children: Array<Node>): void;
@@ -58,12 +66,26 @@ export declare class Node extends Emitter<Topic> {
      */
     absPosition(): [number, number];
     bound(x: number, y: number): boolean;
+<<<<<<< HEAD
+=======
+    /**
+     * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
+     * @param data
+     */
+    memory(data: any): void;
+    isContainer(): boolean;
+    isFlex(): boolean;
+    isDraggable(): boolean;
+>>>>>>> b5aea0ee0dd6f8de5ee09d790eabfd6f7e938511
     getType(): any;
     getX(): any;
     getY(): any;
     getW(): any;
     getH(): any;
     getChildren(): Node[];
+    getPassProps(): ImmutableMap<string, any>;
+    getStyleObject(): any;
+    getMemorizedData(): any;
     setXY(vec: [number, number]): void;
     /**
      * 根据偏移量设置xy
@@ -71,6 +93,7 @@ export declare class Node extends Emitter<Topic> {
      */
     setXYByVec(vec: [number, number]): void;
     setXYWH(left: number, top: number, width: number, height: number): void;
+    setPassPropValue(key: Array<string>, value: any): void;
     /**
      * 根据mountPoint的rect更新节点的盒子模型
      */

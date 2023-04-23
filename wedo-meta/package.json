@@ -25,5 +25,7 @@
   },
   "dependencies": {
     "immutable": "^4.3.0"
+  },
+  "devDependencies": {
   }
 }

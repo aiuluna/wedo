@@ -6,7 +6,18 @@ import RenderContext from "./RenderContext"
 import useSubscribe from "../../hooks/useSubscribe"
 import Draggable from "../draggable/Draggable"
 import { UIEvents } from "../../object/uiModel.types"
+import { Bridge, RenderOptions } from '@wedo/meta'
 
+function __render(node: Node, options: RenderOptions) {
+  const reactElement = (
+    <NodeRender
+      node={node}
+      key={options.key}
+      inheritProps={options.childrenProps}
+    />
+  )
+  return reactElement;
+}
 
 /**
  * 生成node节点的真实挂载点
@@ -63,9 +74,10 @@ function Styled({
 
 const InnerRender = ({ node, C, inheritProps }: NodeRenderProps & { C: React.ComponentType }) => {
   const context = useContext(RenderContext);
-  const editor = context.editor;
+  const editor = context.editor!;
   const passProps = node.getPassProps().toJS();
-
+  const bridge = new Bridge(node, editor.page, 'editor')
+  bridge.renderForReact = __render
   const [_, setVer] = useState(0)
 
   useSubscribe([
@@ -102,7 +114,7 @@ const InnerRender = ({ node, C, inheritProps }: NodeRenderProps & { C: React.Com
   </Draggable>
 }
 
-const NodeRender = ({ node }: NodeRenderProps) => {
+const NodeRender = ({ node, inheritProps }: NodeRenderProps) => {
 
   const [localComponent, setLocalComponent] = useState<React.ComponentType | null>(null);
 
@@ -120,7 +132,7 @@ const NodeRender = ({ node }: NodeRenderProps) => {
   }
 
   if (!localComponent) return null;
-  return <InnerRender node={node} C={localComponent} />
+  return <InnerRender node={node} C={localComponent} inheritProps={inheritProps}/>
 }
 
 
