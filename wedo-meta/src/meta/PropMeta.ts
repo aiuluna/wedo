@@ -4,7 +4,7 @@ export interface PropConfig {
   name: string;
   label?: string;
   props?: any;
-  disable?: boolean;
+  disabled?: boolean;
   type: string;
   path: string;
   default?: any;
@@ -15,7 +15,7 @@ export interface PropConfig {
 }
 
 export class PropMeta {
-  disable?: boolean;
+  disabled?: boolean;
   path: Array<string>;
   config: PropConfig;
   constructor(config: PropConfig) {

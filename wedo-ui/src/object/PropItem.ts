@@ -5,7 +5,7 @@ export default class PropItem extends Emitter<Topic>{
   meta: PropMeta;
   // Node可以嵌套，所以会有多个node属性的合并
   nodes: Array<Node>;
-  disable: boolean;
+  disabled: boolean;
   value: any;
 
   constructor(meta: PropMeta, node: Node) {
@@ -13,7 +13,7 @@ export default class PropItem extends Emitter<Topic>{
     this.meta = meta;
     this.nodes = [];
     this.nodes.push(node);
-    this.disable = meta.disable || false;
+    this.disabled = meta.disabled || false;
     this.value = PropMeta.getPropValue(meta.path, node.getData())
   }
 
@@ -25,13 +25,13 @@ export default class PropItem extends Emitter<Topic>{
   merge(meta: PropMeta, node: Node) {
     const value = PropMeta.getPropValue(meta.path, node.getData());
     if (value !== this.value) {
-      this.disable = true
+      this.disabled = true
     }
     this.nodes.push(node)
   }
 
   update() {
-    if (this.disable) return;
+    if (this.disabled) return;
     if (this.nodes.length > 0) {
       this.value = PropMeta.getPropValue(this.meta.path, this.nodes[0].getData())      
     }

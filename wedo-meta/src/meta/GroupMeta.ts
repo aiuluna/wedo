@@ -3,7 +3,7 @@ import { PropConfig } from "./PropMeta";
 export interface GroupConfig {
   name: string;
   title: string;
-  disable?: boolean;
+  disabled?: boolean;
   style: any;
   props?: Array<PropConfig>;
 }
@@ -11,10 +11,9 @@ export interface GroupConfig {
 export class GroupMeta {
   name: string;
   title: string;
-  disable?: boolean;
+  disabled?: boolean;
   style: any;
-  // todo ???为什么只要key
-  propKeys: Set<string>;
+  propKeys: Set<string>; // 用来筛选当前group的name归属
 
   private constructor() {
     this.name = '';
@@ -27,7 +26,7 @@ export class GroupMeta {
     const group = new GroupMeta();
     group.name = config.name;
     group.title = config.title;
-    group.disable = config.disable || false;
+    group.disabled = config.disabled || false;
     group.style = config.style;
     if (config.props) {
       config.props.forEach(prop => {
@@ -44,7 +43,7 @@ export class GroupMeta {
     g.name = this.name;
     g.title = this.title;
     g.style = this.style;
-    g.disable = this.disable;
+    g.disabled = this.disabled;
     g.propKeys = new Set([...this.propKeys]);
     return g;
   }

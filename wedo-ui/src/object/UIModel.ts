@@ -137,6 +137,8 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
       function selectForDrop(container: Node, rect: Rect, exclude: Node | null) {
         // 获取适合放置rect的最适合的容器
         let receiver = NodeSelector.selectForDrop(container, [rect[0], rect[1]], exclude);
+        console.log("🚀 ~ file: UIModel.ts:140 ~ UIModel ~ selectForDrop ~ receiver:", receiver)
+        
         // 判断容器存在并且容器没有全包含rect
         if (receiver && !receiver.absRect().contains(rect)) {
           // 如果父节点是flex布局，接受容器就变为父节点

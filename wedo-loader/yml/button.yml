@@ -81,6 +81,6 @@ editor:
         - name: color
           title: 颜色
           type: color
-          default: #000
+          default: '#000'
           row: 2
           path: passProps.color

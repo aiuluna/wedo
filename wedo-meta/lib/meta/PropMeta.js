@@ -1,5 +1,5 @@
 export class PropMeta {
-    disable;
+    disabled;
     path;
     config;
     constructor(config) {

@@ -10,7 +10,7 @@ const json: JsonPage = {
     group: "container",
     box: {
       // left: (3200 - 414) / 2,
-      left: 400,
+      left: 300,
       top: 40,
       width: 414,
       height: 736,

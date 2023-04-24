@@ -1,10 +1,9 @@
 export class GroupMeta {
     name;
     title;
-    disable;
+    disabled;
     style;
-    // todo ???为什么只要key
-    propKeys;
+    propKeys; // 用来筛选当前group的name归属
     constructor() {
         this.name = '';
         this.title = '';
@@ -15,7 +14,7 @@ export class GroupMeta {
         const group = new GroupMeta();
         group.name = config.name;
         group.title = config.title;
-        group.disable = config.disable || false;
+        group.disabled = config.disabled || false;
         group.style = config.style;
         if (config.props) {
             config.props.forEach(prop => {
@@ -31,7 +30,7 @@ export class GroupMeta {
         g.name = this.name;
         g.title = this.title;
         g.style = this.style;
-        g.disable = this.disable;
+        g.disabled = this.disabled;
         g.propKeys = new Set([...this.propKeys]);
         return g;
     }

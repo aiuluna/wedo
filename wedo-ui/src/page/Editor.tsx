@@ -25,7 +25,7 @@ const Wedo = () => {
     console.log('editor', editor)
   }, [editor])
 
-  if(!editor) {
+  if (!editor) {
     return null
   }
 
@@ -35,7 +35,7 @@ const Wedo = () => {
       <ComponentList editor={editor} />
       <Panel editor={editor}>
         {/* <LocalComponent /> */}
-        <NodeRender node={editor.page.getRoot()}/>
+        <NodeRender node={editor.page.getRoot()} />
       </Panel>
       <div className={style["right"]}>
         <RightTabs editor={editor} />
@@ -45,11 +45,21 @@ const Wedo = () => {
   </React.Fragment>
 }
 
-const RightTabs = ({editor}: {editor: UIModel}) => {
-  return <Tabs defaultActiveKey="1" type="card" style={{height: '100%'}}>
-    <TabPane tab="属性编辑" key="1">
+const RightTabs = ({ editor }: { editor: UIModel }) => {
+  return <Tabs defaultActiveKey="1"
+    type="card"
+    style={{ height: '100%' }}
+    items={new Array(1).fill(null).map((_, i) => {
+      const id = String(i + 1);
+      return {
+        label: `属性编辑`,
+        key: id,
+        children: <PropEditor editor={editor} />,
+      };
+    }) }>
+    {/* <TabPane tab="属性编辑" key="1">
       <PropEditor editor={editor}/>
-    </TabPane>
+    </TabPane> */}
     {/* <TabPane tab="页面结构" key="2">
       
     </TabPane> */}

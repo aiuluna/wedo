@@ -37,6 +37,7 @@ export class NodeSelector {
             const result = NodeSelector.select(child, [x - nodeRect.left, y - nodeRect.top], exclude)
             if (result) return result;
         }
+        console.log("🚀 ~ file: NodeSelector.ts:42 ~ NodeSelector ~ select ~ container:", container)
         return container;
     }
 }
