@@ -1,6 +1,6 @@
 import { Bridge } from '@wedo/meta'
 import FlexContainer from './FlexContainer'
-const Row = ({bridge} : {bridge : Bridge}) => {
-  return <FlexContainer bridge={bridge} gap="column" />
+const Column = ({bridge} : {bridge : Bridge}) => {
+  return <FlexContainer bridge={bridge} gap="col" />
 }
-export default Row
+export default Column

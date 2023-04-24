@@ -33,8 +33,8 @@ export class MountPoint {
             throw new Error(`Page is not initialized to node ${this.node.getId()}.`);
         }
         const rect = this.ele.getBoundingClientRect();
-        const left = rect.left + cord.scrollX - cord.viewPort.left;
-        const top = rect.top + cord.scrollY - cord.viewPort.top;
+        const left = Math.round(rect.left + cord.scrollX - cord.viewPort.left);
+        const top = Math.round(rect.top + cord.scrollY - cord.viewPort.top);
         return [left, top];
     }
     /**
@@ -48,9 +48,9 @@ export class MountPoint {
         if (!nodeRect) {
             throw new Error('You cannot call positiondiff on unmounted node.');
         }
-        // const childRect = nodeEle.children[0].getBoundingClientRect();
-        // const dx = childRect.left - nodeRect.left;
-        // const dy = childRect.top - nodeRect.top;
-        return [curRect.left - nodeRect.left, curRect.top - nodeRect.top];
+        const childRect = nodeEle.children[0].getBoundingClientRect();
+        const dx = childRect.left - nodeRect.left;
+        const dy = childRect.top - nodeRect.top;
+        return [curRect.left - nodeRect.left - dx, curRect.top - nodeRect.top - dy];
     }
 }

@@ -10,7 +10,7 @@ export class NodeSelector {
      */
     public static selectForDrop(container: Node, position: [number, number], exclude: Node | null): (Node | null) {
         let node = NodeSelector.select(container, position, exclude)
-        while(node && !node.isContainer()) {
+        while (node && !node.isContainer()) {
             node = node.getParent()
         }
 
@@ -37,7 +37,6 @@ export class NodeSelector {
             const result = NodeSelector.select(child, [x - nodeRect.left, y - nodeRect.top], exclude)
             if (result) return result;
         }
-        console.log("🚀 ~ file: NodeSelector.ts:42 ~ NodeSelector ~ select ~ container:", container)
         return container;
     }
 }

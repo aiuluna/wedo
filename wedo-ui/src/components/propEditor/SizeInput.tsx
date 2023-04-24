@@ -1,8 +1,8 @@
-import {Input, Select} from 'antd'
+import { Input, Select } from 'antd'
 import { PropComponentProps } from './propeditor.types'
 import classes from './prop-editor.module.scss'
 import { SizeUnit } from '@wedo/meta'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Option = Select.Option
 const SizeInput = ({
@@ -11,12 +11,15 @@ const SizeInput = ({
   onChange,
   metaProps,
 }: PropComponentProps) => {
+  const sizeUnit: SizeUnit = propValue
 
-  const sizeUnit : SizeUnit = propValue
-
-  const [value ,setValue] = useState(sizeUnit.getValue())
-  const [unit,setUnit] = useState(sizeUnit.getUnit())
+  const [value, setValue] = useState(sizeUnit.getValue())
+  const [unit, setUnit] = useState(sizeUnit.getUnit())
   const [mode, setMode] = useState(sizeUnit.getMode())
+
+  useEffect(() => {    
+    setValue(sizeUnit.getValue())
+  }, [sizeUnit.getValue()])
 
   return (
     <div className={classes["size-input"]}>

@@ -23,7 +23,6 @@ const Button = ({
   fontFamily,
   bridge,
 }: ButtonProps) => {
-  console.log('bridge', bridge)
   const style = bridge.getPassProps().style;
   const applyStyle: any = {
     fontFamily,

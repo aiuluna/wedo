@@ -123,7 +123,6 @@ const InnerRender = ({ node, C, inheritProps }: NodeRenderProps & { C: any }) =>
     }}
     onDragEnd={e => {
       if (node.isDraggable()) {
-        console.log('dispatch UIEvents.EvtNodeMoved' + UIEvents.EvtNodeMoved)
         editor?.dispatch(UIEvents.EvtNodeMoved, node, [e.diffX, e.diffY])
       }
     }}

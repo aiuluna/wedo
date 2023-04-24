@@ -107,12 +107,10 @@ function render(type: string, props: PropComponentProps, key: any) {
 }
 
 function renderProp(prop: PropItem, disabled: boolean, key: any) {
-
   return render(prop.meta.config.type, {
     disabled: disabled || prop.disabled,
     onChange: (v: any) => {
       prop.set(v)
-      // console.log("🚀 ~ file: PropertyItem.tsx:35 ~ renderProp ~ v:", v)
       return
     },
     children: prop.meta.config.children,

@@ -10,7 +10,6 @@ export enum Topic {
   NewNodeAdded, // 添加新节点
   SelectionChanged, // 选中节点变化
   NodeGapIndexChanged, // Node的children需要重新排序
-  NodePositionMoved, // 节点位置变化
 
   MouseMoveEventPass, // 鼠标移动事件
   MouseUpEventPass, // 鼠标抬起事件

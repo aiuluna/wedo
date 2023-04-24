@@ -9,6 +9,7 @@ box :
   flexDirection : column
   width : 80
   height : 200
+  container : true
 style:
   borderWidth : 1px
   borderColor : "#eee"
