@@ -18,7 +18,7 @@ const TextAlignSelector = ({onChange, initialValue} : TextAlignSelectorProps) =>
       return
     }
     onChange(sel)
-  }, [sel, dirty, onChange])
+  }, [sel, dirty])
   return <div>
     <AlignLeftOutlined onClick={() => setSelection("left")} style={{color : sel==="left" ? "black" : "grey"}} />
     <AlignCenterOutlined onClick={() => setSelection("center")}   style={{color : sel==="center" ? "black" : "grey"}} />

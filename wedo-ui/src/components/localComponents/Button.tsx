@@ -2,6 +2,7 @@ import { Bridge } from '@wedo/meta';
 import { Button as AntdButton } from 'antd'
 import styles from './component.module.scss'
 import { TextInput } from './TextInput';
+import { useEffect } from 'react';
 
 interface ButtonProps {
   text: string,
@@ -32,14 +33,15 @@ const Button = ({
     ...style,
   }
 
+
   if (fontStyle.has("bold")) {
-    style.fontWeight = "bold"
+    applyStyle.fontWeight = "bold"
   }
   if (fontStyle.has("italic")) {
-    style.fontStyle = "italic"
+    applyStyle.fontStyle = "italic"
   }
 
-  
+
   return (
     <div className={styles.button} style={applyStyle}>
       <TextInput
@@ -52,10 +54,10 @@ const Button = ({
         onTextChange={(text: string) => {
           bridge.setPropValue(["text"], text)
         }}
+        style={{textAlign: align}}
         text={text}
       />
     </div>
   )
 }
-
 export default Button;

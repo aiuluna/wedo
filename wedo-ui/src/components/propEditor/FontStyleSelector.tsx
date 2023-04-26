@@ -14,7 +14,7 @@ const FontStyleSelector = ({onChange, initialValue} : FontStyleSelectorProps) =>
       return
     }
     onChange(styles)
-  }, [styles, dirty, onChange])
+  }, [styles, dirty])
 
 
   function toggle(set : Set<string>, value :string) {

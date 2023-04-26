@@ -75,7 +75,7 @@ editor:
         - name: align
           title: 文本对齐
           type: font-align
-          default: left
+          default: center
           row: 2
           path: passProps.align
         - name: color

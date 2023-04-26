@@ -4,10 +4,12 @@ export const TextInput = ({
   text,
   onTextChange,
   onStateChange,
+  style
 }: {
   text: string
   onTextChange?: Function
   onStateChange?: Function
+  style?: any
 }) => {
   const [state, setState] = useState({
     text: text,
@@ -46,6 +48,7 @@ export const TextInput = ({
         style={{
           display:
             state.state === "display" ? "block" : "none",
+            ...style
         }}
       >
         {text}
