@@ -1,12 +1,11 @@
 import { ComponentMeta, JsonPage, Node, Page, Topic } from "@wedo/meta";
 import PropertyEditor from "./PropertyEditor";
 import Selection from "./Selection";
-import StateMachine from "./StateMachine";
 import { CubeType, UIEvents, UIStates } from "./uiModel.types";
 import { ComponentsLoader } from "@wedo/loader/lib";
 import md5 from 'md5'
 import { NodeSelector } from "./NodeSelector";
-import { Rect, throttle } from "@wedo/utils";
+import { Rect, throttle, StateMachine } from "@wedo/utils";
 import { getFlexGap } from "../util/getFlexGap";
 import Resizer from "./Resizer";
 

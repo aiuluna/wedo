@@ -1,4 +1,4 @@
-import { Emitter } from '@wedo/utils';
+import { Emitter } from './Emitter';
 
 type StateTransferFunction = (...args: any) => void
 
@@ -57,4 +57,4 @@ class StateMachine<S extends string | number, A extends string | number, Topic e
   }
 }
 
-export default StateMachine;
+export { StateMachine };

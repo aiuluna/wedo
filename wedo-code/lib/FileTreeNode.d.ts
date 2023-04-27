@@ -13,6 +13,9 @@ export declare class FileTreeNode {
      * 获取文件扩展名
      */
     getExt(): string | undefined;
+    getFileName(): string;
+    getFileType(): FileType;
+    getChildren(): FileTreeNode[];
     toJSON(): Record<string, any>;
     static fromJSON(json: FileTreeNodeConfig): FileTreeNode;
 }

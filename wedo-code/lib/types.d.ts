@@ -4,5 +4,5 @@ export type FileTreeNodeConfig = {
     fileName: string;
     type: FileType;
     url: string;
-    children: FileTreeNodeConfig[];
+    children?: FileTreeNodeConfig[];
 };

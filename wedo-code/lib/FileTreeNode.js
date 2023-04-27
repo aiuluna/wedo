@@ -28,6 +28,15 @@ export class FileTreeNode {
         const prts = this.fileName.split('.');
         return prts.length > 1 ? prts.pop() : '';
     }
+    getFileName() {
+        return this.fileName;
+    }
+    getFileType() {
+        return this.type;
+    }
+    getChildren() {
+        return this.children;
+    }
     toJSON() {
         return {
             fileName: this.fileName,
@@ -39,7 +48,7 @@ export class FileTreeNode {
     static fromJSON(json) {
         const node = new FileTreeNode(json.fileName, json.type);
         node.url = json.url;
-        node.children = json.children.map(x => FileTreeNode.fromJSON(x));
+        node.children = json.children?.map(x => FileTreeNode.fromJSON(x)) || [];
         return node;
     }
 }
