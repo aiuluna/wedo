@@ -4,6 +4,7 @@
     "lib": ["ES6", "DOM"],
     "rootDir": "./src",
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "outDir": "lib"
   }
 }

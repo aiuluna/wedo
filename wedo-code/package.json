@@ -20,6 +20,7 @@
   "hydra": {
     "type": "lib",
     "devLinks": [
+      "@wedo/request"
     ]
   },
   "dependencies": {

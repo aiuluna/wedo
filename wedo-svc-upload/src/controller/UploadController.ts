@@ -1,6 +1,6 @@
 import { Request, Response, Express } from 'express'
 import { Application } from '../Application';
-import { UploadService } from '../service/uploadService';
+import { UploadService } from '../service/UploadService';
 
 enum HTTPMethod {
   GET,
@@ -9,9 +9,7 @@ enum HTTPMethod {
   DELETE
 }
 export class UploadController {
-  private service: UploadService;
   constructor() {
-    this.service = new UploadService()
   }
 
   @restful(HTTPMethod.GET, '/')
@@ -19,10 +17,11 @@ export class UploadController {
     res.send('hello')
   }
 
-  @restful(HTTPMethod.PUT, 'upload-content')
+  @restful(HTTPMethod.POST, '/upload-content')
   async uploadContent(req: Request, res: Response) {
-    const {file, content} = req.body;
-    const data = await this.service.uploadContent(file, content);
+    const {file , content} = req.query as {[key: string]: any};
+    const service = new UploadService()
+    const data = await service.uploadContent(file, content);
     res.send(data)
   }
 

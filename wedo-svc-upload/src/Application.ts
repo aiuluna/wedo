@@ -13,6 +13,10 @@ export class Application {
     return this.app
   }
 
+  public listen() {
+    this.app.listen(7001)
+  }
+
   static getInstance() {
     if (!Application.inst) {
       Application.inst = new Application()

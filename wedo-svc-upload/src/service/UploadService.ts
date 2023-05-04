@@ -2,22 +2,22 @@ import { UploadDao } from "../dao/UploadDao";
 import { ServiceResponseForOSS } from "../standard.types";
 
 export class UploadService {
-  private dao;
+  private dao: UploadDao;
   constructor() {
     this.dao = new UploadDao()
   }
 
   async uploadContent(file: string, content: string): Promise<ServiceResponseForOSS> {
-    const uploaded = await this.dao(file, content);
+    const uploaded = await this.dao.saveFile(file, content);
     if (!uploaded) {
       return {
         success: false,
-        data: ''
+        data: '上传失败'
       }
     }
     return {
       success: true,
-      data: ''
+      data: '上传成功'
     }
 
   }
