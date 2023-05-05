@@ -37,6 +37,20 @@ export class FileTreeNode {
     getChildren() {
         return this.children;
     }
+    add(child) {
+        this.children.push(child);
+    }
+    isDirty() {
+        return this.dirty;
+    }
+    *find(predication) {
+        if (predication(this)) {
+            yield this;
+        }
+        for (let child of this.children) {
+            yield* child.find(predication);
+        }
+    }
     toJSON() {
         return {
             fileName: this.fileName,

@@ -1,10 +1,21 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["ES6", "DOM"],
-    "rootDir": "./src",
-    "esModuleInterop": true,
+    "module": "ESNext",
+    "outDir": "lib",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "rootDir": "src",
+    "allowJs": false,
+    "downlevelIteration": true,
+    "noImplicitAny": false,
+    "strict": true,
     "moduleResolution": "node",
-    "outDir": "lib"
-  }
+    "declaration": true,
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

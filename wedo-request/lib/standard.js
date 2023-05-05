@@ -2,7 +2,7 @@ function getXUser() {
     if (!global.localStorage) {
         return '';
     }
-    return localStorage.getItem('x-user');
+    return localStorage.getItem('x-user') || '';
 }
 export const analyzeResponse = async (resp) => {
     const status = resp.status;

@@ -14,7 +14,25 @@ export class CodeProject {
     this.root = FileTreeNode.fromJSON(root)
   }
 
+  public setRootNode(node: FileTreeNode) {
+    this.root = node;
+  }
+
   public getRoot() {
     return this.root
+  }
+
+  public getName() {
+    return this.name;
+  }
+
+  public getJSON() {
+    return {
+      name: this.name,
+      type: this.type,
+      version: this.version,
+      scriptUrl: '',
+      fileTreeNode: this.root.toJSON()
+    }
   }
 }

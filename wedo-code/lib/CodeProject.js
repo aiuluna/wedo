@@ -13,7 +13,22 @@ export class CodeProject {
     setRoot(root) {
         this.root = FileTreeNode.fromJSON(root);
     }
+    setRootNode(node) {
+        this.root = node;
+    }
     getRoot() {
         return this.root;
+    }
+    getName() {
+        return this.name;
+    }
+    getJSON() {
+        return {
+            name: this.name,
+            type: this.type,
+            version: this.version,
+            scriptUrl: '',
+            fileTreeNode: this.root.toJSON()
+        };
     }
 }

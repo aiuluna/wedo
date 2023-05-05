@@ -20,7 +20,7 @@ export class FileTreeNode {
     if (this.content !== content) {
       this.content = content;
       this.dirty = true
-    }    
+    }
   }
 
   public saved() {
@@ -45,6 +45,24 @@ export class FileTreeNode {
 
   public getChildren() {
     return this.children;
+  }
+
+  public add(child: FileTreeNode) {
+    this.children.push(child)
+  }
+
+  public isDirty(): boolean {
+    return this.dirty
+  }
+
+  public *find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode> {
+    if (predication(this)) {
+      yield this
+    }
+
+    for (let child of this.children) {
+      yield* child.find(predication)
+    }
   }
 
   public toJSON(): Record<string, any> {

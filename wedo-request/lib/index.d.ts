@@ -1,4 +1,4 @@
 import { CodeProjectService } from "./services/CodeProjectService";
 import { FileService } from "./services/FileService";
-export const fileRemote = new FileService();
-export const codeProjectRemote = new CodeProjectService();
+export declare const fileRemote: FileService;
+export declare const codeProjectRemote: CodeProjectService;

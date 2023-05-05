@@ -16,6 +16,9 @@ export declare class FileTreeNode {
     getFileName(): string;
     getFileType(): FileType;
     getChildren(): FileTreeNode[];
+    add(child: FileTreeNode): void;
+    isDirty(): boolean;
+    find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode>;
     toJSON(): Record<string, any>;
     static fromJSON(json: FileTreeNodeConfig): FileTreeNode;
 }
