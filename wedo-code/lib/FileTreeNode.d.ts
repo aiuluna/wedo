@@ -8,6 +8,7 @@ export declare class FileTreeNode {
     private dirty;
     constructor(fileName: string, type: FileType);
     setContent(content: string): void;
+    getContent(): string | undefined;
     saved(): void;
     /**
      * 获取文件扩展名
@@ -18,6 +19,7 @@ export declare class FileTreeNode {
     getChildren(): FileTreeNode[];
     add(child: FileTreeNode): void;
     isDirty(): boolean;
+    setUrl(url: string): void;
     find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode>;
     toJSON(): Record<string, any>;
     static fromJSON(json: FileTreeNodeConfig): FileTreeNode;

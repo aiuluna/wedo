@@ -1,6 +1,6 @@
 import config from "../config";
 import { CustomResponse, fetchStandrd } from "../standard";
-import md5 from 'md5'
+import * as md5 from 'md5'
 
 export class FileService {
   async post1(
@@ -8,7 +8,7 @@ export class FileService {
     ext: string,
     content: string
   ): Promise<CustomResponse> {
-    const hash = md5(content);
+    const hash = (md5 as any).default(content);
     const finalFileName = ext ? `${bucket}/${hash}.${ext}` : `${bucket}/${hash}`;
     const res = await fetchStandrd(config.uploadFileText, {
       headers: {

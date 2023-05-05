@@ -23,6 +23,10 @@ export class FileTreeNode {
     }
   }
 
+  public getContent() {
+    return this.content
+  }
+
   public saved() {
     this.dirty = false
   }
@@ -53,6 +57,10 @@ export class FileTreeNode {
 
   public isDirty(): boolean {
     return this.dirty
+  }
+
+  public setUrl(url: string) {
+    this.url = url;
   }
 
   public *find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode> {

@@ -15,9 +15,12 @@ export class UploadService {
         data: '上传失败'
       }
     }
+    if (file[0] !== '/') {
+      file = '/' + file;
+    }
     return {
       success: true,
-      data: '上传成功'
+      data: `https://huzhang-wedo.oss-cn-hangzhou.aliyuncs.com${file}`
     }
 
   }

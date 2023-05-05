@@ -1,4 +1,7 @@
-export class FileTreeNode {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FileTreeNode = void 0;
+class FileTreeNode {
     fileName;
     type;
     children = [];
@@ -17,6 +20,9 @@ export class FileTreeNode {
             this.content = content;
             this.dirty = true;
         }
+    }
+    getContent() {
+        return this.content;
     }
     saved() {
         this.dirty = false;
@@ -43,6 +49,9 @@ export class FileTreeNode {
     isDirty() {
         return this.dirty;
     }
+    setUrl(url) {
+        this.url = url;
+    }
     *find(predication) {
         if (predication(this)) {
             yield this;
@@ -66,3 +75,4 @@ export class FileTreeNode {
         return node;
     }
 }
+exports.FileTreeNode = FileTreeNode;

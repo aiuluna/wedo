@@ -1,10 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.fetchStandrd = exports.analyzeResponse = void 0;
 function getXUser() {
     if (!global.localStorage) {
         return '';
     }
     return localStorage.getItem('x-user') || '';
 }
-export const analyzeResponse = async (resp) => {
+const analyzeResponse = async (resp) => {
     const status = resp.status;
     if (status >= 200 && status < 300) {
         try {
@@ -40,7 +43,8 @@ export const analyzeResponse = async (resp) => {
         };
     }
 };
-export const fetchStandrd = async (url, init) => {
+exports.analyzeResponse = analyzeResponse;
+const fetchStandrd = async (url, init) => {
     if (!init) {
         init = {};
     }
@@ -51,5 +55,6 @@ export const fetchStandrd = async (url, init) => {
         ...init.headers,
         'x-user': getXUser()
     };
-    return await analyzeResponse(await fetch(url, init));
+    return await (0, exports.analyzeResponse)(await fetch(url, init));
 };
+exports.fetchStandrd = fetchStandrd;

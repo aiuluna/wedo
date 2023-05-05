@@ -1,5 +1,8 @@
-import { FileTreeNode } from "./FileTreeNode";
-export class CodeProject {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CodeProject = void 0;
+const FileTreeNode_1 = require("./FileTreeNode");
+class CodeProject {
     name;
     type;
     version;
@@ -8,10 +11,10 @@ export class CodeProject {
         this.name = name;
         this.type = type;
         this.version = 0;
-        this.root = new FileTreeNode('root', 'dir');
+        this.root = new FileTreeNode_1.FileTreeNode('root', 'dir');
     }
     setRoot(root) {
-        this.root = FileTreeNode.fromJSON(root);
+        this.root = FileTreeNode_1.FileTreeNode.fromJSON(root);
     }
     setRootNode(node) {
         this.root = node;
@@ -32,3 +35,4 @@ export class CodeProject {
         };
     }
 }
+exports.CodeProject = CodeProject;

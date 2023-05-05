@@ -1,5 +1,5 @@
 import express, { Express } from 'express'
-
+import bodyParser from 'body-parser'
 export class Application {
   static inst: Application;
 
@@ -7,6 +7,7 @@ export class Application {
 
   constructor() {
     this.app = express()
+    this.app.use(bodyParser.json())
   }
 
   public getApp() {

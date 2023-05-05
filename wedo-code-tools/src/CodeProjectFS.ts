@@ -1,11 +1,13 @@
 import { CodeProject, FileTreeNode } from '@wedo/code'
-import { codeProjectRemote } from '@wedo/request'
+import { codeProjectRemote, fileRemote } from '@wedo/request'
 import fs from 'fs';
 import path from 'path';
 
 // 处理文件上传等上下文类
 export class CodeProjectFS {
-  private cwd: string;
+  constructor(private cwd: string) {
+  }
+
   // 根据dir在内存中生成FileTreeNode
   private createFileNode(dir: string, name: string): FileTreeNode {
     const files = fs.readdirSync(dir);
@@ -30,11 +32,20 @@ export class CodeProjectFS {
     const shouldUpdates = [...fileNode.find(x => x.isDirty())]
 
     for (let file of shouldUpdates) {
-      // const result = 
+      const result = await fileRemote.post1('/code', file.getExt(), file.getContent())
+      file.setUrl(result.data)
+      file.saved()
     }
-    await codeProjectRemote.put('default', project.getName(), project.getJSON())
+    const result = await codeProjectRemote.put('default', project.getName(), project.getJSON())
+    if (!result.success) {
+      throw new Error('upload failed:' + result.data)
+    }
+  }
 
-
+  public static async createTemplates() {
+    const fs = new CodeProjectFS(path.resolve(__dirname, '../template', 'codeless'))
+    const project = new CodeProject('codeless-default', 'codeless')
+    await fs.upload(project)
   }
 
 }

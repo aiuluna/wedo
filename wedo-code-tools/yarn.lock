@@ -3,16 +3,6 @@
 
 
 "@types/node@^18.16.3":
-  version "18.16.3"
-  resolved "http://npm-reg.devops.ichoice.cc/@types%2fnode/-/node-18.16.3.tgz"
-  integrity sha512-OPs5WnnT1xkCBiuQrZA4+YAV4HEJejmHneyraIaxsbev5yCEr6KMwINNFP9wQeFIw8FWcoTqF3vQsa5CDaI+8Q==
-
-"@wedo/code@file:../wedo-code":
-  version "1.0.0"
-  resolved "file:../wedo-code"
-
-"@wedo/request@file:../wedo-request":
-  version "1.0.0"
-  resolved "file:../wedo-request"
-  dependencies:
-    md5 "^2.3.0"
+  version "18.16.4"
+  resolved "https://registry.npmmirror.com/@types/node/-/node-18.16.4.tgz#dfb38f0f3fb045fca84ffa7783233c63009d8a92"
+  integrity sha512-LUhvPmAKAbgm+p/K11IWszLZVoZDlMF4NRmqbhEzDz/CnCuehPkZXwZbBCKGJsgjnuVejotBwM7B3Scrq4EqDw==

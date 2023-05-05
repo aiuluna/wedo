@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
     "outDir": "lib",
     "lib": [
       "dom",
@@ -15,6 +15,7 @@
     "strict": true,
     "moduleResolution": "node",
     "declaration": true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

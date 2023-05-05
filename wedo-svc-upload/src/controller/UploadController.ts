@@ -19,7 +19,7 @@ export class UploadController {
 
   @restful(HTTPMethod.POST, '/upload-content')
   async uploadContent(req: Request, res: Response) {
-    const {file , content} = req.query as {[key: string]: any};
+    const {file , content} = req.body;
     const service = new UploadService()
     const data = await service.uploadContent(file, content);
     res.send(data)
