@@ -10,6 +10,11 @@ enum HTTPMethod {
 }
 
 class DocController {
+  @restful(HTTPMethod.GET, '/')
+  async index(req: Request, res: Response) {
+    console.log('index success')
+    res.send('success')
+  }
   
   @restful(HTTPMethod.PUT, '/code-project/:user/:name')
   async saveCodeProjectJSON(req: Request, res: Response) {

@@ -32,7 +32,6 @@ const standard_1 = require("../standard");
 const md5 = __importStar(require("md5"));
 class FileService {
     async post1(bucket, ext, content) {
-        console.log('hash', md5, typeof md5);
         const hash = md5.default(content);
         const finalFileName = ext ? `${bucket}/${hash}.${ext}` : `${bucket}/${hash}`;
         const res = await (0, standard_1.fetchStandrd)(config_1.default.uploadFileText, {

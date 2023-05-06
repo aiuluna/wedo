@@ -5,11 +5,12 @@ class DocService {
     try {
       const client = Redis.getInstance();
       let userData = await client.getData(user);
-      if (userData) {
-        const json = JSON.parse(userData);
-        json[name] = values;
-        userData = JSON.stringify(json)
-      }
+
+      const json = userData ? JSON.parse(userData) : {};
+      json[name] = values;
+      userData = JSON.stringify(json)
+
+      console.log('user', user, 'userData', userData)
       await client.setData(user, userData)
       return {
         success: true,
