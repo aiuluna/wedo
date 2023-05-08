@@ -1,4 +1,4 @@
-import { FileNodeJSON, FileTreeNodeConfig, FileType } from "./types";
+import { FileNodeJSON, FileType } from "./types";
 
 export class FileTreeNode {
 
@@ -59,6 +59,10 @@ export class FileTreeNode {
     return this.dirty
   }
 
+  public getUrl() {
+    return this.url
+  }
+
   public setUrl(url: string) {
     this.url = url;
   }
@@ -82,7 +86,7 @@ export class FileTreeNode {
     }
   }
 
-  public static fromJSON(json: FileTreeNodeConfig): FileTreeNode {
+  public static fromJSON(json: FileNodeJSON): FileTreeNode {
     const node = new FileTreeNode(json.fileName, json.type);
     node.url = json.url;
     node.children = json.children?.map(x => FileTreeNode.fromJSON(x)) || []

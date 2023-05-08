@@ -11,7 +11,7 @@ export const useCodeEditor = (name: string, type: CodeProjectType) => {
   const [_, setVer] = useState(0)
 
   useEffect(() => {
-    const sub = editor.on(Topic.SelectionChanged).subscribe(() => {
+    const sub = editor.on([Topic.SelectionChanged, Topic.Loaded]).subscribe(() => {
       setVer(x => x + 1)
     })
     return () => {

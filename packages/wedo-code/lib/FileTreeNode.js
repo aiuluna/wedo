@@ -46,6 +46,9 @@ export class FileTreeNode {
     isDirty() {
         return this.dirty;
     }
+    getUrl() {
+        return this.url;
+    }
     setUrl(url) {
         this.url = url;
     }

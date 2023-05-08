@@ -1,5 +1,6 @@
 import express, { Express } from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 export class Application {
   static inst: Application;
 
@@ -8,6 +9,9 @@ export class Application {
   constructor() {
     this.app = express()
     this.app.use(bodyParser.json())
+    this.app.use(cors({
+      origin: ['http://localhost:3001']
+    }))
   }
 
   public getApp() {

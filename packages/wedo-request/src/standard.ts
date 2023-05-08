@@ -8,7 +8,7 @@ export type CustomResponse = {
 }
 
 function getXUser() {
-  if (!global.localStorage) {
+  if (!globalThis.localStorage) {
     return ''
   }
   return localStorage.getItem('x-user') || ''

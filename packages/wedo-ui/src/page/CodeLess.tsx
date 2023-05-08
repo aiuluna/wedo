@@ -1,6 +1,11 @@
 
 import { ProjectEditor } from '@wedo/ui-code'
+import { useParams } from 'react-router-dom'
 
 export default () => {
-  return <ProjectEditor />
+  const {page: pageName} = useParams<{[key: string]: any}>();
+  return <>
+    
+    <ProjectEditor name={pageName}/>
+  </>
 }

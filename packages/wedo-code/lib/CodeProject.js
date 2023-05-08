@@ -1,17 +1,19 @@
 import { FileTreeNode } from "./FileTreeNode";
-export class CodeProject {
+class CodeProject {
     name;
     type;
     version;
     root;
-    static TemplateNames;
+    static TemplateNames = {
+        codeless: 'codeless-template'
+    };
     constructor(name, type) {
         this.name = name;
         this.type = type;
         this.version = 0;
         this.root = new FileTreeNode('root', 'dir');
     }
-    setRoot(root) {
+    setRootByJSON(root) {
         this.root = FileTreeNode.fromJSON(root);
     }
     setRootNode(node) {
@@ -23,7 +25,7 @@ export class CodeProject {
     getName() {
         return this.name;
     }
-    getJSON() {
+    toJSON() {
         return {
             name: this.name,
             type: this.type,
@@ -32,4 +34,13 @@ export class CodeProject {
             fileTreeNode: this.root.toJSON()
         };
     }
+    incrVer() {
+        this.version = this.version++;
+    }
+    static formJSON(json) {
+        const project = new CodeProject(json.name, json.type);
+        project.setRootByJSON(json.fileTreeNode);
+        return project;
+    }
 }
+export { CodeProject };

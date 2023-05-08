@@ -1,4 +1,4 @@
-import { FileNodeJSON, FileTreeNodeConfig, FileType } from "./types";
+import { FileNodeJSON, FileType } from "./types";
 export declare class FileTreeNode {
     private fileName;
     private type;
@@ -19,8 +19,9 @@ export declare class FileTreeNode {
     getChildren(): FileTreeNode[];
     add(child: FileTreeNode): void;
     isDirty(): boolean;
+    getUrl(): string | undefined;
     setUrl(url: string): void;
     find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode>;
     toJSON(): FileNodeJSON;
-    static fromJSON(json: FileTreeNodeConfig): FileTreeNode;
+    static fromJSON(json: FileNodeJSON): FileTreeNode;
 }

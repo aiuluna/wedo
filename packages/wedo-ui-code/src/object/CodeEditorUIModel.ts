@@ -1,7 +1,7 @@
 import { CodeProject, CodeProjectType, FileTreeNode, ProjectJSON } from '@wedo/code'
 import { StateMachine } from '@wedo/utils'
-import { mockProject } from '../mock/mockProject';
-import { codeProjectRemote } from '@wedo/request'
+import { fileRemote, codeProjectRemote } from '@wedo/request'
+import CodeProjectReop from '../codeProjectRepo'
 
 export enum States {
   Initialize = 0,
@@ -14,13 +14,24 @@ export enum Actions {
 }
 
 export enum Topic {
-  SelectionChanged
+  SelectionChanged,
+  Loaded
+}
+
+function first<T>(g: Generator<T>) {
+  const next = g.next()
+  if (next.value) {
+    return next.value
+  }
+  return null
 }
 
 export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
 
   private project: CodeProject;
   private selectedFile?: FileTreeNode;
+
+  private _loaded = false;
 
   constructor(private name: string, private type: CodeProjectType) {
     super(States.Initialize)
@@ -38,6 +49,7 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
     })
   }
 
+  // 加载lowCode项目
   private async load() {
     const result = await codeProjectRemote.get(localStorage['x-user'], this.project.getName())
     if (!result.data) {
@@ -46,13 +58,34 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
       result.data.name = this.project.getName()
     }
     const json: ProjectJSON = result.data;
+    this.project = CodeProject.formJSON(json);
+    const files = [...this.project.getRoot().find(x => x.getFileType() === 'file')].filter(x => x.getUrl())
 
+    await Promise.all(files.map(async file => {
+      const url = file.getUrl()
+      const res = await fileRemote.get(url!)
+      file.setContent(res.data)
+      file.saved()
+    }))
+
+    this.selectedFile = first(this.project.getRoot().find(x => !!x.getContent()))
+    this._loaded = true
+    this.emit(Topic.Loaded)
+  }
+
+  public async save() {
+    const codeProjectRepo = new CodeProjectReop(this.project)
+    await codeProjectRepo.save(localStorage['x-user'])
   }
 
   public getProject() {
     return this.project
   }
 
+  public getLoaded() {
+    return this._loaded
+  }
+ 
   public getSelectedFile() {
     return this.selectedFile;
   }

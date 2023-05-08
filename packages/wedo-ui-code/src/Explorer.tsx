@@ -40,7 +40,7 @@ const FileItem = ({ file, depth }: { file: FileTreeNode, depth: number }) => {
         className={`${style["editor-dir"]} ${active ? style.active : ""
           }`}
         onClick={() => {
-          editor?.dispatch(Actions.Select, file)
+          // editor?.dispatch(Actions.Select, file)
         }}>
         {file.getFileName()}
       </div>

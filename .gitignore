@@ -4,3 +4,4 @@
 **/.vscode
 yarn.lock
 **/yarn.lock
+packages/wedo-svc-upload/src/ossConfig.ts

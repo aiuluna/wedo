@@ -5,6 +5,6 @@ import { ProjectEditor } from "@wedo/ui-code";
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <ProjectEditor />
+    <ProjectEditor name="default"/>
   </StrictMode>,
 )

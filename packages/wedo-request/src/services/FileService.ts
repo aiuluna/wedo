@@ -22,4 +22,23 @@ export class FileService {
     })
     return res;
   }
+
+  async get(url: string): Promise<CustomResponse> {
+    let resp:any = null;
+    try {
+      resp = await fetch(url);
+      const text = await resp.text();
+      return {
+        data: text, 
+        success: true,
+        httpCode: resp.status
+      }
+    } catch (error: any) {
+      return {
+        message: error.toString(),
+        success: false,
+        httpCode: resp ? resp.status : 400
+      }
+    }
+  }
 }

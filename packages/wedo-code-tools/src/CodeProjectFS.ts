@@ -36,7 +36,7 @@ export class CodeProjectFS {
       file.setUrl(result.data)
       file.saved()
     }
-    const result = await codeProjectRemote.put(user, project.getName(), project.getJSON())
+    const result = await codeProjectRemote.put(user, project.getName(), project.toJSON())
     if (!result.success) {
       throw new Error('upload failed:' + result.data)
     }

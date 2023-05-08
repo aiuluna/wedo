@@ -1,11 +1,11 @@
 import { FileTreeNode } from "./FileTreeNode";
-import { CodeProjectType, FileTreeNodeConfig, ProjectJSON } from "./types";
+import { CodeProjectType, FileNodeJSON, ProjectJSON } from "./types";
 
 export class CodeProject {
   private version: number;
   private root: FileTreeNode;
 
-  static TemplateNames: {
+  static TemplateNames = {
     codeless: 'codeless-template'
   }
 
@@ -14,7 +14,7 @@ export class CodeProject {
     this.root = new FileTreeNode('root', 'dir')
   }
 
-  public setRoot(root: FileTreeNodeConfig) {
+  public setRootByJSON(root: FileNodeJSON) {
     this.root = FileTreeNode.fromJSON(root)
   }
 
@@ -30,7 +30,7 @@ export class CodeProject {
     return this.name;
   }
 
-  public getJSON(): ProjectJSON {
+  public toJSON(): ProjectJSON {
     return {
       name: this.name,
       type: this.type,
@@ -38,5 +38,15 @@ export class CodeProject {
       scriptUrl: '',
       fileTreeNode: this.root.toJSON()
     }
+  }
+
+  public incrVer() {
+    this.version = this.version++
+  }
+
+  static formJSON(json: ProjectJSON): CodeProject {
+    const project = new CodeProject(json.name, json.type as CodeProjectType);
+    project.setRootByJSON(json.fileTreeNode)
+    return project;
   }
 }
