@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "outDir": "lib",
+    // "module": "ESNext",
+    // "outDir": "dist/es",
+    "module": "CommonJS",
+    "outDir": "dist/commonjs",
+
     "lib": [
       "dom",
       "dom.iterable",

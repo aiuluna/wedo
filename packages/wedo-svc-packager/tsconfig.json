@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "outDir": "es",
+    "module": "CommonJS",
+    "outDir": "lib",
     "rootDir": "src",
     "moduleResolution": "node",
     "lib": ["ES6","DOM.Iterable","ScriptHost"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true
+    "esModuleInterop": true,
   },
   "exclude": [
     "node_modules"

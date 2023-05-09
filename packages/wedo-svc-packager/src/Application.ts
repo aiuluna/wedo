@@ -18,6 +18,10 @@ export default class Application {
     this.app.listen(port)
   }
 
+  public getApp() {
+    return this.app
+  }
+
   static getInstance() {
     if (!Application.inst) {
       Application.inst = new Application()

@@ -13,6 +13,7 @@ export declare class CodeProject {
     setRootNode(node: FileTreeNode): void;
     getRoot(): FileTreeNode;
     getName(): string;
+    getType(): "codeless";
     toJSON(): ProjectJSON;
     incrVer(): void;
     static formJSON(json: ProjectJSON): CodeProject;

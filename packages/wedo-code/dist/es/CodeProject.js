@@ -25,6 +25,9 @@ class CodeProject {
     getName() {
         return this.name;
     }
+    getType() {
+        return this.type;
+    }
     toJSON() {
         return {
             name: this.name,

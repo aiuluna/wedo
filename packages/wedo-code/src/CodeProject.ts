@@ -30,6 +30,10 @@ export class CodeProject {
     return this.name;
   }
 
+  public getType() {
+    return this.type
+  }
+
   public toJSON(): ProjectJSON {
     return {
       name: this.name,
