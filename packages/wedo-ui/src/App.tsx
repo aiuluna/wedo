@@ -16,9 +16,10 @@ const App = () => {
 
   return <BrowserRouter>
     <Routes>
-
       <Route path="/" element={<Editor />}></Route>
-      <Route path="/codeless" element={<CodeLess />}></Route>
+      <Route path="/wedo/:page" element={<Editor />}></Route>
+      <Route path="/codeless/:page" element={<CodeLess />}></Route>
+
     </Routes>
   </BrowserRouter>
 }

@@ -85,4 +85,5 @@ export declare class Node extends Emitter<Topic> {
      */
     updateFromMountPoint(): void;
     printData(): void;
+    bfs(): Generator<Node>;
 }

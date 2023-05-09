@@ -9,6 +9,7 @@ import { UIModel } from "../object/UIModel";
 import { Tabs } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import PropEditor from "../components/propEditor/ComponentPropEditor";
+import TitleBar from "../components/frame/TitleBar";
 
 const BottomBar = () => {
   return <div className={style.footer}></div>
@@ -30,7 +31,7 @@ const Wedo = () => {
   }
 
   return <React.Fragment>
-    {/* <TitleBar pageName={pageName} name="skedo" /> */}
+    <TitleBar pageName={pageName} name="wedo" />
     <div className={style.container}>
       <ComponentList editor={editor} />
       <Panel editor={editor}>

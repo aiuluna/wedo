@@ -265,12 +265,17 @@ export class Node extends Emitter {
      */
     updateFromMountPoint() {
         const rect = this.getRect();
-        console.log('rect', rect);
         const box = this.getBox();
         box.left.setValue(rect.left);
         box.top.setValue(rect.top);
     }
     printData() {
         console.log(this.data.toJS());
+    }
+    *bfs() {
+        yield this;
+        for (let child of this.getChildren()) {
+            yield* child.bfs();
+        }
     }
 }

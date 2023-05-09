@@ -51,3 +51,4 @@ export type RenderOptions = {
     ele?: HTMLElement;
 };
 export type RenderFor = 'react' | 'vue' | 'dom';
+export type WedoEventName = 'click' | 'f12' | 'data';

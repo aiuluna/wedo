@@ -1,8 +1,8 @@
 import config from "../config";
-import { fetchStandrd } from "../standard";
+import { CustomResponse, fetchStandrd } from "../standard";
 
 export class CodeProjectService {
-  public async put(user: string, name: string, values: any) {
+  public async put(user: string, name: string, values: any): Promise<CustomResponse> {
     return await fetchStandrd(config.codeProjectURL(user, name), {
       method: 'PUT',
       headers: {
@@ -12,7 +12,7 @@ export class CodeProjectService {
     })
   }
 
-  public async get(user: string, name: string) {
+  public async get(user: string, name: string): Promise<CustomResponse> {
     return await fetchStandrd(config.codeProjectURL(user, name), {
       method: 'GET',
       headers: {
@@ -21,4 +21,15 @@ export class CodeProjectService {
     })
   }
 
+  build = new BuildService()
+
+}
+
+class BuildService {
+  async put(user: string, name: string): Promise<CustomResponse> {
+    const resp = await fetchStandrd(config.codeProjectBuildURL(user, name), {
+      method: 'PUT'
+    })
+    return resp;
+  }
 }

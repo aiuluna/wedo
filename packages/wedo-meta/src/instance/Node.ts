@@ -337,4 +337,10 @@ export class Node extends Emitter<Topic> {
     console.log(this.data.toJS())
   }
 
+  *bfs(): Generator<Node> {
+    yield this;
+    for (let child of this.getChildren()) {
+      yield* child.bfs()
+    }
+  }
 }

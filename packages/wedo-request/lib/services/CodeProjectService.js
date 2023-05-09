@@ -18,4 +18,13 @@ export class CodeProjectService {
             }
         });
     }
+    build = new BuildService();
+}
+class BuildService {
+    async put(user, name) {
+        const resp = await fetchStandrd(config.codeProjectBuildURL(user, name), {
+            method: 'PUT'
+        });
+        return resp;
+    }
 }

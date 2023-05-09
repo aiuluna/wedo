@@ -18,6 +18,8 @@ export enum Topic {
   PropertyChanged, // 属性值PropItem已更新
   PropertyModelUpdated, // 属性模型PropEditor已更新
 
+  ExternalEventNotify, //额外事件通知
+
   DragDataUpdated,
   NodeChildrenUpdated,
 }

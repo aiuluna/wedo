@@ -8,7 +8,7 @@ export class FileService {
     ext: string,
     content: string
   ): Promise<CustomResponse> {
-    const hash = (md5 as any).default(content);
+    const hash = (md5 as any)(content);
     const finalFileName = ext ? `${bucket}/${hash}.${ext}` : `${bucket}/${hash}`;
     const res = await fetchStandrd(config.uploadFileText, {
       headers: {
