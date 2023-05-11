@@ -54,12 +54,11 @@ export class Package {
     await this.npmInstall()
   }
 
-  public async npmLink(map: Map<string, TreeNode<Package>>) {
-    if (this.getDevLinks()) {
+  public async npmLink() {
+    if (this.getDevLinks().length > 0) {
       let linkNames = ''
       for (let linkName of this.getDevLinks()) {
-        await map.get(linkName)?.getVal().npmLink(map)
-        linkName += ' ' + linkName;
+        linkNames += ' ' + linkName;
       }
       notice(`${this.getName()}: npm link ${linkNames}`)
       await this.exec(`npm link ${linkNames}`)

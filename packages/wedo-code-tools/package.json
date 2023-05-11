@@ -14,7 +14,8 @@
   "license": "ISC",
   "hydra": {
     "devLinks": [
-      "@wedo/code"
+      "@wedo/code",
+      "@wedo/request"
     ],
     "type": "lib"
   },

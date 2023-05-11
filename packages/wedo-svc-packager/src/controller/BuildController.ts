@@ -31,11 +31,11 @@ export class BuildController {
 
     const builder = new ProjectBuilder();
     await builder.build(user, name, cwd);
-
+    res.send({
+      success: true
+    })
 
   }
-
-
 }
 
 function restful(method: HTTPMethod, path: string) {

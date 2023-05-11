@@ -1,6 +1,7 @@
 import { Package } from "./package";
 import { error, notice, hasCycle } from "./utils";
 import TreeNode from '../object/TreeNode'
+import Graph from "./Graph";
 export class Projects {
   constructor(private packages: Array<Package>) {
     this.packages = packages;
@@ -72,60 +73,42 @@ export class Projects {
         otherNode.getVal().getDevLinks()?.includes(node.getVal().getName()))
     })
 
-    const rootNodes = linkNodes.filter(node => !node.getChildren().length);
-    // console.log("rootNodes", rootNodes)
+    /* 构建拓扑图 */
+    const graph = linkNodes.reduce((graph, node) => {
+      node.getChildren().map(child => graph.addEdge(child, node))
+      return graph;
+    }, new Graph<TreeNode<Package>>(linkNodes))
 
-    const result = [];
-    const queue = [];
+    // 拓扑排序
+    const inDegree = new Map<TreeNode<Package>, number>();
+    for (let [key, _] of graph.getAdj()) {
+      inDegree.set(key, 0)
+    }
 
-    // 统计入度
-    // const inDegree = new Map();
-    // for (let node of linkNodes) {
-    //   inDegree.set(node.getVal().getName(), 0);
-    //   for (let child of node.getChildren()) {
-    //     const childName = child.getVal().getName();
-    //     inDegree.set(childName, inDegree.get(childName) + 1)
-    //   }
-    // }
-    // console.log("linkNodes", linkNodes)
-    const inDegree = calculateInDegree(linkNodes)
-    // while(queue.length) {
-    //   const node = queue.shift();
-    //   result.push(node.getVal().getName())
+    for (let [_, value] of graph.getAdj()) {
+      for (let linked of [...value.find()]) {
+        inDegree.set(linked.val, (inDegree.get(linked.val) || 0) + 1)
+      }
+    }
+  
+    const queue: TreeNode<Package> [] = [];
+    for (let [k, v] of inDegree) {
+      if (v === 0) queue.push(k)
+    }
 
-    //   for (let p of node.getParents()) {
-    //     const pName = p.getVal().getName()
-    //     if (!inDegree.get(pName))
-    //   }
-    // }
-
-    console.log(inDegree)
-
-    return
-
-
-    /* 找出filterNodes所有有依赖的节点 */
-    // const childSet = linkNodes.reduce((set, node) => {
-    //   node.getChildren().forEach(c => set.add(c))
-    //   return set;
-    // }, new Set<TreeNode<Package>>());
-    // const rootNodes = Array.from(childSet).filter(s => s.getChildren().length)
-
-    // // console.log('childSet', childSet);
-    // console.log('rootNodes', rootNodes)
-    // return
-
-
-    /* 从每个根节点开始判断是否有环 */
-    // const _hasCycle = rootNodes.some(node => hasCycle(node))
-    // if (_hasCycle) {
-    //   error('当前有环状依赖，请检查hydra中的devLinks...')
-    // }
-
-    /* 递归开始进行npm link */
-    const hasLinked = new Set<string>();
-    for (let node of linkNodes) {
-      await node.getVal().npmLink(map)
+    const visited = new Set<String>();
+    while (queue.length) {
+      const top = queue.shift();
+      if (visited.has(top.getVal().getName())) {
+        throw new Error('devlinks has cycle')
+      }
+      visited.add(top.getVal().getName())
+      console.log('->', top.getVal().getName())
+      await top.getVal().npmLink()
+      for (let t of graph.getAdj().get(top).find()) {
+        inDegree.set(t.val, inDegree.get(t.val) - 1)
+        if (inDegree.get(t.val) === 0) queue.push(t.val)
+      }
     }
   }
 
@@ -169,85 +152,3 @@ export class Projects {
   }
 
 }
-
-
-// function calculateInDegree(nodes: TreeNode<Package>[], inDegree = new Map()): Map<string, TreeNode<Package>> {
-//   if (!nodes.length) return inDegree;
-//   for (let node of nodes) {
-//     const name = node.getVal().getName()
-//     if (!inDegree.get(name)) inDegree.set(name, 0);
-//     inDegree.set(name, inDegree.get(name) + 1)
-//     calculateInDegree(node.getChildren(), inDegree)
-//   }
-//   return inDegree;
-// }
-
-/**
- * 计算入度
- * @param rootNodes 
- * @returns 
- */
-function calculateInDegree(rootNodes: TreeNode<Package>[]): Map<string, number> {
-  const inDegreeMap = new Map<string, number>();
-  const queue: TreeNode<Package>[] = Array.from(rootNodes);
-
-  while (queue.length > 0) {
-    const node = queue.shift()!;
-    const name = node.getVal().getName();
-    inDegreeMap.set(name, inDegreeMap.get(name) || 0);
-
-    for (let parent of node.getParents()) {
-      const parentName = parent.getVal().getName();
-      inDegreeMap.set(parentName, (inDegreeMap.get(parentName) || 0) + 1);
-      if (![...inDegreeMap.keys()].includes(parentName)) {
-        queue.push(parent);
-      }
-    }
-  }
-
-  return inDegreeMap;
-}
-
-// function calculateInDegree(rootNodes: TreeNode<Package>[]): Map<string, number> {
-//   const inDegreeMap = new Map<string, number>();
-
-//   for (let rootNode of rootNodes) {
-//     if (hasCycle(rootNode)) {
-//       throw new Error('The package dependencies contain cycles.');
-//     }
-//   }
-
-//   function hasCycle(node: TreeNode<Package>, visitedSet = new Set<TreeNode<Package>>(), path = new Set<TreeNode<Package>>()): boolean {
-//     visitedSet.add(node);
-//     path.add(node);
-
-//     for (let parent of node.getParents()) {
-//       if (!visitedSet.has(parent) && hasCycle(parent, visitedSet, path)) {
-//         return true;
-//       } else if (path.has(parent)) {
-//         return true;
-//       }
-//     }
-
-//     path.delete(node);
-//     return false;
-//   }
-
-//   const queue: TreeNode<Package>[] = Array.from(rootNodes);
-
-//   while (queue.length > 0) {
-//     const node = queue.shift()!;
-//     const name = node.getVal().getName();
-//     inDegreeMap.set(name, inDegreeMap.get(name) || 0);
-
-//     for (let parent of node.getParents()) {
-//       const parentName = parent.getVal().getName();
-//       inDegreeMap.set(parentName, (inDegreeMap.get(parentName) || 0) + 1);
-//       if (![...inDegreeMap.keys()].includes(parentName)) {
-//         queue.push(parent);
-//       }
-//     }
-//   }
-
-//   return inDegreeMap;
-// }

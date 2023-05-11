@@ -21,6 +21,10 @@ export default class TreeNode<T> {
     this.parents.push(parent);
   }
 
+  /**
+   * 表示当前Node依赖的节点，如@wedo/loader依赖于@wedo/meta，则children包含@wedo/meta
+   * @returns 
+   */
   getChildren(): TreeNode<T>[] {
     return this.children
   }

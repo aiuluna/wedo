@@ -13,7 +13,9 @@ export class ProjectBuilder {
       case "codeless":
         console.log("project rollup build start...")
         const rollup = new Rollup(cwd)
+        await rollup.build()
 
+        // const repo = new CodeProjectRepo()
         break;
 
       default:
