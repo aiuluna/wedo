@@ -23,6 +23,7 @@ const Preview = () => {
   if (!pageName) pageName = 'default';
 
   const [editor] = useEditor(pageName);
+  const [page] = usePage()
 
   useEffect(() => {
     if (!editor) return;
@@ -38,7 +39,7 @@ const Preview = () => {
     <div className={style['preview-container']}>
       <RenderContext.Provider value={{
         cord: new CordNew(Rect.ZERO),
-        
+        page: pag
       }}>
         <NodeRender node={editor.page.getRoot()} />
 
