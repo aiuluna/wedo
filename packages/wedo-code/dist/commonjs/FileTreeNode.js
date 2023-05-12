@@ -55,6 +55,20 @@ class FileTreeNode {
     setUrl(url) {
         this.url = url;
     }
+    /**
+     * 目录在前，文件在后
+     */
+    sort() {
+        this.children.sort((a, b) => {
+            if (a.getFileType() === 'dir' && b.getFileType() !== 'dir') {
+                return -1;
+            }
+            if (a.getFileType() !== 'dir' && b.getFileType() === 'dir') {
+                return 1;
+            }
+            return 0;
+        });
+    }
     *find(predication) {
         if (predication(this)) {
             yield this;

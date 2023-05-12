@@ -1,7 +1,7 @@
-import { CodeProject } from "@wedo/code";
+import { CodeProject } from "./CodeProject";
 import { codeProjectRemote, fileRemote } from "@wedo/request";
 
-class CodeProjectReop {
+export class CodeProjectRepo {
   constructor(private project: CodeProject) {}
 
   public async save(user: string) {
@@ -24,4 +24,3 @@ class CodeProjectReop {
 
 }
 
-export default CodeProjectReop;

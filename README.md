@@ -8,7 +8,7 @@
    npm install ts-node -g
    ```
 
-2. 安装 `docker` 和 `redis`，启动 `redis` 服务
+2. 安装 `docker` 、 `redis`、 `mongodb`，启动 `redis` 服务
 
    ```
    docker pull redis

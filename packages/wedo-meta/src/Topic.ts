@@ -1,5 +1,5 @@
 export enum Topic {
-  RemoteComponentsLoaded,
+  RemoteComponentsLoaded, // 已经从yml和网络加载完组件
 
   NodePropUpdated, // node属性已更新
 

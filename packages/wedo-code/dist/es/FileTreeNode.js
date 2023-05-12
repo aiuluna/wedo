@@ -52,6 +52,20 @@ export class FileTreeNode {
     setUrl(url) {
         this.url = url;
     }
+    /**
+     * 目录在前，文件在后
+     */
+    sort() {
+        this.children.sort((a, b) => {
+            if (a.getFileType() === 'dir' && b.getFileType() !== 'dir') {
+                return -1;
+            }
+            if (a.getFileType() !== 'dir' && b.getFileType() === 'dir') {
+                return 1;
+            }
+            return 0;
+        });
+    }
     *find(predication) {
         if (predication(this)) {
             yield this;
@@ -72,6 +86,7 @@ export class FileTreeNode {
         const node = new FileTreeNode(json.fileName, json.type);
         node.url = json.url;
         node.children = json.children?.map(x => FileTreeNode.fromJSON(x)) || [];
+        node.sort();
         return node;
     }
 }

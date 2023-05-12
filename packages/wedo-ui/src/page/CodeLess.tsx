@@ -5,6 +5,7 @@ import TitleBar from '../components/frame/TitleBar';
 import { CaretRightOutlined } from "@ant-design/icons"
 import { useState } from 'react';
 import { useCodeEditor } from '@wedo/ui-code/src/hooks/useCodeEditor';
+import { message } from 'antd';
 
 export default () => {
   const { page: pageName } = useParams<{ [key: string]: any }>();
@@ -19,10 +20,10 @@ export default () => {
           try {
             setLoading(true)
             await editor.build()
-            // message.success("编译成功")
+            message.success("编译成功")
           } catch (ex) {
             console.error(ex)
-            // message.error("编译失败")
+            message.error("编译失败")
           } finally {
             setLoading(false)
           }

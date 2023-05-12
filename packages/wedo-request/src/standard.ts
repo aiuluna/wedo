@@ -19,9 +19,9 @@ export const analyzeResponse = async (resp: Response): Promise<CustomResponse> =
   if (status >= 200 && status < 300) {
     try {
       return await resp.json()
-    } catch (error: any) {
+    } catch (error) {
       return {
-        message: error.toString(),
+        message: (error as Error).toString(),
         success: false,
         httpCode: status
       }

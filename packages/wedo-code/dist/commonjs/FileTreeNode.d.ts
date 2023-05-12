@@ -21,6 +21,10 @@ export declare class FileTreeNode {
     isDirty(): boolean;
     getUrl(): string | undefined;
     setUrl(url: string): void;
+    /**
+     * 目录在前，文件在后
+     */
+    sort(): void;
     find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode>;
     toJSON(): FileNodeJSON;
     static fromJSON(json: FileNodeJSON): FileTreeNode;

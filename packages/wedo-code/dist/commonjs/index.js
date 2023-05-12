@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./CodeProject"), exports);
 __exportStar(require("./FileTreeNode"), exports);
 __exportStar(require("./types"), exports);
+__exportStar(require("./CodeProjectRepo"), exports);

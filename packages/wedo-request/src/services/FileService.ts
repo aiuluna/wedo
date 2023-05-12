@@ -1,6 +1,6 @@
 import config from "../config";
 import { CustomResponse, fetchStandrd } from "../standard";
-import * as md5 from 'md5'
+import { MD5 } from 'crypto-js'
 
 export class FileService {
   async post1(
@@ -8,7 +8,7 @@ export class FileService {
     ext: string,
     content: string
   ): Promise<CustomResponse> {
-    const hash = (md5 as any)(content);
+    const hash = MD5(content);
     const finalFileName = ext ? `${bucket}/${hash}.${ext}` : `${bucket}/${hash}`;
     const res = await fetchStandrd(config.uploadFileText, {
       headers: {
@@ -24,18 +24,18 @@ export class FileService {
   }
 
   async get(url: string): Promise<CustomResponse> {
-    let resp:any = null;
+    let resp: any = null;
     try {
       resp = await fetch(url);
       const text = await resp.text();
       return {
-        data: text, 
+        data: text,
         success: true,
         httpCode: resp.status
       }
-    } catch (error: any) {
+    } catch (error) {
       return {
-        message: error.toString(),
+        message: (error as Error).toString(),
         success: false,
         httpCode: resp ? resp.status : 400
       }

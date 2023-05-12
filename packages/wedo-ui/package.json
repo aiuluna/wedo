@@ -7,7 +7,7 @@
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
 		"serve": "vite preview",
-		"devlinks": "npm link @wedo/meta @wedo/utils @wedo/loader @wedo/ui-code"
+		"devlinks": "npm link @wedo/meta @wedo/utils @wedo/loader @wedo/ui-code @wedo/runtime @wedo/request"
 	},
 	"keywords": [],
 	"author": "huzhang",
@@ -40,7 +40,9 @@
 			"@wedo/utils",
 			"@wedo/meta",
 			"@wedo/loader",
-      "@wedo/ui-code"
+      "@wedo/ui-code",
+      "@wedo/runtime",
+      "@wedo/request"
 		],
 		"type": "app"
 	}

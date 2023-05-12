@@ -67,6 +67,21 @@ export class FileTreeNode {
     this.url = url;
   }
 
+  /**
+   * 目录在前，文件在后
+   */
+  public sort() {
+    this.children.sort((a, b) => {
+      if (a.getFileType() === 'dir' && b.getFileType() !== 'dir') {
+        return -1
+      }
+      if (a.getFileType() !== 'dir' && b.getFileType() === 'dir') {
+        return 1
+      }
+      return 0;
+    })
+  }
+
   public *find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode> {
     if (predication(this)) {
       yield this
@@ -90,6 +105,7 @@ export class FileTreeNode {
     const node = new FileTreeNode(json.fileName, json.type);
     node.url = json.url;
     node.children = json.children?.map(x => FileTreeNode.fromJSON(x)) || []
+    node.sort()
     return node
   }
 }

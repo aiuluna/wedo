@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
-    "outDir": "dist/commonjs",
+    // "module": "ESNext",
+    // "outDir": "dist/es",
+    // "module": "CommonJS",
+    // "outDir": "dist/commonjs",
+    "declarationDir": "dist",
     "lib": [
       "dom",
       "dom.iterable",
@@ -11,12 +14,10 @@
     "rootDir": "src",
     "allowJs": false,
     "downlevelIteration": true,
-    "noImplicitAny": false,
     "strict": true,
     "moduleResolution": "node",
     "declaration": true,
-    "esModuleInterop": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["./node_modules"]
 }

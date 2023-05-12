@@ -15,7 +15,8 @@
   "hydra": {
     "devLinks": [
       "@wedo/code",
-      "@wedo/request"
+      "@wedo/request",
+      "@wedo/ui-code"
     ],
     "type": "lib"
   },

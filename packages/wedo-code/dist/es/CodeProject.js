@@ -4,6 +4,7 @@ class CodeProject {
     type;
     version;
     root;
+    scriptUrl;
     static TemplateNames = {
         codeless: 'codeless-template'
     };
@@ -28,12 +29,15 @@ class CodeProject {
     getType() {
         return this.type;
     }
+    setScriptURL(url) {
+        this.scriptUrl = url;
+    }
     toJSON() {
         return {
             name: this.name,
             type: this.type,
             version: this.version,
-            scriptUrl: '',
+            scriptUrl: this.scriptUrl || "",
             fileTreeNode: this.root.toJSON()
         };
     }

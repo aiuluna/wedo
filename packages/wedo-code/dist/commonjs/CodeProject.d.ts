@@ -5,6 +5,7 @@ export declare class CodeProject {
     private type;
     private version;
     private root;
+    private scriptUrl?;
     static TemplateNames: {
         codeless: string;
     };
@@ -14,6 +15,7 @@ export declare class CodeProject {
     getRoot(): FileTreeNode;
     getName(): string;
     getType(): "codeless";
+    setScriptURL(url: string): void;
     toJSON(): ProjectJSON;
     incrVer(): void;
     static formJSON(json: ProjectJSON): CodeProject;

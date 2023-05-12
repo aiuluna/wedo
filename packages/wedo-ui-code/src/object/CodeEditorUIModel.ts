@@ -1,7 +1,6 @@
-import { CodeProject, CodeProjectType, FileTreeNode, ProjectJSON } from '@wedo/code'
+import { CodeProject, CodeProjectType, FileTreeNode, ProjectJSON, CodeProjectRepo } from '@wedo/code'
 import { StateMachine } from '@wedo/utils'
 import { fileRemote, codeProjectRemote } from '@wedo/request'
-import CodeProjectReop from '../CodeProjectRepo'
 
 export enum States {
   Initialize = 0,
@@ -74,7 +73,7 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
   }
 
   public async save() {
-    const codeProjectRepo = new CodeProjectReop(this.project)
+    const codeProjectRepo = new CodeProjectRepo(this.project)
     await codeProjectRepo.save(localStorage['x-user'])
   }
 
@@ -89,7 +88,7 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
   public getLoaded() {
     return this._loaded
   }
- 
+
   public getSelectedFile() {
     return this.selectedFile;
   }

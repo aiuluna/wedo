@@ -4,6 +4,7 @@ import { CodeProjectType, FileNodeJSON, ProjectJSON } from "./types";
 export class CodeProject {
   private version: number;
   private root: FileTreeNode;
+  private scriptUrl?: string;
 
   static TemplateNames = {
     codeless: 'codeless-template'
@@ -34,12 +35,16 @@ export class CodeProject {
     return this.type
   }
 
+  public setScriptURL(url: string) {
+    this.scriptUrl = url;
+  }
+
   public toJSON(): ProjectJSON {
     return {
       name: this.name,
       type: this.type,
       version: this.version,
-      scriptUrl: '',
+      scriptUrl: this.scriptUrl || "",
       fileTreeNode: this.root.toJSON()
     }
   }
