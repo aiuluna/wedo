@@ -26,9 +26,7 @@ export class UploadService {
 
   }
 
-  async uploadFile(filename: string, file: formidable.File) {
-    const ext = file.mimetype.split('/').pop()
-    filename = `/img/${filename}.${ext}`;
+  async uploadFile(filename: string, file: formidable.File): Promise<ServiceResponseForOSS> {
     const uploaded = await this.dao.saveFile(filename, file.filepath)
     if (!uploaded) {
       return {

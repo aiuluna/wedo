@@ -10,13 +10,6 @@ export class UploadDao {
     stream.push(content);
     stream.push(null);
     await oss.putStream(fileName, stream);
-    // if (fileName[0] !== '/') {
-    //   fileName = '/' + fileName
-    // }
-    // const client = Redis.getInstance();
-    // await client.setData(fileName, JSON.stringify({
-    //   content
-    // }))
     return true
   }
 
