@@ -2,7 +2,6 @@
 const modules = await import.meta.glob('../localComponents/*.tsx');
 const localComponentsMap: { [key: string]: React.ComponentClass } = {}
 
-
 const loadLocalComponentsMap = async () => {
   for (const path in modules) {
     let key = path.replace('../localComponents/', '');

@@ -1,7 +1,8 @@
 import { Node } from "./instance/Node";
 import { Page } from "./instance/Page";
-import { RenderFor, RenderOptions } from "./standard.types";
+import { RenderFor, RenderOptions, WedoEventName } from "./standard.types";
 import { Topic } from "./Topic";
+import { Observable } from '@wedo/utils/node_modules/rxjs'
 
 type BridgeMode = 'editor' | 'render';
 
@@ -68,8 +69,36 @@ export class Bridge {
     return this.getNode().getMemorizedData()
   }
 
+  /**
+   * preview从node中缓存的数据
+   * @returns 
+   */
+  getNodeData() {
+    const data = this.getMemorizedData()
+    const path = this.node?.getPassProps().get('dataPath')
+    if (!path) {
+      return data
+    }
+    return data ? data[path] : null
+  }
+
   onDataChange(handler: Function) {
     this.dataChangeHandlers.push(handler)
+  }
+
+  notify(eventType: WedoEventName) {
+    this.node?.emit(Topic.ExternalEventNotify, {
+      type: eventType,
+      node: this.node
+    })
+  }
+
+  passProps() {
+    return this.node?.getPassProps().toJS()
+  }
+
+  on(topic: Topic | Topic[]) {
+    return this.node?.on(topic)
   }
 
 }

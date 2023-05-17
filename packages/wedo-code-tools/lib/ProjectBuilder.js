@@ -23,6 +23,7 @@ class ProjectBuilder {
                 const uploadResult = await request_1.fileRemote.post1("codeless", "js", await (0, promises_1.readFile)(path_1.default.resolve(cwd, 'build/index.js'), {
                     encoding: 'utf-8'
                 }));
+                console.log('uploadResult', uploadResult);
                 project.setScriptURL(uploadResult.data);
                 const repo = new code_1.CodeProjectRepo(project);
                 await repo.save(user);

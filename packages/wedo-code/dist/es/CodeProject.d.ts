@@ -16,6 +16,7 @@ export declare class CodeProject {
     getName(): string;
     getType(): "codeless";
     setScriptURL(url: string): void;
+    getScriptURL(): string | undefined;
     toJSON(): ProjectJSON;
     incrVer(): void;
     static formJSON(json: ProjectJSON): CodeProject;

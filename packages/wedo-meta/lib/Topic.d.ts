@@ -13,6 +13,7 @@ export declare enum Topic {
     PropertyChanged = 11,
     PropertyModelUpdated = 12,
     ExternalEventNotify = 13,
-    DragDataUpdated = 14,
-    NodeChildrenUpdated = 15
+    Initialize = 14,
+    DragDataUpdated = 15,
+    NodeChildrenUpdated = 16
 }

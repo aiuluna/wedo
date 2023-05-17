@@ -154,7 +154,7 @@ export class Node extends Emitter {
         return this.getRect().bound(x, y);
     }
     /**
-     * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
+     * 将传入数据缓存到this.tmpData并触发MemorizedDataChanged事件
      * @param data
      */
     memory(data) {
@@ -277,5 +277,12 @@ export class Node extends Emitter {
         for (let child of this.getChildren()) {
             yield* child.bfs();
         }
+    }
+    toJSON(links = {}) {
+        const data = this.getData().remove('parent');
+        const json = data.toJS();
+        const newJson = { ...json, box: json.box?.toJSON() };
+        newJson.children = this.getChildren().map(child => child.toJSON(links));
+        return newJson;
     }
 }

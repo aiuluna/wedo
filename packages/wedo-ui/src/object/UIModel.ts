@@ -3,11 +3,13 @@ import PropertyEditor from "./PropertyEditor";
 import Selection from "./Selection";
 import { CubeType, UIEvents, UIStates } from "./uiModel.types";
 import { ComponentsLoader } from "@wedo/loader/lib";
-import md5 from 'md5'
+import { MD5 } from 'crypto-js'
 import { NodeSelector } from "./NodeSelector";
 import { Rect, throttle, StateMachine } from "@wedo/utils";
 import { getFlexGap } from "../util/getFlexGap";
 import Resizer from "./Resizer";
+import PageExporter from "./PageExporter";
+import { fileRemote, compose, pageRemote } from '@wedo/request';
 
 export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
   // todo 基准线
@@ -26,7 +28,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
   dropNode?: Node | null;
   copyList: Array<Node> = [];
 
-  static instance: Page | null = null;
+  static instance: UIModel | null = null;
 
   private constructor(json: JsonPage, pageName: string) {
     super(UIStates.Start)
@@ -37,7 +39,7 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
     this.altDown = false;
     this.mouseDown = false;
     this.startSelVer = 0;
-    this.contentHash = md5(JSON.stringify(json))
+    this.contentHash = MD5(JSON.stringify(json)).toString()
 
     // @ts-ignore
     // 调试用
@@ -48,14 +50,16 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
   }
 
   static async getInstance(json: JsonPage, pageName: string) {
-    // if (UIModel.instance) return UIModel.instance;
-    const _instance = new UIModel(json, pageName);
-    await Promise.resolve().then(() => {
-      // 让前面的微队列先执行完就能拿到root
-      _instance.root = _instance.page.getRoot();
-      _instance.registerAll()
-    })
-    return _instance;
+    if (!UIModel.instance) {
+      const _instance = new UIModel(json, pageName);
+      await Promise.resolve().then(() => {
+        // 让前面的微队列先执行完就能拿到root
+        _instance.root = _instance.page.getRoot();
+        _instance.registerAll()
+      })
+      UIModel.instance = _instance
+    }
+    return UIModel.instance;
   }
 
   private registerAll() {
@@ -274,6 +278,22 @@ export class UIModel extends StateMachine<UIStates, UIEvents, Topic> {
 
   public clearSelection() {
     this.selection.clear()
+  }
+
+  public async save() {
+    const pageExporter = new PageExporter();
+    const json = pageExporter.exportToJSON(this.page.pageNode);
+    const text = JSON.stringify(json);
+    console.log("🚀 ~ file: UIModel.ts:284 ~ UIModel ~ save ~ text:", text)
+    const contentHash = MD5(text).toString()
+    if (this.contentHash === contentHash) return;
+    this.contentHash = contentHash;
+
+    const user = localStorage['x-user'];
+    const composeSvcCall = compose(fileRemote.post1, pageRemote.put, (data) => {
+      return [user, this.page.name, data]
+    })
+    await composeSvcCall('/page', "json", text )
   }
 
   handleHotKeys(handlers: Array<string>) {

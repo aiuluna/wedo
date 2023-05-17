@@ -12,7 +12,13 @@ const config: ConfigAttributes = {
   },
   codeProjectBuildURL: (user: string, name: string) => {
     return `${buildServiceURL}/build/${user}/${name}`
-  }
+  },
+  pageUrl: (user? : string, name ? : string) => {
+		if(!name || !user) {
+			return `${docServiceURL}/page`
+		}
+		return `${docServiceURL}/page/${user}/${name}`
+	},
 }
 
 export default config

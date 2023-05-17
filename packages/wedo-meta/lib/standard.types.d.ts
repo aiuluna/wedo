@@ -1,5 +1,6 @@
 import { Map as ImmutableMap } from 'immutable';
 import { Node } from './instance/Node';
+import { BoxDescriptor } from './BoxDescriptor';
 export type SizeMode = "fill" | "value" | "fixed" | 'auto';
 export type SizeUnitInput = {
     value: number;
@@ -35,6 +36,9 @@ export type BasicJsonNode = {
     children?: Array<JsonNode>;
     id?: number;
     passProps?: any;
+};
+export type NodeInstanceJsonStructure = BasicJsonNode & {
+    box: BoxDescriptor;
 };
 export type JsonNode = BasicJsonNode & {
     box: BoxDescriptorInput;

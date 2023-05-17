@@ -1,7 +1,7 @@
 import { Map as ImmutableMap } from 'immutable';
 import { Emitter, Rect } from "@wedo/utils";
 import { Topic } from "../Topic";
-import { NodeData } from '../standard.types';
+import { JsonNode, NodeData } from '../standard.types';
 import { ComponentMeta } from '../meta/ComponentMeta';
 import { BoxDescriptor } from '../BoxDescriptor';
 import { MountPoint } from './MountPoint';
@@ -46,7 +46,7 @@ export declare class Node extends Emitter<Topic> {
     absPosition(): [number, number];
     bound(x: number, y: number): boolean;
     /**
-     * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
+     * 将传入数据缓存到this.tmpData并触发MemorizedDataChanged事件
      * @param data
      */
     memory(data: any): void;
@@ -86,4 +86,5 @@ export declare class Node extends Emitter<Topic> {
     updateFromMountPoint(): void;
     printData(): void;
     bfs(): Generator<Node>;
+    toJSON(links?: {}): JsonNode;
 }

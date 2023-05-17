@@ -39,6 +39,10 @@ export class CodeProject {
     this.scriptUrl = url;
   }
 
+  public getScriptURL() {
+    return this.scriptUrl
+  }
+
   public toJSON(): ProjectJSON {
     return {
       name: this.name,
@@ -56,6 +60,8 @@ export class CodeProject {
   static formJSON(json: ProjectJSON): CodeProject {
     const project = new CodeProject(json.name, json.type as CodeProjectType);
     project.setRootByJSON(json.fileTreeNode)
+    project.scriptUrl = json.scriptUrl
+    project.version = json.version
     return project;
   }
 }

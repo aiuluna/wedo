@@ -2,18 +2,18 @@ import { Emitter } from "@wedo/utils";
 import { Topic } from "../Topic";
 import { ComponentMeta } from "../meta/ComponentMeta";
 import { Node } from "./Node";
-import { JsonNode, JsonPage } from '../standard.types';
+import { JsonNode, JsonPage, NodeType } from '../standard.types';
 type ComponentsLoader = {
     loadByName: (group: string, name: string) => Promise<ComponentMeta>;
 };
 export declare class Page extends Emitter<Topic> {
     private root;
-    private name;
+    name: string;
     private loader;
     private id_base;
     private nodes;
     private links;
-    private pageNode;
+    pageNode: NodeType;
     constructor(name: string, json: JsonPage, loader: ComponentsLoader);
     createId(): number;
     private init;

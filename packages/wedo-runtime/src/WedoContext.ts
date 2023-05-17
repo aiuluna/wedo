@@ -1,9 +1,10 @@
-import { Page } from '@wedo/meta'
+import { Page, Topic } from '@wedo/meta'
 import { WedoNodeProxy } from './WedoNodeProxy';
 
 export class WedoContext {
   constructor(private page: Page) {
 
+    this.page.on(Topic.Initialize).subscribe(() => {})
   }
 
   public select(name: string) {

@@ -213,6 +213,25 @@ export class BoxDescriptor {
         box.display = this.display;
         return box;
     }
+    toJSON() {
+        return {
+            left: this.left.toJSON(),
+            top: this.top.toJSON(),
+            width: this.width.toJSON(),
+            height: this.height.toJSON(),
+            marginLeft: this.marginLeft.toJSON(),
+            marginTop: this.marginTop.toJSON(),
+            marginBottom: this.marginBottom.toJSON(),
+            marginRight: this.marginRight.toJSON(),
+            resizable: this.resizable,
+            position: this.position,
+            flexDirection: this.flexDirection,
+            movable: this.movable,
+            container: this.container,
+            display: this.display,
+            selectable: this.selectable
+        };
+    }
 }
 function defineOr(val, defaultValue) {
     if (typeof val === 'undefined') {

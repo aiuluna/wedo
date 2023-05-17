@@ -52,5 +52,6 @@ export declare class BoxDescriptor {
     private parseSizeUnit;
     setNode(node: Node): void;
     clone(): BoxDescriptor;
+    toJSON(): BoxDescriptorInput;
 }
 export {};

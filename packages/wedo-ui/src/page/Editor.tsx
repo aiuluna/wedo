@@ -15,15 +15,27 @@ const BottomBar = () => {
   return <div className={style.footer}></div>
 }
 
+
+
 const Wedo = () => {
   let { page: pageName } = useParams<{ [key: string]: string }>()
   if (!pageName) pageName = 'default';
 
   const [editor] = useEditor(pageName);
 
+
+  const saveListener = (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+      e.preventDefault();
+      editor?.save();
+      console.log('保存成功')
+    }
+  }
+
   useEffect(() => {
     if (!editor) return;
-    console.log('editor', editor)
+    window.addEventListener('keydown', saveListener)
+    return () => window.removeEventListener('keydown', saveListener)
   }, [editor])
 
   if (!editor) {
@@ -49,7 +61,7 @@ const Wedo = () => {
 const RightTabs = ({ editor }: { editor: UIModel }) => {
   return <Tabs defaultActiveKey="1"
     type="card"
-    style={{ height: '100%' }}
+    style={{ height: '100%', overflowY: 'auto' }}
     items={new Array(1).fill(null).map((_, i) => {
       const id = String(i + 1);
       return {

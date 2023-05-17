@@ -20,6 +20,7 @@ export enum Topic {
 
   ExternalEventNotify, //额外事件通知
 
+  Initialize, // 运行时上下文初始化成功
   DragDataUpdated,
   NodeChildrenUpdated,
 }

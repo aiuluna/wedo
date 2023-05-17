@@ -11,12 +11,12 @@ type ComponentsLoader = {
 
 export class Page extends Emitter<Topic>{
   private root!: NodeType;
-  private name: string;
+  name: string;
   private loader: ComponentsLoader;
   private id_base;
   private nodes: Array<Node>;
   private links: Record<number, Node>;
-  private pageNode!: NodeType;
+  pageNode!: NodeType;
 
   constructor(name: string, json: JsonPage, loader: ComponentsLoader) {
     super()

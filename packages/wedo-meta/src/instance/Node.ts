@@ -1,7 +1,7 @@
 import { List, Map as ImmutableMap, fromJS } from 'immutable'
 import { Emitter, Rect, Logger } from "@wedo/utils";
 import { Topic } from "../Topic";
-import { NodeData } from '../standard.types'
+import { JsonNode, NodeData, NodeInstanceJsonStructure } from '../standard.types'
 import { ComponentMeta } from '../meta/ComponentMeta';
 import { BoxDescriptor } from '../BoxDescriptor';
 import { PropMeta } from '../meta/PropMeta';
@@ -9,7 +9,7 @@ import { MountPoint } from './MountPoint';
 import { CordNew } from './Cord.new';
 
 export class Node extends Emitter<Topic> {
-  
+
   meta: ComponentMeta;
 
   private mountPoint?: MountPoint;
@@ -191,9 +191,9 @@ export class Node extends Emitter<Topic> {
     if (!this.getParent()) return true;
     return this.getRect().bound(x, y)
   }
-  
+
   /**
-   * 缓存数据到this.tmpData并触发MemorizedDataChanged事件
+   * 将传入数据缓存到this.tmpData并触发MemorizedDataChanged事件
    * @param data 
    */
   public memory(data: any) {
@@ -216,7 +216,7 @@ export class Node extends Emitter<Topic> {
 
   public isResizable() {
     const name = this.getName();
-    return  this.getBox().resizable && name !== 'root' && name !== 'page'
+    return this.getBox().resizable && name !== 'root' && name !== 'page'
   }
 
 
@@ -285,7 +285,7 @@ export class Node extends Emitter<Topic> {
   public getStyleObject() {
     return this.data.get('style').toJS()
   }
- 
+
   public getMemorizedData(): any {
     if (typeof this.tmpData !== 'undefined') {
       return this.tmpData
@@ -342,5 +342,13 @@ export class Node extends Emitter<Topic> {
     for (let child of this.getChildren()) {
       yield* child.bfs()
     }
+  }
+
+  toJSON(links = {}) {
+    const data = this.getData().remove('parent');
+    const json: Partial<NodeInstanceJsonStructure> = data.toJS();
+    const newJson = {...json, box: json.box?.toJSON()}
+    newJson.children = this.getChildren().map(child => child.toJSON(links))
+    return newJson as JsonNode
   }
 }

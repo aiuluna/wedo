@@ -19,15 +19,12 @@
   - 启动 `MongoDB`
   ```
   docker pull mongo
+  // 先不加--auth进入，然后在admin库中设置好账号密码再使用--auth验证启动
+  docker run -itd --name wedo-mongo -p 27017:27017 -v ~/data/db:/data/db mongo --auth
 
-  docker run -d \
-  -p 27017:27017 \
-  --name wedo-mongo \
-  -e MONGO_INITDB_ROOT_USERNAME=admin \
-  -e MONGO_INITDB_ROOT_PASSWORD=123456 \
-  -v ~/data/db:/data/db \
-  mongo
-
+  ```
+  ```
+   docker exec -it wedo-mongo mongosh -u huzhang -p 123456 --authenticationDatabase=admin
   ```
 
 ## 启动服务

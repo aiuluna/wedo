@@ -50,7 +50,31 @@ export class Bridge {
     getMemorizedData() {
         return this.getNode().getMemorizedData();
     }
+    /**
+     * preview从node中缓存的数据
+     * @returns
+     */
+    getNodeData() {
+        const data = this.getMemorizedData();
+        const path = this.node?.getPassProps().get('dataPath');
+        if (!path) {
+            return data;
+        }
+        return data ? data[path] : null;
+    }
     onDataChange(handler) {
         this.dataChangeHandlers.push(handler);
+    }
+    notify(eventType) {
+        this.node?.emit(Topic.ExternalEventNotify, {
+            type: eventType,
+            node: this.node
+        });
+    }
+    passProps() {
+        return this.node?.getPassProps().toJS();
+    }
+    on(topic) {
+        return this.node?.on(topic);
     }
 }

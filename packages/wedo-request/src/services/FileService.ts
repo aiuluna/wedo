@@ -8,7 +8,7 @@ export class FileService {
     ext: string,
     content: string
   ): Promise<CustomResponse> {
-    const hash = MD5(content);
+    const hash: string = MD5(content).toString();
     const finalFileName = ext ? `${bucket}/${hash}.${ext}` : `${bucket}/${hash}`;
     const res = await fetchStandrd(config.uploadFileText, {
       headers: {
@@ -21,6 +21,15 @@ export class FileService {
       })
     })
     return res;
+  }
+
+  async post2(object: any): Promise<CustomResponse> {
+    const form = new FormData();
+    form.append("file", object);
+    return await fetchStandrd(config.uploadFileObject, {
+      method: 'POST',
+      body: form
+    })
   }
 
   async get(url: string): Promise<CustomResponse> {

@@ -89,6 +89,7 @@ class FileTreeNode {
         const node = new FileTreeNode(json.fileName, json.type);
         node.url = json.url;
         node.children = json.children?.map(x => FileTreeNode.fromJSON(x)) || [];
+        node.sort();
         return node;
     }
 }

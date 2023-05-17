@@ -1,3 +1,4 @@
+import { CodeProject } from "./CodeProject";
 import { codeProjectRemote, fileRemote } from "@wedo/request";
 export class CodeProjectRepo {
     project;
@@ -17,5 +18,11 @@ export class CodeProjectRepo {
         }
         await codeProjectRemote.put(user, this.project.getName(), this.project.toJSON());
         console.log('project saved.', this.project.toJSON());
+    }
+    static async load(user, name) {
+        const result = await codeProjectRemote.get(user, name);
+        console.log("🚀 ~ file: CodeProjectRepo.ts:27 ~ CodeProjectRepo ~ load ~ result:", result);
+        const project = CodeProject.formJSON(result.data);
+        return project;
     }
 }

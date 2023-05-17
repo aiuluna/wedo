@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import useEditor from "../hooks/useEditor";
 import ComponentList from "../components/ComponentList";
 import Panel from "../components/render/Panel";
-import NodeRender from "../components/render/NodeRender";
 import { UIModel } from "../object/UIModel";
 import { Tabs } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
@@ -13,6 +12,8 @@ import TitleBar from "../components/frame/TitleBar";
 import RenderContext from "../components/render/RenderContext";
 import { CordNew } from "@wedo/meta/lib/instance/Cord.new";
 import { Rect } from "@wedo/utils";
+import { usePage, NodeRender } from "@wedo/render";
+import { Topic } from "@wedo/meta";
 
 const BottomBar = () => {
   return <div className={style.footer}></div>
@@ -22,16 +23,19 @@ const Preview = () => {
   let { page: pageName } = useParams<{ [key: string]: string }>()
   if (!pageName) pageName = 'default';
 
-  const [editor] = useEditor(pageName);
-  const [page] = usePage()
+  
+  const page = usePage(pageName)
 
   useEffect(() => {
-    if (!editor) return;
-    console.log('editor', editor)
-  }, [editor])
+    requestAnimationFrame(() => {
+      if (page !== null) {
+        // page.emit(Topic.Loaded)
+      } 
+    })
+  }, [page])
 
-  if (!editor) {
-    return null
+  if (!page) {
+    return null;
   }
 
   return <React.Fragment>
@@ -39,9 +43,9 @@ const Preview = () => {
     <div className={style['preview-container']}>
       <RenderContext.Provider value={{
         cord: new CordNew(Rect.ZERO),
-        page: pag
+        page
       }}>
-        <NodeRender node={editor.page.getRoot()} />
+        <NodeRender node={page.getRoot()} />
 
       </RenderContext.Provider>
 

@@ -53,12 +53,12 @@ const TitleBar = ({pageName, name, children = null} : {
           path={`/codeless/${pageName}`}
           src="https://voice-static.oss-accelerate.aliyuncs.com//img/8ff6fd7149b9def759a1f1c6760ac1beaf18557d.png"
         />
-        <Route
+        {/* <Route
           title="服务端"
           active={name === "faas"}
           path={`/faas/${pageName}`}
           src="https://voice-static.oss-accelerate.aliyuncs.com//img/7d614228eaaa473246435d58e5c51700732d88f8.png"
-        />
+        /> */}
         <Route
           title="预览"
           active={name === "preview"}

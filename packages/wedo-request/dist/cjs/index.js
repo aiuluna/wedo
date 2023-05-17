@@ -18,6 +18,12 @@ var config$1 = {
   },
   codeProjectBuildURL: function codeProjectBuildURL(user, name) {
     return buildServiceURL + "/build/" + user + "/" + name;
+  },
+  pageUrl: function pageUrl(user, name) {
+    if (!name || !user) {
+      return docServiceURL + "/page";
+    }
+    return docServiceURL + "/page/" + user + "/" + name;
   }
 };
 
@@ -223,7 +229,7 @@ var FileService = /*#__PURE__*/function () {
       return _regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            hash = cryptoJs.MD5(content);
+            hash = cryptoJs.MD5(content).toString();
             finalFileName = ext ? bucket + "/" + hash + "." + ext : bucket + "/" + hash;
             _context.next = 4;
             return fetchStandrd(config.uploadFileText, {
@@ -250,42 +256,68 @@ var FileService = /*#__PURE__*/function () {
     }
     return post1;
   }();
-  _proto.get = /*#__PURE__*/function () {
-    var _get = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(url) {
-      var resp, text;
+  _proto.post2 = /*#__PURE__*/function () {
+    var _post2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(object) {
+      var form;
       return _regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            resp = null;
-            _context2.prev = 1;
+            form = new FormData();
+            form.append("file", object);
             _context2.next = 4;
+            return fetchStandrd(config.uploadFileObject, {
+              method: 'POST',
+              body: form
+            });
+          case 4:
+            return _context2.abrupt("return", _context2.sent);
+          case 5:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2);
+    }));
+    function post2(_x4) {
+      return _post2.apply(this, arguments);
+    }
+    return post2;
+  }();
+  _proto.get = /*#__PURE__*/function () {
+    var _get = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(url) {
+      var resp, text;
+      return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            resp = null;
+            _context3.prev = 1;
+            _context3.next = 4;
             return fetch(url);
           case 4:
-            resp = _context2.sent;
-            _context2.next = 7;
+            resp = _context3.sent;
+            _context3.next = 7;
             return resp.text();
           case 7:
-            text = _context2.sent;
-            return _context2.abrupt("return", {
+            text = _context3.sent;
+            return _context3.abrupt("return", {
               data: text,
               success: true,
               httpCode: resp.status
             });
           case 11:
-            _context2.prev = 11;
-            _context2.t0 = _context2["catch"](1);
-            return _context2.abrupt("return", {
-              message: _context2.t0.toString(),
+            _context3.prev = 11;
+            _context3.t0 = _context3["catch"](1);
+            return _context3.abrupt("return", {
+              message: _context3.t0.toString(),
               success: false,
               httpCode: resp ? resp.status : 400
             });
           case 14:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
-      }, _callee2, null, [[1, 11]]);
+      }, _callee3, null, [[1, 11]]);
     }));
-    function get(_x4) {
+    function get(_x5) {
       return _get.apply(this, arguments);
     }
     return get;
@@ -293,8 +325,106 @@ var FileService = /*#__PURE__*/function () {
   return FileService;
 }();
 
+var PageService = /*#__PURE__*/function () {
+  function PageService() {}
+  var _proto = PageService.prototype;
+  _proto.put = /*#__PURE__*/function () {
+    var _put = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(user, name, url) {
+      return _regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return fetchStandrd(config.pageUrl(user, name), {
+              method: 'PUT',
+              headers: {
+                'content-type': 'application/json'
+              },
+              body: _JSON$stringify({
+                url: url
+              })
+            });
+          case 2:
+            return _context.abrupt("return", _context.sent);
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee);
+    }));
+    function put(_x, _x2, _x3) {
+      return _put.apply(this, arguments);
+    }
+    return put;
+  }();
+  _proto.get = /*#__PURE__*/function () {
+    var _get = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(user, name) {
+      return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return fetchStandrd(config.pageUrl(user, name));
+          case 2:
+            return _context2.abrupt("return", _context2.sent);
+          case 3:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2);
+    }));
+    function get(_x4, _x5) {
+      return _get.apply(this, arguments);
+    }
+    return get;
+  }();
+  return PageService;
+}();
+
+function compose(fn1, fn2, combiner) {
+  return /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+    var result,
+      data,
+      nextArgs,
+      _args = arguments;
+    return _regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return fn1.apply(void 0, _args);
+        case 2:
+          result = _context.sent;
+          if (result.success) {
+            _context.next = 5;
+            break;
+          }
+          return _context.abrupt("return", result);
+        case 5:
+          data = result.data;
+          nextArgs = combiner(data);
+          if (nextArgs) {
+            _context.next = 9;
+            break;
+          }
+          return _context.abrupt("return", {
+            success: false
+          });
+        case 9:
+          _context.next = 11;
+          return fn2.apply(void 0, nextArgs);
+        case 11:
+          return _context.abrupt("return", _context.sent);
+        case 12:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+}
+
 var fileRemote = new FileService();
 var codeProjectRemote = new CodeProjectService();
+var pageRemote = new PageService();
 
 exports.codeProjectRemote = codeProjectRemote;
+exports.compose = compose;
 exports.fileRemote = fileRemote;
+exports.pageRemote = pageRemote;

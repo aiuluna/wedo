@@ -22,5 +22,13 @@ export class CodeProjectRepo {
     console.log('project saved.', this.project.toJSON())
   }
 
+  public static async load(user: string, name: string) {
+    const result = await codeProjectRemote.get(user, name);
+    console.log("🚀 ~ file: CodeProjectRepo.ts:27 ~ CodeProjectRepo ~ load ~ result:", result)
+    
+    const project = CodeProject.formJSON(result.data);
+    return project
+  }
+
 }
 
