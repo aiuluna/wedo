@@ -2,11 +2,12 @@ import { FileNodeJSON, FileType } from "./types";
 export declare class FileTreeNode {
     private fileName;
     private type;
+    private parent?;
     private children;
     private url?;
     private content?;
     private dirty;
-    constructor(fileName: string, type: FileType);
+    constructor(fileName: string, type: FileType, parent?: FileTreeNode | undefined);
     setContent(content: string): void;
     getContent(): string | undefined;
     saved(): void;
@@ -17,6 +18,7 @@ export declare class FileTreeNode {
     getFileName(): string;
     getFileType(): FileType;
     getChildren(): FileTreeNode[];
+    getParent(): FileTreeNode | undefined;
     add(child: FileTreeNode): void;
     isDirty(): boolean;
     getUrl(): string | undefined;
@@ -27,5 +29,5 @@ export declare class FileTreeNode {
     sort(): void;
     find(predication: (item: FileTreeNode) => boolean): Generator<FileTreeNode>;
     toJSON(): FileNodeJSON;
-    static fromJSON(json: FileNodeJSON): FileTreeNode;
+    static fromJSON(json: FileNodeJSON, parent?: FileTreeNode): FileTreeNode;
 }

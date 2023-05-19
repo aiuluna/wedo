@@ -13,7 +13,7 @@ export class FileTreeNode {
   // 文件是否被更改
   private dirty: boolean = false;
 
-  constructor(private fileName: string, private type: FileType) {
+  constructor(private fileName: string, private type: FileType, private parent?: FileTreeNode) {
   }
 
   public setContent(content: string) {
@@ -51,7 +51,12 @@ export class FileTreeNode {
     return this.children;
   }
 
+  public getParent() {
+    return this.parent;
+  }
+
   public add(child: FileTreeNode) {
+    child.parent = this;
     this.children.push(child)
   }
 
@@ -101,10 +106,10 @@ export class FileTreeNode {
     }
   }
 
-  public static fromJSON(json: FileNodeJSON): FileTreeNode {
-    const node = new FileTreeNode(json.fileName, json.type);
+  public static fromJSON(json: FileNodeJSON, parent?: FileTreeNode): FileTreeNode {
+    const node = new FileTreeNode(json.fileName, json.type, parent);
     node.url = json.url;
-    node.children = json.children?.map(x => FileTreeNode.fromJSON(x)) || []
+    node.children = json.children?.map(x => FileTreeNode.fromJSON(x, node)) || []
     node.sort()
     return node
   }

@@ -4,6 +4,7 @@ exports.FileTreeNode = void 0;
 class FileTreeNode {
     fileName;
     type;
+    parent;
     children = [];
     // oss，文件地址
     url;
@@ -11,9 +12,10 @@ class FileTreeNode {
     content;
     // 文件是否被更改
     dirty = false;
-    constructor(fileName, type) {
+    constructor(fileName, type, parent) {
         this.fileName = fileName;
         this.type = type;
+        this.parent = parent;
     }
     setContent(content) {
         if (this.content !== content) {
@@ -43,7 +45,11 @@ class FileTreeNode {
     getChildren() {
         return this.children;
     }
+    getParent() {
+        return this.parent;
+    }
     add(child) {
+        child.parent = this;
         this.children.push(child);
     }
     isDirty() {
@@ -85,10 +91,10 @@ class FileTreeNode {
             children: this.children.map(x => x.toJSON())
         };
     }
-    static fromJSON(json) {
-        const node = new FileTreeNode(json.fileName, json.type);
+    static fromJSON(json, parent) {
+        const node = new FileTreeNode(json.fileName, json.type, parent);
         node.url = json.url;
-        node.children = json.children?.map(x => FileTreeNode.fromJSON(x)) || [];
+        node.children = json.children?.map(x => FileTreeNode.fromJSON(x, node)) || [];
         node.sort();
         return node;
     }
