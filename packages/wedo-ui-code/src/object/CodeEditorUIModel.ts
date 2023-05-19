@@ -9,12 +9,16 @@ export enum States {
 
 export enum Actions {
   AUTO,
-  Select
+  Select,
+  NewFile,
+  Rename
 }
 
 export enum Topic {
   SelectionChanged,
-  Loaded
+  Loaded,
+  FileAdded,
+  FileRenamed
 }
 
 function first<T>(g: Generator<T>) {
@@ -46,6 +50,26 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
         this.emit(Topic.SelectionChanged, node)
       })
     })
+
+    this.describe('处理新增文件和修改文件名称的逻辑', register => {
+
+      register(States.Selected, States.Selected, Actions.NewFile, () => {
+        const newFile = new FileTreeNode('unknow', 'file')
+        if (this.selectedFile?.getFileType() === 'dir') {
+          this.selectedFile.add(newFile);
+        } else {
+          this.selectedFile?.getParent()?.add(newFile)
+        }
+        this.emit(Topic.FileAdded)
+      })
+
+      register(States.Selected, States.Selected, Actions.Rename, fileName => {
+        // this.selectedFile.
+      })
+    })
+
+
+
   }
 
   // 加载lowCode项目
@@ -67,7 +91,7 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
       file.saved()
     }))
 
-    this.selectedFile = first(this.project.getRoot().find(x => !!x.getContent()))
+    this.dispatch(Actions.Select, first(this.project.getRoot().find(x => !!x.getContent())))
     this._loaded = true
     this.emit(Topic.Loaded)
   }
