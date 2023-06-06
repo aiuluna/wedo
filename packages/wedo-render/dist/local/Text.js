@@ -1,16 +1,15 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Topic } from "@wedo/meta";
 import { useState, useEffect } from "react";
 export default ({ bridge }) => {
     const [, setV] = useState(0);
     const props = bridge.passProps();
     useEffect(() => {
-        bridge.on(Topic.MemorizedDataChanged)?.subscribe(() => {
+        bridge.onDataChange(() => {
             setV(x => x + 1);
         });
-    }, []);
+    }, [bridge]);
     const data = bridge.getNodeData();
-    console.log('here', props);
+    console.log('here', props, data);
     return _jsx("p", { style: {
             color: props?.color,
             fontSize: props?.fontSize,

@@ -8,13 +8,13 @@ export default ({ bridge }: ComponentProps) => {
   const props = bridge.passProps()
 
   useEffect(() => {
-    bridge.on(Topic.MemorizedDataChanged)?.subscribe(() => {
+    bridge.onDataChange(() => {
       setV(x => x + 1)
     })
 
-  }, [])
+  }, [bridge])
   const data = bridge.getNodeData()
-  console.log('here', props)
+  console.log('here', props, data)
   return <p style={{
     color: props?.color,
     fontSize: props?.fontSize,

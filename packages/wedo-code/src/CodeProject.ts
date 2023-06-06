@@ -7,7 +7,8 @@ export class CodeProject {
   private scriptUrl?: string;
 
   static TemplateNames = {
-    codeless: 'codeless-template'
+    codeless: 'codeless-template',
+    faas: 'faas-template'
   }
 
   constructor(private name: string, private type: CodeProjectType) {
@@ -43,6 +44,10 @@ export class CodeProject {
     return this.scriptUrl
   }
 
+  public getVersion() {
+    return this.version
+  }
+
   public toJSON(): ProjectJSON {
     return {
       name: this.name,
@@ -54,7 +59,7 @@ export class CodeProject {
   }
 
   public incrVer() {
-    this.version = this.version++
+    this.version++
   }
 
   static formJSON(json: ProjectJSON): CodeProject {

@@ -10,6 +10,7 @@ export class Bridge {
         this.node = node;
         this.page = page;
         node?.on(Topic.MemorizedDataChanged).subscribe(() => {
+            console.log('Topic.MemorizedDataChanged');
             this.dataChangeHandlers.forEach(h => h());
         });
     }

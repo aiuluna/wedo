@@ -1,10 +1,16 @@
 import { Page, Topic } from '@wedo/meta'
 import { WedoNodeProxy } from './WedoNodeProxy';
+import { codeProjectRemote } from '@wedo/request'
 
 export class WedoContext {
   constructor(private page: Page) {
 
     this.page.on(Topic.Initialize).subscribe(() => {})
+  }
+
+
+  public async faas(fnName: string, ...args: string[]) {
+    return await codeProjectRemote.faas.get(localStorage['x-user'], this.page.name, fnName, ...args)
   }
 
   public select(name: string) {

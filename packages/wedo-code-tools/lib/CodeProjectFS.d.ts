@@ -7,4 +7,6 @@ export declare class CodeProjectFS {
     private downloadFile;
     download(user: string, name: string): Promise<CodeProject>;
     static createTemplates(): Promise<void>;
+    addDirectory(project: CodeProject, dir: string, name: string): void;
+    removeDirectory(project: CodeProject, dir: string, name: string): void;
 }

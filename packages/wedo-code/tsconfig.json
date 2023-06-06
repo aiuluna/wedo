@@ -3,9 +3,9 @@
     "target": "ESNext",
     // "module": "ESNext",
     // "outDir": "dist/es",
-    "module": "CommonJS",
-    "outDir": "dist/commonjs",
-
+    // "module": "CommonJS",
+    // "outDir": "dist/commonjs",
+    "declarationDir": "dist",
     "lib": [
       "dom",
       "dom.iterable",
@@ -14,10 +14,10 @@
     "rootDir": "src",
     "allowJs": false,
     "downlevelIteration": true,
-    "noImplicitAny": true,
     "strict": true,
     "moduleResolution": "node",
     "declaration": true,
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules"]
 }

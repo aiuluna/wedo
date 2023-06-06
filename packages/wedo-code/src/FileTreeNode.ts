@@ -55,9 +55,21 @@ export class FileTreeNode {
     return this.parent;
   }
 
+  public setFileName(name: string) {
+    this.fileName = name;
+  }
+
   public add(child: FileTreeNode) {
     child.parent = this;
     this.children.push(child)
+  }
+
+  public remove(child: FileTreeNode | FileTreeNode []) {
+    const filters = Array.isArray(child) ? child : [child];
+    this.children = this.children.reduce((prev: FileTreeNode[], curv: FileTreeNode) => {
+      if (!filters.includes(curv)) prev.push(curv);
+      return prev
+    }, [])
   }
 
   public isDirty(): boolean {

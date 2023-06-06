@@ -38,7 +38,7 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
 
   constructor(private name: string, private type: CodeProjectType) {
     super(States.Initialize)
-    this.project = new CodeProject(name, 'codeless')
+    this.project = new CodeProject(name, type)
     this.init()
     this.load()
   }
@@ -64,7 +64,8 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
       })
 
       register(States.Selected, States.Selected, Actions.Rename, fileName => {
-        // this.selectedFile.
+        this.selectedFile?.setFileName(fileName)
+        this.emit(Topic.FileRenamed)
       })
     })
 
@@ -76,7 +77,7 @@ export class CodeEditorUIModel extends StateMachine<States, Actions, Topic> {
   private async load() {
     const result = await codeProjectRemote.get(localStorage['x-user'], this.project.getName())
     if (!result.data) {
-      const templateProject = await codeProjectRemote.get('template', CodeProject.TemplateNames.codeless)
+      const templateProject = await codeProjectRemote.get('template', CodeProject.TemplateNames[this.type])
       result.data = templateProject.data;
       result.data.name = this.project.getName()
     }

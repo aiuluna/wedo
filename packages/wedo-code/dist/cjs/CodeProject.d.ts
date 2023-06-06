@@ -8,15 +8,17 @@ export declare class CodeProject {
     private scriptUrl?;
     static TemplateNames: {
         codeless: string;
+        faas: string;
     };
     constructor(name: string, type: CodeProjectType);
     setRootByJSON(root: FileNodeJSON): void;
     setRootNode(node: FileTreeNode): void;
     getRoot(): FileTreeNode;
     getName(): string;
-    getType(): "codeless";
+    getType(): CodeProjectType;
     setScriptURL(url: string): void;
     getScriptURL(): string | undefined;
+    getVersion(): number;
     toJSON(): ProjectJSON;
     incrVer(): void;
     static formJSON(json: ProjectJSON): CodeProject;

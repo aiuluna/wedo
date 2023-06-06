@@ -16,7 +16,7 @@ export class BuildController {
 
   @restful(HTTPMethod.GET, '/')
   index(req: Request, res: Response) {
-    res.send('success')
+    res.send('hello wedo-svc-packager')
   }
 
   @restful(HTTPMethod.PUT, '/build/:user/:name')
@@ -25,16 +25,19 @@ export class BuildController {
 
     const cwd = path.resolve(__dirname, '../temp')
     console.log('start build...')
-    if (!fs.existsSync(cwd)) {
-      fs.mkdirSync(cwd)
-    }
-
-    const builder = new ProjectBuilder();
-    await builder.build(user, name, cwd);
-    res.send({
-      success: true
-    })
-
+    try {
+      if (!fs.existsSync(cwd)) {
+        fs.mkdirSync(cwd)
+      }
+  
+      const builder = new ProjectBuilder();
+      await builder.build(user, name, cwd);
+      res.send({
+        success: true
+      })
+    } catch (error) {
+      res.status(500).send('error msg:' + error.toString())
+    } 
   }
 }
 

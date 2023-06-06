@@ -22,7 +22,7 @@ export class CodeProjectService {
   }
 
   build = new BuildService()
-
+  faas = new FaasService()
 }
 
 class BuildService {
@@ -30,6 +30,13 @@ class BuildService {
     const resp = await fetchStandrd(config.codeProjectBuildURL(user, name), {
       method: 'PUT'
     })
+    return resp;
+  }
+}
+
+class FaasService {
+  async get(user: string, project: string, fnName: string, ...args: string[]) {
+    const resp = await fetchStandrd(config.faasRunner(user, project, fnName, ...args))
     return resp;
   }
 }

@@ -9,6 +9,7 @@ import Editor from './page/Editor'
 import CodeLess from "./page/CodeLess";
 import './index.css'
 import Preview from "./page/Preview";
+import Fass from "./page/Fass";
 
 const container = document.getElementById('root')
 const root = createRoot(container!)
@@ -20,6 +21,7 @@ const App = () => {
       <Route path="/" element={<Editor />}></Route>
       <Route path="/wedo/:page" element={<Editor />}></Route>
       <Route path="/codeless/:page" element={<CodeLess />}></Route>
+      <Route path="/faas/:page" element={<Fass />}></Route>
       <Route path="/preview/:page" element={<Preview />}></Route>
 
     </Routes>

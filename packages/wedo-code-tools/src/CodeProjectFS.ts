@@ -69,6 +69,7 @@ export class CodeProjectFS {
   public async download(user: string, name: string) {
     console.log("fs---download", name)
     const result = await codeProjectRemote.get(user, name);
+    console.log('fs ---- downloaded', result)
     const json: ProjectJSON = result.data;
     const project: CodeProject = CodeProject.formJSON(json);
     await this.downloadFile(this.cwd, project.getRoot());
@@ -83,6 +84,18 @@ export class CodeProjectFS {
       const fs = new CodeProjectFS(path.resolve(__dirname, '../template', key as CodeProjectType))
       await fs.upload("template", project)
     }
+  }
+
+  public addDirectory(project: CodeProject, dir: string, name: string) {
+    const node = this.createFileNode(dir, name);
+    const root = project.getRoot();
+    root.add(node);
+  }
+
+  public removeDirectory(project: CodeProject, dir: string, name: string) {
+    const root = project.getRoot();
+    const filters = root.find(item => item.getFileName() === name && item.getFileType() === 'dir');
+    root.remove([...filters])
   }
 
 }

@@ -9,7 +9,6 @@ const path_1 = __importDefault(require("path"));
 const rollup_plugin_typescript2_1 = __importDefault(require("rollup-plugin-typescript2"));
 const plugin_node_resolve_1 = __importDefault(require("@rollup/plugin-node-resolve"));
 class RollupConfig {
-    cwd;
     constructor(cwd) {
         this.cwd = cwd;
     }

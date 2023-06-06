@@ -1,6 +1,7 @@
 import _asyncToGenerator from '@babel/runtime-corejs3/helpers/asyncToGenerator';
 import _regeneratorRuntime from '@babel/runtime-corejs3/regenerator';
 import _JSON$stringify from '@babel/runtime-corejs3/core-js-stable/json/stringify';
+import _concatInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/concat';
 import _extends from '@babel/runtime-corejs3/helpers/extends';
 import _globalThis from '@babel/runtime-corejs3/core-js/global-this';
 import { MD5 } from 'crypto-js';
@@ -8,6 +9,7 @@ import { MD5 } from 'crypto-js';
 var uploadServiceURL = "http://localhost:7001";
 var docServiceURL = "http://localhost:7002";
 var buildServiceURL = "http://localhost:7003";
+var faasServiceURL = "http://localhost:7004";
 var config$1 = {
   uploadFileObject: uploadServiceURL + "/upload-object",
   uploadFileText: uploadServiceURL + "/upload-content",
@@ -22,6 +24,13 @@ var config$1 = {
       return docServiceURL + "/page";
     }
     return docServiceURL + "/page/" + user + "/" + name;
+  },
+  faasRunner: function faasRunner(user, project, fnName) {
+    for (var _len = arguments.length, args = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+      args[_key - 3] = arguments[_key];
+    }
+    var query = args.join(',');
+    return faasServiceURL + "/" + user + "/" + project + "/" + fnName + "?" + query;
   }
 };
 
@@ -35,7 +44,7 @@ function getXUser() {
 }
 var analyzeResponse = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(resp) {
-    var status;
+    var status, msg, jsonRes;
     return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -58,7 +67,7 @@ var analyzeResponse = /*#__PURE__*/function () {
             httpCode: status
           });
         case 11:
-          _context.next = 22;
+          _context.next = 36;
           break;
         case 13:
           if (!(status >= 300 && status < 400)) {
@@ -66,8 +75,8 @@ var analyzeResponse = /*#__PURE__*/function () {
             break;
           }
           return _context.abrupt("return", {
-            success: false,
-            message: 'Error: Redirection occured.',
+            success: true,
+            message: 'Warning: Redirection occured.',
             httpCode: status
           });
         case 17:
@@ -81,16 +90,35 @@ var analyzeResponse = /*#__PURE__*/function () {
             httpCode: status
           });
         case 21:
+          if (!(status >= 500)) {
+            _context.next = 35;
+            break;
+          }
+          msg = "Server side 500";
+          _context.prev = 23;
+          _context.next = 26;
+          return resp.json();
+        case 26:
+          jsonRes = _context.sent;
+          throw new Error(jsonRes.message);
+        case 30:
+          _context.prev = 30;
+          _context.t1 = _context["catch"](23);
+          throw new Error(msg);
+        case 33:
+          _context.next = 36;
+          break;
+        case 35:
           return _context.abrupt("return", {
             success: false,
             message: "Server side error occured.",
             httpCode: status
           });
-        case 22:
+        case 36:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[2, 8]]);
+    }, _callee, null, [[2, 8], [23, 30]]);
   }));
   return function analyzeResponse(_x) {
     return _ref.apply(this, arguments);
@@ -133,6 +161,7 @@ var fetchStandrd = /*#__PURE__*/function () {
 var CodeProjectService = /*#__PURE__*/function () {
   function CodeProjectService() {
     this.build = new BuildService();
+    this.faas = new FaasService();
   }
   var _proto = CodeProjectService.prototype;
   _proto.put = /*#__PURE__*/function () {
@@ -216,6 +245,41 @@ var BuildService = /*#__PURE__*/function () {
     return put;
   }();
   return BuildService;
+}();
+var FaasService = /*#__PURE__*/function () {
+  function FaasService() {}
+  var _proto3 = FaasService.prototype;
+  _proto3.get = /*#__PURE__*/function () {
+    var _get2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(user, project, fnName) {
+      var _context4;
+      var _len,
+        args,
+        _key,
+        resp,
+        _args4 = arguments;
+      return _regeneratorRuntime.wrap(function _callee4$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
+          case 0:
+            for (_len = _args4.length, args = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+              args[_key - 3] = _args4[_key];
+            }
+            _context5.next = 3;
+            return fetchStandrd(config.faasRunner.apply(config, _concatInstanceProperty(_context4 = [user, project, fnName]).call(_context4, args)));
+          case 3:
+            resp = _context5.sent;
+            return _context5.abrupt("return", resp);
+          case 5:
+          case "end":
+            return _context5.stop();
+        }
+      }, _callee4);
+    }));
+    function get(_x8, _x9, _x10) {
+      return _get2.apply(this, arguments);
+    }
+    return get;
+  }();
+  return FaasService;
 }();
 
 var FileService = /*#__PURE__*/function () {

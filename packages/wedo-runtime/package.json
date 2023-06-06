@@ -12,7 +12,8 @@
   "hydra": {
 		"type": "lib",
 		"devLinks": [
-			"@wedo/meta"
+			"@wedo/meta",
+      "@wedo/request"
 		]
 	}
 }

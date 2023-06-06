@@ -19,6 +19,7 @@ export class Bridge {
     this.node = node;
     this.page = page;
     node?.on(Topic.MemorizedDataChanged).subscribe(() => {
+      console.log('Topic.MemorizedDataChanged')
       this.dataChangeHandlers.forEach(h => h())
     })
   }
@@ -97,8 +98,7 @@ export class Bridge {
     return this.node?.getPassProps().toJS()
   }
 
-  on(topic: Topic | Topic[]) {
-    return this.node?.on(topic)
+  public on(topic : Topic | Topic[]) {
+    return this.getNode().on(topic)
   }
-
 }

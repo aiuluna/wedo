@@ -1,4 +1,4 @@
-export type CodeProjectType = 'codeless';
+export type CodeProjectType = 'codeless' | 'faas';
 export type FileType = 'dir' | 'file';
 export type FileNodeJSON = {
     fileName: string;

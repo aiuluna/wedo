@@ -21,7 +21,7 @@ const CodeEditor = () => {
       selectFile?.setContent(e || '')
       editor?.save()
     }, 2000)}
-    value={selectFile?.getContent()}
+    value={selectFile?.getContent() || ""}
     options={{
       fontSize: 24
     }}

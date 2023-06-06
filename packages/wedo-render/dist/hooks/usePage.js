@@ -48,7 +48,7 @@ export const usePage = (pageName) => {
     async function run(page) {
         try {
             const user = localStorage['x-user'];
-            const project = await CodeProjectRepo.load(user, pageName);
+            const project = await CodeProjectRepo.load(user, 'codeless-' + pageName);
             const url = project.getScriptURL();
             const result = await fileRemote.get(url);
             const content = result.data;

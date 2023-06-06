@@ -19,7 +19,9 @@ export declare class FileTreeNode {
     getFileType(): FileType;
     getChildren(): FileTreeNode[];
     getParent(): FileTreeNode | undefined;
+    setFileName(name: string): void;
     add(child: FileTreeNode): void;
+    remove(child: FileTreeNode | FileTreeNode[]): void;
     isDirty(): boolean;
     getUrl(): string | undefined;
     setUrl(url: string): void;
