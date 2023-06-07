@@ -27,6 +27,26 @@
    docker exec -it wedo-mongo mongosh -u huzhang -p 123456 --authenticationDatabase=admin
   ```
 
+## 依赖安装
+在根目录的 `scripts/hydra` 目录下执行以下命令：
+```
+# 安装所有项目的所有links
+yarn install-links 
+
+# 安装指定项目的links
+yarn install-link --name xxx [xxx表示项目名，如@wedo/ui] 
+
+# 安装所有项目依赖
+yarn install-deps --type [type: async | sync] (可选) - 包的安装类型。async 表示并行安装，sync 表示串行安装。默认值为 sync。
+
+# 安装指定的项目及其子项目的依赖
+yarn install-dep --name xxx --type [type: async | sync] (可选) - 包的安装类型。async 表示并行安装，sync 表示串行安装。默认值为 sync。
+
+```
+
+
+
+
 ## 启动服务
 在根目录的 `scripts/hydra` 目录下执行以下命令：
 
@@ -40,3 +60,4 @@ yarn dev --name @wedo/xxx [xxx表示server名称]
 yarn dev --name @wedo/svc-packager
 ```
 脚本将通过 `pm2` 启动该服务。
+

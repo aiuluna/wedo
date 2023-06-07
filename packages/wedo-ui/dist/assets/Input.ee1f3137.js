@@ -1,0 +1,1 @@
+import{s as t}from"./component.module.eb27806f.js";import{j as s}from"./index.a6d21641.js";const n=({multiline:a})=>a==="on"?s("textarea",{className:t.textarea,onMouseDown:e=>e.preventDefault()}):s("input",{className:t.input,onMouseDown:e=>e.preventDefault()});export{n as default};

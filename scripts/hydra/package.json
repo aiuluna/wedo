@@ -13,13 +13,15 @@
 	"scripts": {
 		"ls": "ts-node ./src/main.ts ls",
 		"list": "ts-node ./src/main.ts list",
-		"install-link": "ts-node ./src/main.ts install",
-		"reinstall": "ts-node ./src/main.ts reinstall",
+    "install-deps": "ts-node ./src/main.ts install-deps",
+		"install-dep": "ts-node ./src/main.ts install-dep",
+		"reinstall-dep": "ts-node ./src/main.ts reinstall",
 		"clear": "ts-node ./src/main.ts clear",
 		"dev": "ts-node ./src/main.ts dev",
 		"serve": "ts-node ./src/main.ts serve",
 		"build-self": "rollup -c ./config/rollup.config.js --bundleConfigAsCjs",
-    "links": "ts-node ./src/main.ts links"
+    "install-links": "ts-node ./src/main.ts install-links",
+    "install-link": "ts-node ./src/main.ts install-link"
 	},
 	"author": "huzhang",
 	"license": "ISC",

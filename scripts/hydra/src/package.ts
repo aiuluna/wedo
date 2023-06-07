@@ -46,6 +46,7 @@ export class Package {
   }
 
   public async npmInstall() {
+    notice(`start install ${this.getName()}`)
     await this.exec('yarn')
   }
 

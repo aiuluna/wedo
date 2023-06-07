@@ -1,24 +1,31 @@
 {
-	"compilerOptions": {
-		"target": "esnext",
-		"module": "esnext",
-		"moduleResolution": "node",
-		"allowJs": false,
-		"strict": true,
-		"jsx": "react-jsx",
-		"sourceMap": true,
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
-		"lib": ["esnext", "dom"],
-		"noImplicitAny": false
-	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.d.ts",
-		"src/**/*.tsx",
-		"src/**/*.vue",
-		"src/plugin/vite-plugin-closure-id.js",
-		"src/plugin/test.ts"
-	]
-	// "include": ["src/**/*"]
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "lib",
+    "declaration": true,
+
+    /* Bundler mode */
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "noImplicitAny": false,
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false, // 是否忽略未使用的局部变量
+    "noUnusedParameters": false, // 是否忽略未使用的函数参数
+    "noFallthroughCasesInSwitch": true,
+
+    /* Paths */
+    "paths": {
+      "@vitejs/*": ["./node_modules/@vitejs/*"]
+    }
+  },
+  "include": ["src", "packages/runner/vite-env.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

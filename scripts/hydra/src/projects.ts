@@ -8,24 +8,14 @@ export class Projects {
   }
 
   public async install(type?: 'async' | 'sync', name?: string) {
+    if (!type) type = 'sync';
     if (name) {
       notice('isInstalling ~~~' + name);
-      this.packages.find(p => p.getName() === name)?.npmInstall();
-      return
+      const set = new Set<Package>();
+      this.findDepedences(name, set);
+      return await this.runInstallByType(type, Array.from(set))
     }
-
-    if (!type || type === 'sync') {
-      this.packages.forEach((pkg) => {
-        notice("isInstalling async...", pkg.getDir())
-        pkg.npmInstall()
-      });
-    }
-    else {
-      for (const pkg of this.packages) {
-        notice("isInstalling async...", pkg.getDir())
-        await pkg.npmInstall();
-      }
-    }
+    return await this.runInstallByType(type, this.packages);
   }
 
   public async reInstall(type?: 'async' | 'sync', name?: string) {
@@ -50,12 +40,14 @@ export class Projects {
   /**
    * 构建依赖树
    */
-  public async links() {
+  public async links(pkgName?: string) {
     const map = new Map<string, TreeNode<Package>>()
     for (let pkg of this.packages) {
-      map.set(pkg.getName(), TreeNode.createNode(pkg))
+      const [name, node] = [pkg.getName(), TreeNode.createNode(pkg)];
+      map.set(name, node);
     }
 
+    // 构建依赖关系
     for (let [k, v] of map) {
       if (v.getVal().getDevLinks()) {
         v.getVal().getDevLinks().map(name => {
@@ -66,13 +58,21 @@ export class Projects {
 
     const nodes: TreeNode<Package>[] = Array.from(map.values()) || [];
 
-    /* 找出所有需要[npm link]或者[npm link xxx]的节点 */
-    const linkNodes = nodes.filter(node => {
-      const devLinks = node.getVal().getDevLinks() || [];
-      return devLinks.length > 0 || nodes.some(otherNode =>
-        otherNode.getVal().getDevLinks()?.includes(node.getVal().getName()))
-    })
+    let linkNodes: TreeNode<Package>[] = []
+    if (pkgName) {
+      const linksSet = new Set<TreeNode<Package>>()
+      this.findDevLinks(map.get(pkgName), linksSet)
+      linkNodes = Array.from(linksSet)
+    } else {
+      //找出所有需要[npm link]或者[npm link xxx]的节点         
+      linkNodes = nodes.filter(node => {
+        const devLinks = node.getVal().getDevLinks() || [];
+        return devLinks.length > 0 || nodes.some(otherNode =>
+          otherNode.getVal().getDevLinks()?.includes(node.getVal().getName()))
+      })
+    }
 
+    console.log('linkNodes ===> ' + linkNodes.length)
     /* 构建拓扑图 */
     const graph = linkNodes.reduce((graph, node) => {
       node.getChildren().map(child => graph.addEdge(child, node))
@@ -90,8 +90,8 @@ export class Projects {
         inDegree.set(linked.val, (inDegree.get(linked.val) || 0) + 1)
       }
     }
-  
-    const queue: TreeNode<Package> [] = [];
+
+    const queue: TreeNode<Package>[] = [];
     for (let [k, v] of inDegree) {
       if (v === 0) queue.push(k)
     }
@@ -151,4 +151,30 @@ export class Projects {
     return this.packages.find(p => p.getName() === name)
   }
 
+  private findDevLinks(node: TreeNode<Package>, set: Set<TreeNode<Package>>) {
+    set.add(node);
+    for (let child of node.getChildren()) {
+      this.findDevLinks(child, set)
+    }
+  }
+
+  private findDepedences(pkgName: string, set: Set<Package>) {
+    const pkg = this.findPackage(pkgName)
+    if (pkg) {
+      set.add(pkg);
+      for (let child of pkg.getDevLinks()) {
+        this.findDepedences(child, set)
+      }
+    }
+  }
+
+  private async runInstallByType(type: 'async' | 'sync', pkgs: Package[]) {
+    if (type === 'async') {
+      await Promise.all(pkgs.map(pkg => pkg.npmInstall()))
+    } else {
+      for (let pkg of pkgs) {
+        await pkg.npmInstall()
+      }
+    }
+  }
 }

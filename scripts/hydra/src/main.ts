@@ -15,14 +15,20 @@ async function run() {
     case "ls":
       projects.list()
       break;
-    case "install":
+    case "install-deps":
+      projects.install(argv.type)
+      break;
+    case "install-dep":
       projects.install(argv.type, argv.name)
       break;
     case "reinstall":
       projects.reInstall(argv.type, argv.name)
       break;
-    case "links":
+    case "install-links":
       await projects.links()
+      break;
+    case "install-link":
+      await projects.links(argv.name)
       break;
     case "clear":
       projects.clear()
