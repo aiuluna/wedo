@@ -1,0 +1,11 @@
+FROM node:18
+
+WORKDIR /usr/app
+
+COPY . .
+
+RUN sh ./scripts/build-packager.sh
+
+EXPOSE 7003
+
+CMD yarn serve --name @wedo/svc-packager

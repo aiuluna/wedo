@@ -1,0 +1,59 @@
+version: '3'
+x-commons: &commons
+  networks:
+    - my-net
+services:
+  ui:
+    container_name: wedo-ui
+    image: wedo-ui
+    ports:
+      - "3000:5000"
+    <<: *commons
+  upload:
+    container_name: wedo-svc-upload
+    image: wedo-upload
+    ports:
+      - "7001:7001"
+    <<: *commons
+  doc:
+    container_name: wedo-svc-doc
+    image: wedo-svc-doc
+    ports:
+      - "7002:7002"
+    depends_on:
+      - redis
+      - mongo
+    <<: *commons
+  packager:
+    container_name: wedo-svc-packager
+    image: wedo-svc-packager
+    ports:
+      - "7003:7003"
+    <<: *commons
+  faas:
+    container_name: wedo-svc-faas
+    image: wedo-svc-faas
+    ports:
+      - "7004:7004"
+    <<: *commons
+  redis:
+    image: redis
+    container_name: local-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass huzhang6
+    <<: *commons
+  mongo:
+    container_name: wedo-mongo
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/data/db:/data/db
+    command: mongod --auth
+    <<: *commons
+
+networks:
+  my-net:
+    driver: bridge

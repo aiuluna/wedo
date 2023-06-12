@@ -16,7 +16,8 @@
     "devLinks": [
       "@wedo/code",
       "@wedo/request",
-      "@wedo/ui-code"
+      "@wedo/ui-code",
+      "@wedo/runtime"
     ],
     "type": "lib"
   },

@@ -1,4 +1,4 @@
-import Application from "./Application";
+import { Application } from "./Application";
 import { BuildController } from "./controller/BuildController";
 
 new BuildController()

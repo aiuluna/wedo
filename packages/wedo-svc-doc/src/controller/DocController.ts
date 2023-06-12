@@ -13,7 +13,7 @@ class DocController {
   @restful(HTTPMethod.GET, '/')
   async index(req: Request, res: Response) {
     console.log('index success')
-    res.send('success')
+    res.send('hello wedo-svc-doc')
   }
 
   @restful(HTTPMethod.PUT, '/code-project/:user/:name')

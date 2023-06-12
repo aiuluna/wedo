@@ -1,1 +1,0 @@
-import{u as r}from"./useListenChildrenUpdate.07dcc169.js";import{ListRender as e}from"./ListRender.df20a130.js";import{j as o}from"./index.a6d21641.js";import"./component.module.eb27806f.js";const a=({bridge:t})=>(r(t.getNode()),o(e,{bridge:t}));export{a as default};

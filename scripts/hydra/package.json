@@ -21,7 +21,9 @@
 		"serve": "ts-node ./src/main.ts serve",
 		"build-self": "rollup -c ./config/rollup.config.js --bundleConfigAsCjs",
     "install-links": "ts-node ./src/main.ts install-links",
-    "install-link": "ts-node ./src/main.ts install-link"
+    "install-link": "ts-node ./src/main.ts install-link",
+    "build": "ts-node ./src/main.ts build",
+    "build-ts": "ts-node ./src/main.ts build-ts"
 	},
 	"author": "huzhang",
 	"license": "ISC",

@@ -7,9 +7,7 @@ class Application {
   private constructor() {
     this.app = express()
     this.app.use(express.json())
-    this.app.use(cors({
-      origin: ['http://localhost:3001']
-    }))
+    this.app.use(cors())
   }
 
   public getApp() {

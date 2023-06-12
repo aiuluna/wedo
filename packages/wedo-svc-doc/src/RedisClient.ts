@@ -7,7 +7,7 @@ class Redis {
 
   private constructor() {
     this.client = createClient({
-      password: 'huzhang6'
+      url: 'redis://:huzhang6@local-redis:6379'
     });
     this.client.on('error', err => {
       console.log('Redis Client Error', err);

@@ -48,6 +48,9 @@ async function run() {
     case "build":
       projects.build(argv.name)
       break;
+    case "build-ts":
+      projects.buildTS(argv.name)
+      break;
     case "serve":
       projects.serve(argv.name)
       break;

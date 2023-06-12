@@ -130,12 +130,21 @@ export class Projects {
   }
 
   public async build(name: string) {
-    const pkg = this.findPackage(name);;
+    const pkg = this.findPackage(name);
     await pkg?.build()
   }
 
+  public async buildTS(name: string) {
+    const pkg = this.findPackage(name);
+    if (!pkg) {
+      error("can't find project name like " + name)
+      return
+    }
+    await pkg.buildTS();
+  }
+
   public async serve(name: string) {
-    const pkg = this.findPackage(name);;
+    const pkg = this.findPackage(name);
     await pkg?.serve()
   }
 

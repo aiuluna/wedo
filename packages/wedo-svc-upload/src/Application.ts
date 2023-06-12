@@ -9,9 +9,7 @@ export class Application {
   constructor() {
     this.app = express()
     this.app.use(bodyParser.json())
-    this.app.use(cors({
-      origin: ['http://localhost:3001']
-    }))
+    this.app.use(cors())
   }
 
   public getApp() {

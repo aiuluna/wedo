@@ -6,8 +6,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc --noEmit && vite build",
-		"serve": "vite preview",
-		"links": "npm link @wedo/meta @wedo/utils @wedo/loader @wedo/ui-code @wedo/runtime @wedo/request @wedo/render @wedo/code"
+		"serve": "vite preview"
 	},
 	"keywords": [],
 	"author": "huzhang",
@@ -35,7 +34,8 @@
 		"react-router-dom": "^6.10.0",
 		"rxjs": "^7.5.6",
 		"vite": "^3.0.3",
-		"vite-plugin-yaml2": "^1.1.5"
+		"vite-plugin-yaml2": "^1.1.5",
+		"vue-tsc": "^1.6.5"
 	},
 	"hydra": {
 		"devLinks": [

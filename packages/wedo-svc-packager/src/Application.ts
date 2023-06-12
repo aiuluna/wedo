@@ -1,25 +1,23 @@
-import express, { Express } from "express";
+import express, { Express } from 'express'
+import bodyParser from 'body-parser'
 import cors from 'cors'
-import bodyParser from "body-parser";
-
-export default class Application {
+export class Application {
   static inst: Application;
-  private app: Express;
 
-  private constructor() {
-    this.app = express() 
+  private app: Express
+
+  constructor() {
+    this.app = express()
     this.app.use(bodyParser.json())
-    this.app.use(cors({
-      origin: ['http://localhost:3001']
-    }))
-  }
-
-  public listen(port: number) {
-    this.app.listen(port)
+    this.app.use(cors())
   }
 
   public getApp() {
     return this.app
+  }
+
+  public listen(port?: number) {
+    this.app.listen(port || 7003)
   }
 
   static getInstance() {

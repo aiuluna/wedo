@@ -107,6 +107,11 @@ export class Package {
     await this.exec('yarn build')
   }
 
+  public async buildTS() {
+    notice("build-ts" + this.getName())
+    await this.exec("tsc")
+  }
+
   public async serve() {
     await this.exec('yarn serve')
   }

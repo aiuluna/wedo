@@ -1,0 +1,1 @@
+import r from"./FlexContainer.1420689a.js";import{j as t}from"./index.76e514c0.js";import"./component.module.eb27806f.js";import"./ListRender.3fe3a853.js";const i=({bridge:o})=>t(r,{bridge:o,gap:"row"});export{i as default};
