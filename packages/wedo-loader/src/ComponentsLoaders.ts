@@ -93,7 +93,7 @@ export class ComponentsLoader extends Emitter<Topic>{
 
     for (let key in ymls) {
       const [group, name] = key.split('.');
-      await this.loadByName(group, name)
+      await this.loadByName(group, name);
     }
     // todo 远程loadRemote
     this.state = 1;
