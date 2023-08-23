@@ -1,0 +1,51 @@
+{
+	"name": "hydra",
+	"version": "1.0.0",
+	"description": "",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
+	"files": [
+		"lib"
+	],
+	"bin": {
+		"hydra": "lib/index.js"
+	},
+	"scripts": {
+		"ls": "ts-node ./src/main.ts ls",
+		"list": "ts-node ./src/main.ts list",
+    "install-deps": "ts-node ./src/main.ts install-deps",
+		"install-dep": "ts-node ./src/main.ts install-dep",
+		"reinstall-dep": "ts-node ./src/main.ts reinstall",
+		"clear": "ts-node ./src/main.ts clear",
+		"dev": "ts-node ./src/main.ts dev",
+		"serve": "ts-node ./src/main.ts serve",
+		"build-self": "rollup -c ./config/rollup.config.js --bundleConfigAsCjs",
+    "install-links": "ts-node ./src/main.ts install-links",
+    "install-link": "ts-node ./src/main.ts install-link",
+    "build": "ts-node ./src/main.ts build",
+    "build-ts": "ts-node ./src/main.ts build-ts"
+	},
+	"author": "huzhang",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/core": "^7.21.3",
+		"@babel/plugin-transform-runtime": "^7.21.0",
+		"@babel/preset-env": "^7.20.2",
+		"@babel/preset-typescript": "^7.21.0",
+		"@rollup/plugin-babel": "^6.0.3",
+		"@rollup/plugin-commonjs": "^24.0.1",
+		"@rollup/plugin-json": "^6.0.0",
+		"@rollup/plugin-node-resolve": "^15.0.1",
+		"@rollup/plugin-typescript": "^11.0.0",
+		"@types/node": "^18.14.2",
+		"@types/yargs-parser": "^21.0.0",
+		"chalk": "^4.1.1",
+		"core-js": "3",
+		"inquirer": "^8.1.2",
+		"rollup": "^3.20.2",
+		"rollup-plugin-node-resolve": "^5.2.0",
+		"rollup-plugin-sourcemaps": "^0.6.3",
+		"typescript": "^5.0.2",
+		"yargs-parser": "^21.1.1"
+	}
+}

@@ -1,0 +1,1 @@
+const t={group:"container",name:"root",componentType:"react",imageUrl:"https://voice-static.oss-accelerate.aliyuncs.com//img/5aee98f58f9584472592617cdd4182391f59820d.png",title:"\u77E9\u5F62\u5BB9\u5668",url:"local.Root",style:{backgroundColor:"#ddd"},box:{width:3200,height:3200,container:!0},intrinsic:!0};export{t as default};

@@ -1,0 +1,11 @@
+FROM node:18
+
+WORKDIR /usr/app
+
+COPY . .
+
+RUN sh ./scripts/build-faas.sh
+
+EXPOSE 7004
+
+CMD yarn serve --name @wedo/svc-faas

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["ES6"],
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "outDir": "es",
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": [
+      "node",
+      "express"
+    ]
+  },
+  "include": ["./src"],
+  "exclude": ["./node_modules", "./src/temp"]
+}

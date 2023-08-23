@@ -1,0 +1,1 @@
+const t="_text_s975u_5",o="_button_s975u_18",_="_image_s975u_40",s="_input_s975u_66",n="_textarea_s975u_72",u="_icon_s975u_78",c="_root_s975u_83",a="_row_s975u_87",e="_column_s975u_93",r="_rowgap_s975u_99",p="_colgap_s975u_105",i={text:t,button:o,image:_,input:s,textarea:n,icon:u,root:c,row:a,column:e,rowgap:r,colgap:p,"txt-input":"_txt-input_s975u_111"};export{i as s};

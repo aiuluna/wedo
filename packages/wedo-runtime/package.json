@@ -1,0 +1,19 @@
+{
+  "name": "@wedo/runtime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "es/index.js",
+  "types": "es/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "huzhang",
+  "license": "ISC",
+  "hydra": {
+		"type": "lib",
+		"devLinks": [
+			"@wedo/meta",
+      "@wedo/request"
+		]
+	}
+}

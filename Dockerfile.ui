@@ -1,0 +1,12 @@
+FROM node:14
+
+WORKDIR /usr/app
+
+COPY . .
+
+RUN sh scripts/build-wedo-ui.sh
+
+EXPOSE 5000
+
+CMD node scripts/serve.js ./dist 5000
+

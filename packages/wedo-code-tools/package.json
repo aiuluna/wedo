@@ -1,0 +1,34 @@
+{
+  "name": "@wedo/code-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "huzhang",
+  "license": "ISC",
+  "hydra": {
+    "devLinks": [
+      "@wedo/code",
+      "@wedo/request",
+      "@wedo/ui-code",
+      "@wedo/runtime"
+    ],
+    "type": "lib"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.3"
+  },
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "rollup": "^3.21.5",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "typescript": "^5.0.4"
+  }
+}
