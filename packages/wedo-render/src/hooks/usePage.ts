@@ -82,9 +82,9 @@ export const usePage = (pageName: string): (Page | null) => {
 
     const page = new Page(pageName, data, ComponentsLoader.getInstance());
 
-    await run(page)
-    page.emit(Topic.Initialize)
-    setPage(page)
+    await run(page);
+    page.emit(Topic.Initialize);
+    setPage(page);
 
   }
 
