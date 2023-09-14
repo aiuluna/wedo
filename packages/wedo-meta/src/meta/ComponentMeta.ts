@@ -144,7 +144,6 @@ export class ComponentMeta {
     }
 
     return data
-
   }
 }
 

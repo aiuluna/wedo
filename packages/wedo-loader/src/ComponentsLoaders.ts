@@ -1,8 +1,8 @@
 import { Topic, ComponentMetaConfig, ComponentMeta, metaSchema } from '@wedo/meta';
 import { Emitter } from '@wedo/utils';
-import * as R from 'ramda'
+import * as R from 'ramda';
 // import { Validator } from 'jsonschema'
-import Ajv from "ajv"
+import Ajv from "ajv";
 
 const metas: { [key: string]: ComponentMeta } = {}
 const ymls: { [key: string]: ComponentMetaConfig } = {}
